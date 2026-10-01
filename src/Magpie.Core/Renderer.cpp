@@ -1881,24 +1881,39 @@ ID3D11Texture2D* Renderer::_BuildEffects() noexcept {
 					inputDesc.Width, inputDesc.Height, outputDesc.Width, outputDesc.Height));
 			}
 		}
-		bool bypassDlssSr = false;
-		if (effects[i].name == "DLSS\\DLSS_SR") {
+		bool bypassNativeSr = false;
+		const bool isDlssSr = effects[i].name == "DLSS\\DLSS_SR";
+		const bool isCrossVendorSr = effects[i].name == "XeSS\\XeSS_SR" ||
+			effects[i].name == "FSR3\\FSR3_SR";
+		if (isDlssSr || isCrossVendorSr) {
 			D3D11_TEXTURE2D_DESC inputDesc{};
 			D3D11_TEXTURE2D_DESC outputDesc{};
 			_effectDrawers[i].GetTexture(0)->GetDesc(&inputDesc);
 			_effectDrawers[i].GetOutputTexture()->GetDesc(&outputDesc);
-			// NGX DLSS SR cannot downscale. Keep the video-region chain running
-			// with the effect's linear adapter when its target is smaller.
-			bypassDlssSr = inputDesc.Width > outputDesc.Width || inputDesc.Height > outputDesc.Height;
-			if (bypassDlssSr) {
+			// Native SR cannot downscale. Skip equal-size video-region routes and
+			// unsupported cross-vendor >3x ratios; use the effect's linear adapter
+			// if geometry drifts before the renderer is initialized.
+			const bool downscale = inputDesc.Width > outputDesc.Width ||
+				inputDesc.Height > outputDesc.Height;
+			const bool noUpscale = options.IsRegionOverlayMode() &&
+				!ShouldRunVideoSuperResolution(
+				{ inputDesc.Width, inputDesc.Height },
+				{ outputDesc.Width, outputDesc.Height });
+			const bool exceedsSdkLimit = isCrossVendorSr &&
+				(static_cast<double>(outputDesc.Width) / inputDesc.Width > 3.0 ||
+				 static_cast<double>(outputDesc.Height) / inputDesc.Height > 3.0);
+			bypassNativeSr = downscale || noUpscale || exceedsSdkLimit;
+			if (bypassNativeSr) {
 				Logger::Get().Info(fmt::format(
-					"DLSS SR bypassed: target is smaller than input {}x{} -> {}x{}; using linear adapter",
+					"{} bypassed: {} {}x{} -> {}x{}; using linear adapter",
+					effects[i].name, downscale ? "target is smaller than input" :
+						(noUpscale ? "target does not upscale" : "target exceeds 3x SDK limit"),
 					inputDesc.Width, inputDesc.Height, outputDesc.Width, outputDesc.Height));
 			}
 		}
 
 		NativeEffectBackendResult nativeBackend{};
-		if (!bypassRtxVideoVsr && !bypassDlssSr) {
+		if (!bypassRtxVideoVsr && !bypassNativeSr) {
 			nativeBackend = CreateNativeEffectBackend(
 				effects[i].name,
 				effects[i],
@@ -2362,6 +2377,7 @@ bool Renderer::_AppendBicubic(ID3D11Texture2D** inOutTexture) noexcept {
 ID3D11Texture2D* Renderer::_ResizeEffects() noexcept {
 	const auto priorityCheck = wil::scope_exit([this] { _EnsureGpuPriority(true); });
 	const std::vector<EffectOption>& effects = _runtimeEffectOptions;
+	const bool regionOverlayMode = ScalingWindow::Get().Options().IsRegionOverlayMode();
 	assert(!effects.empty());
 	const uint32_t effectCount = (uint32_t)effects.size();
 	if (!_DrainNgxConsumers()) {
@@ -2406,6 +2422,37 @@ ID3D11Texture2D* Renderer::_ResizeEffects() noexcept {
 		)) {
 			Logger::Get().Error(fmt::format("更改效果#{} ({}) 尺寸失败", i, effects[i].name));
 			return nullptr;
+		}
+		const bool isDlssSr = effects[i].name == "DLSS\\DLSS_SR";
+		const bool isCrossVendorSr = effects[i].name == "XeSS\\XeSS_SR" ||
+			effects[i].name == "FSR3\\FSR3_SR";
+		if (isDlssSr || isCrossVendorSr) {
+			D3D11_TEXTURE2D_DESC inputDesc{};
+			D3D11_TEXTURE2D_DESC outputDesc{};
+			_effectDrawers[i].GetTexture(0)->GetDesc(&inputDesc);
+			_effectDrawers[i].GetOutputTexture()->GetDesc(&outputDesc);
+			const bool downscale = inputDesc.Width > outputDesc.Width ||
+				inputDesc.Height > outputDesc.Height;
+			const bool noUpscale = regionOverlayMode && !ShouldRunVideoSuperResolution(
+				{ inputDesc.Width, inputDesc.Height },
+				{ outputDesc.Width, outputDesc.Height });
+			const bool exceedsSdkLimit = isCrossVendorSr &&
+				(static_cast<double>(outputDesc.Width) / inputDesc.Width > 3.0 ||
+				 static_cast<double>(outputDesc.Height) / inputDesc.Height > 3.0);
+			if (downscale || noUpscale || exceedsSdkLimit) {
+				if (_nativeEffectBackends[i]) {
+					Logger::Get().Info(fmt::format(
+						"{} bypassed after resize: {}x{} -> {}x{}; using linear adapter",
+						effects[i].name, inputDesc.Width, inputDesc.Height,
+						outputDesc.Width, outputDesc.Height));
+				}
+				_nativeEffectBackends[i].reset();
+				continue;
+			}
+			// A previously bypassed effect waits for the browser's next geometry
+			// restart. Initializing NGX/XeSS/FSR midway through a resize would
+			// require rebuilding frame guidance and the whole effect chain.
+			if (!_nativeEffectBackends[i]) continue;
 		}
 
 		if (_nativeEffectBackends[i] && !_nativeEffectBackends[i]->Resize(

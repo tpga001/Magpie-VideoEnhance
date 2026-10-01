@@ -20,6 +20,7 @@
 #include "WindowHelper.h"
 #include <rapidjson/document.h>
 #include <dwmapi.h>
+#include <algorithm>
 #include <cmath>
 #include <cwctype>
 #include <limits>
@@ -903,12 +904,39 @@ ScalingError ScalingService::_StartScaleImpl(HWND hWnd, const Profile& profile, 
 		options.browserFrameSize = _browserFrameSize;
 		options.browserUiRects = _browserUiRects;
 		for (EffectOption& effect : options.effects) {
-			if (effect.name == "RTXVideo\\RTXVideo_VSR" || effect.name == "DLSS\\DLSS_SR") {
+			const bool isCrossVendorSr = effect.name == "XeSS\\XeSS_SR" ||
+				effect.name == "FSR3\\FSR3_SR";
+			if (effect.name == "RTXVideo\\RTXVideo_VSR" ||
+				effect.name == "DLSS\\DLSS_SR" || isCrossVendorSr) {
 				effect.scalingType = ScalingType::Absolute;
 				effect.scale = {
 					static_cast<float>(regionOverlayInternalSize.cx),
 					static_cast<float>(regionOverlayInternalSize.cy)
 				};
+				if (isCrossVendorSr) {
+					// XeSS and FSR 3.1 accept at most 3x. Keep the overlay at
+					// display resolution and let its final pass cover any remainder.
+					const SIZE inputSize = _browserFrameMapping.empty()
+						? _browserVideoSize : _browserFrameSize;
+					if (inputSize.cx > 0 && inputSize.cy > 0) {
+						const double maxScale = (std::min)({
+							1.0,
+							3.0 * inputSize.cx / regionOverlayInternalSize.cx,
+							3.0 * inputSize.cy / regionOverlayInternalSize.cy
+						});
+						if (maxScale < 1.0) {
+							effect.scale.first = static_cast<float>((std::max)(2L,
+								static_cast<LONG>(std::floor(regionOverlayInternalSize.cx * maxScale)) & ~1L));
+							effect.scale.second = static_cast<float>((std::max)(2L,
+								static_cast<LONG>(std::floor(regionOverlayInternalSize.cy * maxScale)) & ~1L));
+							Logger::Get().Info(fmt::format(
+								"{} region target limited to {}x{} (source {}x{}, display {}x{}): 3x SDK limit",
+								effect.name, static_cast<LONG>(effect.scale.first),
+								static_cast<LONG>(effect.scale.second), inputSize.cx, inputSize.cy,
+								regionOverlayInternalSize.cx, regionOverlayInternalSize.cy));
+						}
+					}
+				}
 			}
 		}
 	}

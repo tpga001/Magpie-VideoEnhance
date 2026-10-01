@@ -413,7 +413,11 @@ if ($featureOptions["EnableFrameTrace"] -eq "true") {
     Copy-Item -LiteralPath (Join-Path $sourceRoot "docs\FRAME_TRACE_GUIDE.md") -Destination (Join-Path $diagnosticsDir "README.md")
 }
 
-$fileRecords = Get-ChildItem -LiteralPath $stagingDir -File -Recurse | Sort-Object FullName | ForEach-Object {
+# A -SkipBuild repack can retain the prior manifest; never list it as its own
+# payload hash because the newly serialized manifest cannot self-hash.
+$fileRecords = Get-ChildItem -LiteralPath $stagingDir -File -Recurse |
+    Where-Object { $_.FullName -ne (Join-Path $stagingDir 'build-manifest.json') } |
+    Sort-Object FullName | ForEach-Object {
     $relativePath = $_.FullName.Substring($stagingDir.Length).TrimStart('\', '/')
     [ordered]@{
         path = $relativePath.Replace('\', '/')
