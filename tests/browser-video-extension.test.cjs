@@ -121,10 +121,15 @@ function workerHarness(initialEnabled = true) {
     remove: async key => { delete values[key]; }
   });
   const onMessage = event();
+  const onStartup = event();
+  const onInstalled = event();
   const chrome = {
     action: { setBadgeBackgroundColor: async () => {}, setBadgeText: async () => {} },
     storage: { local: area(state, 'local'), session: area({}, 'session'), onChanged: changes },
-    runtime: { onMessage, sendNativeMessage: async (_, msg) => { calls.push(msg); return native(msg); } },
+    runtime: {
+      onMessage, onStartup, onInstalled,
+      sendNativeMessage: async (_, msg) => { calls.push(msg); return native(msg); }
+    },
     tabs: {
       onActivated: event(), query: async () => [{ id: activeTabId, windowId: 3, active: true }],
       sendMessage: async (id, msg) => { sent.push(msg); }
@@ -149,6 +154,8 @@ function workerHarness(initialEnabled = true) {
       now = end;
     },
     respond: fn => { native = fn; },
+    startup: () => Promise.all(onStartup.emit()),
+    install: reason => Promise.all(onInstalled.emit({ reason })),
     setFocused: value => { focused = value; },
     focus: value => { focused = value; return Promise.all(chrome.windows.onFocusChanged.emit(value ? 3 : -1)); },
     activate: id => { activeTabId = id; return Promise.all(chrome.tabs.onActivated.emit({ tabId:id, windowId:3 })); },
@@ -161,7 +168,7 @@ function workerHarness(initialEnabled = true) {
   };
 }
 
-test('restored ON never launches; stopped Magpie turns the switch off', async () => {
+test('worker wake never launches; stopped Magpie turns the switch off', async () => {
   const h = workerHarness(); await flush();
   assert.equal(h.calls.length, 0);
   h.respond(async () => ({ ok: true, delivered: false, state: 'stopped' }));
@@ -171,6 +178,55 @@ test('restored ON never launches; stopped Magpie turns the switch off', async ()
   await h.report(900);
   assert.equal(h.calls.filter(x => x.action === 'update').length, 1);
   assert.ok(h.calls.every(x => x.action !== 'enable'));
+});
+
+test('browser startup restores the saved ON state once and rescans the foreground tab', async () => {
+  const h = workerHarness();
+  await h.startup(); await flush();
+  assert.deepEqual(h.calls.map(x => x.action), ['enable']);
+  assert.equal(h.state.enabled, true);
+  assert.equal(h.sent.at(-1).type, 'magpie-rescan');
+  await h.report();
+  assert.deepEqual(h.calls.map(x => x.action), ['enable', 'update']);
+});
+
+test('browser startup respects a saved OFF switch', async () => {
+  const h = workerHarness(false);
+  await h.startup(); await flush();
+  assert.equal(h.calls.length, 0);
+  assert.equal(h.state.enabled, false);
+});
+
+test('failed browser startup leaves the switch OFF without retrying on video heartbeat', async () => {
+  const h = workerHarness(); await flush();
+  h.respond(async () => ({ ok: false, error: 'start failed' }));
+  await h.startup(); await flush();
+  assert.equal(h.state.enabled, false);
+  assert.match(h.state.statusNote, /启动失败/);
+  await h.report();
+  assert.equal(h.calls.filter(x => x.action === 'enable').length, 1);
+});
+
+test('turning the switch OFF during browser startup wins over the pending launch', async () => {
+  const h = workerHarness(); await flush();
+  let release;
+  h.respond(() => new Promise(resolve => { release = resolve; }));
+  const starting = h.startup(); await flush();
+  await h.chrome.storage.local.set({ enabled: false }); await flush();
+  h.respond(async () => ({ ok: true, state: 'running' }));
+  release({ ok: true, state: 'running' });
+  await starting; await flush();
+  assert.equal(h.state.enabled, false);
+  assert.equal(h.calls.filter(x => x.action === 'enable').length, 1);
+  assert.equal(h.calls.at(-1).action, 'disable');
+  assert.ok(!h.sent.some(x => x.type === 'magpie-rescan'));
+});
+
+test('fresh installation enables enhancement through the existing switch path', async () => {
+  const h = workerHarness(false); await flush();
+  await h.install('install'); await flush();
+  assert.equal(h.state.enabled, true);
+  assert.equal(h.calls.filter(x => x.action === 'enable').length, 1);
 });
 
 test('switching to another app removes the overlay without disabling the user toggle', async () => {

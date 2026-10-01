@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Magpie 浏览器视频增强",
-  "description": "自动识别当前浏览器中正在观看的主视频，并交给 Magpie 做 RTX VSR 与 60 帧处理。",
-  "version": "0.2.3",
+  "description": "自动识别前台主视频，使用 Magpie 当前浏览器模式进行超分和补帧。",
+  "version": "0.2.4",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmC53raQXMFgWDrGILzaTm6NV4PLVRWbPcAL2il3KMKxRx7p2nIsNLLvyZW4Gil1RlSaIeTDiiX6I3G2dlL/jqmAtjOQ16JaL7NhrSF68K9SCqHES4HPly4iBZanu1gRVyiPVpVhctx8KK7aeoXAamXiM3yEG5vvNf3S4usEMR06sy0dkg81sB0MqyzpEFHb7e4LUe/8VNS5pxpgK5Fekhwe7lmw2+cx2FxsxUtUfaW1qyY0ilqFomVCyRg/kP4nJYBmZa1kmmQpOLLXsCER/3wESmoANcWr9hBQ+iwNGc1lVnJZpcvNeZwMg0IFFDjOB1SGX2xpURxKQmjef2Q9VeQIDAQAB",
   "permissions": [
     "nativeMessaging",

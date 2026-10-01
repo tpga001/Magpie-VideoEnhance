@@ -53,8 +53,9 @@ internal static class Program
             try
             {
                 string action = request.RootElement.GetProperty("action").GetString()!;
-                // Only an explicit switch-on may launch Magpie. Geometry and
-                // playback notifications must respect a tray exit or task kill.
+                // Only an enable request may launch Magpie, including the
+                // extension's saved ON switch at browser startup. Geometry and
+                // playback notifications respect a tray exit or task kill.
                 if (action == "enable")
                 {
                     File.Delete(requestPath);

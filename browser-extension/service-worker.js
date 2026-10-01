@@ -16,6 +16,7 @@ let focusRevision = 0;
 let pendingSession = "";
 let focusEventRevision = 0;
 let focusLossTimer = 0;
+let startupTask = Promise.resolve();
 
 function stopFrameBridge() {
   const previous = frameBridge;
@@ -162,6 +163,7 @@ chrome.runtime.onMessage.addListener((message, sender) => {
   if (!message || message.type !== "magpie-video-state" || !sender.tab) return;
   return (async () => {
     await ready;
+    await startupTask;
     if (!enabled) return;
     const revision = stateRevision;
     const focus = focusRevision;
@@ -271,10 +273,35 @@ const ready = Promise.all([
   enabled = Boolean(state.enabled);
   activeSession = session.activeSession || "";
   await setBadge();
-  if (enabled) {
+});
+
+// Restore the saved ON switch once when the browser launches. Waking an MV3
+// worker, receiving a video heartbeat, or returning focus must not relaunch
+// Magpie after it was closed while this browser session remains open.
+chrome.runtime.onStartup.addListener(() => {
+  startupTask = (async () => {
+    await ready;
+    if (!enabled) return;
+    const revision = stateRevision;
+    const response = await sendNative({ action: "enable" }, () => enabled && revision === stateRevision);
+    if (!enabled || revision !== stateRevision) return;
+    if (!response || response.state !== "running") {
+      enabled = false;
+      await chrome.storage.local.set({
+        enabled: false, statusNote: "Magpie 启动失败；手动开启开关可重试。"
+      });
+      await setBadge();
+      return;
+    }
+    await chrome.storage.local.set({ statusNote: "已开启，等待前台页面的视频" });
     const tab = await focusedActiveTab();
     if (tab?.id) chrome.tabs.sendMessage(tab.id, { type: "magpie-rescan" }).catch(() => {});
-  }
+  })();
+  return startupTask;
+});
+
+chrome.runtime.onInstalled.addListener(({ reason }) => {
+  if (reason === "install") chrome.storage.local.set({ enabled: true, statusNote: "" });
 });
 
 chrome.storage.onChanged.addListener(async (changes, area) => {
