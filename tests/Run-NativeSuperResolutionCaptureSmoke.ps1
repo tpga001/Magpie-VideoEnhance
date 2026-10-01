@@ -19,7 +19,12 @@ if (Get-Process MagpieNativeSrCaptureApp -ErrorAction SilentlyContinue) {
 $manifestPath = Join-Path $RuntimeDirectory 'build-manifest.json'
 if (!(Test-Path -LiteralPath $manifestPath)) { throw 'The candidate runtime has no build manifest.' }
 $manifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
-foreach ($option in @('EnableDLSSSR', 'EnableXeSSZeroMV', 'EnableFSR3ZeroMV')) {
+$requiredOptions = if ($DlssOnly) {
+    @('EnableDLSSSR')
+} else {
+    @('EnableDLSSSR', 'EnableXeSSZeroMV', 'EnableFSR3ZeroMV')
+}
+foreach ($option in $requiredOptions) {
     if ($manifest.featureOptions.$option -ne 'true') { throw "Candidate runtime does not contain $option" }
 }
 
