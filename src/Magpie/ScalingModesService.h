@@ -58,6 +58,7 @@ public:
 	Event<uint32_t, uint32_t> ScalingModeMoved;
 	Event<> ScalingModesReset;
 	Event<uint32_t, uint32_t> EffectParametersChanged;
+	Event<uint32_t, uint32_t> EffectReplaced;
 
 private:
 	ScalingModesService() = default;

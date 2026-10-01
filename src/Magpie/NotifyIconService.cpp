@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "App.h"
 #include "CommonSharedConstants.h"
+#include "EffectsService.h"
 #include "Logger.h"
 #include "NotifyIconService.h"
 #include "resource.h"
@@ -116,6 +117,30 @@ LRESULT NotifyIconService::_NotifyIconWndProc(HWND hWnd, UINT message, WPARAM wP
 			hstring mainWindowText = resourceLoader.GetString(L"NotifyIcon_MainWindow");
 			AppendMenu(hMenu.get(), MF_STRING, 1, mainWindowText.c_str());
 
+			const auto selectedUpscaler = ScalingService::Get().GetBrowserVideoUpscaler();
+			if (selectedUpscaler != BrowserVideoUpscaler::Unavailable) {
+				HMENU upscalerMenu = CreatePopupMenu();
+				if (upscalerMenu) {
+					const auto addUpscaler = [&](UINT id, const wchar_t* label,
+						std::wstring_view effectName) {
+						const UINT flags = MF_STRING |
+							(EffectsService::Get().GetEffect(effectName) ? 0 : MF_GRAYED);
+						AppendMenu(upscalerMenu, flags, id, label);
+					};
+					addUpscaler(10, L"RTX VSR", L"RTXVideo\\RTXVideo_VSR");
+					addUpscaler(11, L"DLSS SR", L"DLSS\\DLSS_SR");
+					addUpscaler(12, L"XeSS SR", L"XeSS\\XeSS_SR");
+					addUpscaler(13, L"FSR 3.1.5 SR", L"FSR3\\FSR3_SR");
+					CheckMenuRadioItem(upscalerMenu, 10, 13,
+						10 + static_cast<UINT>(selectedUpscaler), MF_BYCOMMAND);
+					const hstring upscalerText = resourceLoader.GetString(L"NotifyIcon_VideoUpscaler");
+					if (!AppendMenu(hMenu.get(), MF_POPUP,
+						reinterpret_cast<UINT_PTR>(upscalerMenu), upscalerText.c_str())) {
+						DestroyMenu(upscalerMenu);
+					}
+				}
+			}
+
 			hstring fmtStr = resourceLoader.GetString(L"NotifyIcon_Timer_Fullscreen");
 			std::wstring timerText = fmt::format(
 				fmt::runtime(std::wstring_view(fmtStr)),
@@ -135,6 +160,7 @@ LRESULT NotifyIconService::_NotifyIconWndProc(HWND hWnd, UINT message, WPARAM wP
 
 			// hWnd 必须为前台窗口才能正确展示弹出菜单
 			// 即使 hWnd 是隐藏的
+			const HWND previousForeground = GetForegroundWindow();
 			SetForegroundWindow(hWnd);
 
 			POINT cursorPos;
@@ -160,6 +186,20 @@ LRESULT NotifyIconService::_NotifyIconWndProc(HWND hWnd, UINT message, WPARAM wP
 				break;
 			case 4:
 				App::Get().Quit();
+				break;
+			case 10:
+			case 11:
+			case 12:
+			case 13:
+				if (!ScalingService::Get().SetBrowserVideoUpscaler(
+					static_cast<BrowserVideoUpscaler>(selectedMenuId - 10))) {
+					MessageBox(hWnd,
+						resourceLoader.GetString(L"NotifyIcon_VideoUpscalerFailed").c_str(),
+						L"Magpie", MB_OK | MB_ICONERROR);
+				}
+				if (previousForeground && IsWindow(previousForeground)) {
+					SetForegroundWindow(previousForeground);
+				}
 				break;
 			}
 			break;

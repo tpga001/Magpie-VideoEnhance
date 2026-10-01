@@ -89,6 +89,7 @@ private:
 	void _ScalingModesService_Moved(uint32_t fromIndex, uint32_t toIndex);
 
 	void _ScalingModesService_NamesChanged();
+	void _ScalingModesService_EffectReplaced(uint32_t modeIdx, uint32_t effectIdx);
 
 	void _Effects_VectorChanged(IObservableVector<IInspectable> const&, IVectorChangedEventArgs const& args);
 
@@ -109,6 +110,7 @@ private:
 	::Magpie::Event<::Magpie::EffectAddedWay>::EventRevoker _scalingModeAddedRevoker;
 	::Magpie::Event<uint32_t, uint32_t>::EventRevoker _scalingModeMovedRevoker;
 	::Magpie::Event<>::EventRevoker _scalingModeNamesChangedRevoker;
+	::Magpie::Event<uint32_t, uint32_t>::EventRevoker _effectReplacedRevoker;
 	IObservableVector<IInspectable>::VectorChanged_revoker _effectsChangedRevoker;
 
 	hstring _renameText;

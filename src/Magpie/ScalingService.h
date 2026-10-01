@@ -14,6 +14,14 @@ namespace Magpie {
 
 struct Profile;
 
+enum class BrowserVideoUpscaler {
+	RtxVsr,
+	DlssSr,
+	XessSr,
+	Fsr3Sr,
+	Unavailable
+};
+
 class ScalingService {
 public:
 	static ScalingService& Get() noexcept;
@@ -54,6 +62,8 @@ public:
 	// host. The request contains the actual DOM video rectangle, so browser UI is
 	// never included in the source crop.
 	void HandleBrowserVideoRequest() noexcept;
+	BrowserVideoUpscaler GetBrowserVideoUpscaler() const noexcept;
+	bool SetBrowserVideoUpscaler(BrowserVideoUpscaler value);
 	void EffectParameterEdited(uint32_t modeIdx, uint32_t effectIdx,
 		const std::string& parameter, float value);
 	void RetryConfigurationSave(std::function<void(bool)> completed);
@@ -123,6 +133,7 @@ private:
 	std::vector<BrowserFrameLease> _retiredBrowserFrameLeases;
 	HMONITOR _browserVideoMonitor = NULL;
 	bool _browserVideoAutoActive = false;
+	bool _browserVideoModeChangePending = false;
 	std::chrono::steady_clock::time_point _browserVideoForegroundLostAt{};
 	struct PendingEffectParametersSave {
 		std::shared_ptr<EffectParametersSaveState> state;

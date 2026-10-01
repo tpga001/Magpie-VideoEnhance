@@ -565,6 +565,12 @@
   <data name="NotifyIcon_MainWindow" xml:space="preserve">
     <value>主視窗</value>
   </data>
+  <data name="NotifyIcon_VideoUpscaler" xml:space="preserve">
+    <value>自動影片超解析</value>
+  </data>
+  <data name="NotifyIcon_VideoUpscalerFailed" xml:space="preserve">
+    <value>無法切換影片超解析，請檢查自動效果組和 Magpie 記錄。</value>
+  </data>
   <data name="Settings_General_RequireRestart.Title" xml:space="preserve">
     <value>需要重新啟動程式才能使變更生效</value>
   </data>

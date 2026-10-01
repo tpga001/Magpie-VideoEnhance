@@ -21,6 +21,7 @@
 #include <rapidjson/document.h>
 #include <dwmapi.h>
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <cwctype>
 #include <limits>
@@ -37,6 +38,40 @@ namespace {
 constexpr wchar_t BROWSER_VIDEO_MODE_NAME[] = L"浏览器视频 30fps → 当前屏幕原生60fps";
 constexpr wchar_t BROWSER_VIDEO_REQUEST_FILE[] = L"browser-video-request.json";
 constexpr auto BROWSER_VIDEO_FOREGROUND_GRACE = std::chrono::milliseconds(400);
+constexpr std::array<std::wstring_view, 4> BROWSER_VIDEO_SR_EFFECTS = {
+	L"RTXVideo\\RTXVideo_VSR",
+	L"DLSS\\DLSS_SR",
+	L"XeSS\\XeSS_SR",
+	L"FSR3\\FSR3_SR"
+};
+
+struct BrowserVideoSrSlot {
+	uint32_t modeIdx;
+	uint32_t effectIdx;
+};
+
+static std::optional<BrowserVideoSrSlot> FindBrowserVideoSrSlot() noexcept {
+	const auto& modes = AppSettings::Get().ScalingModes();
+	std::optional<BrowserVideoSrSlot> result;
+	for (uint32_t modeIdx = 0; modeIdx < modes.size(); ++modeIdx) {
+		const auto& mode = modes[modeIdx];
+		if (mode.name != BROWSER_VIDEO_MODE_NAME) continue;
+		if (result || mode.effects.size() != 3) return std::nullopt;
+		uint32_t filterCount = 0, fgCount = 0, srCount = 0;
+		for (uint32_t effectIdx = 0; effectIdx < mode.effects.size(); ++effectIdx) {
+			const auto& name = mode.effects[effectIdx].name;
+			if (name == L"FrameRate_Filter") ++filterCount;
+			else if (name == L"XeSSFG\\XeSS_FrameGeneration") ++fgCount;
+			else if (std::ranges::find(BROWSER_VIDEO_SR_EFFECTS, std::wstring_view(name)) !=
+				BROWSER_VIDEO_SR_EFFECTS.end()) {
+				++srCount;
+				result = BrowserVideoSrSlot{ modeIdx, effectIdx };
+			} else return std::nullopt;
+		}
+		if (filterCount != 1 || fgCount != 1 || srCount != 1) return std::nullopt;
+	}
+	return result;
+}
 
 struct BrowserVideoRequest {
 	std::string action;
@@ -504,7 +539,8 @@ void ScalingService::HandleBrowserVideoRequest() noexcept {
 		.processingSize = processingSize,
 		.cropping = { cropping.Left, cropping.Top, cropping.Right, cropping.Bottom }
 	};
-	if (_browserVideoAutoActive && request.sessionId == _browserVideoSession &&
+	if (_browserVideoAutoActive && !_browserVideoModeChangePending &&
+		request.sessionId == _browserVideoSession &&
 		window == _browserVideoWindow && monitor == _browserVideoMonitor &&
 		request.frameMapping == _browserFrameMapping &&
 		CanReuseBrowserVideoGeometry(currentGeometry, candidateGeometry) &&
@@ -567,12 +603,62 @@ void ScalingService::HandleBrowserVideoRequest() noexcept {
 	_browserVideoForegroundLostAt = {};
 	_isAutoScaleSuspended = false;
 	_StartScale(window, profile, false, true, processingSize);
+	_browserVideoModeChangePending = false;
 	Logger::Get().Info(fmt::format(
 		"{} video auto mode: hwnd={} crop=({:.0f},{:.0f},{:.0f},{:.0f}) "
 		"overlay={}x{} processing={}x{}",
 		request.localWindow ? "Local player" : "Browser",
 		reinterpret_cast<uintptr_t>(window), cropping.Left, cropping.Top, cropping.Right, cropping.Bottom,
 		videoSize.cx, videoSize.cy, processingSize.cx, processingSize.cy));
+}
+
+BrowserVideoUpscaler ScalingService::GetBrowserVideoUpscaler() const noexcept {
+	const auto slot = FindBrowserVideoSrSlot();
+	if (!slot) return BrowserVideoUpscaler::Unavailable;
+	const auto& name = AppSettings::Get().ScalingModes()[slot->modeIdx].effects[slot->effectIdx].name;
+	for (size_t i = 0; i < BROWSER_VIDEO_SR_EFFECTS.size(); ++i) {
+		if (name == BROWSER_VIDEO_SR_EFFECTS[i]) return static_cast<BrowserVideoUpscaler>(i);
+	}
+	return BrowserVideoUpscaler::Unavailable;
+}
+
+bool ScalingService::SetBrowserVideoUpscaler(BrowserVideoUpscaler value) {
+	const auto index = static_cast<size_t>(value);
+	if (index >= BROWSER_VIDEO_SR_EFFECTS.size()) return false;
+	const auto slot = FindBrowserVideoSrSlot();
+	if (!slot) return false;
+	auto& sr = AppSettings::Get().ScalingModes()[slot->modeIdx].effects[slot->effectIdx];
+	if (sr.name == BROWSER_VIDEO_SR_EFFECTS[index]) return true;
+	if (!EffectsService::Get().GetEffect(BROWSER_VIDEO_SR_EFFECTS[index])) return false;
+
+	EffectItem previous = sr;
+	EffectItem replacement;
+	replacement.name = BROWSER_VIDEO_SR_EFFECTS[index];
+	replacement.scalingType = ScalingType::Fit;
+	switch (value) {
+	case BrowserVideoUpscaler::RtxVsr:
+		replacement.parameters[L"strength"] = 3.0f;
+		break;
+	case BrowserVideoUpscaler::DlssSr:
+		replacement.parameters[L"dlssModelPreset"] = 11.0f;
+		[[fallthrough]];
+	case BrowserVideoUpscaler::XessSr:
+	case BrowserVideoUpscaler::Fsr3Sr:
+		replacement.parameters[L"opticalFlowMethod"] = 0.0f;
+		break;
+	default:
+		return false;
+	}
+	sr = std::move(replacement);
+	if (!AppSettings::Get().Save()) {
+		sr = std::move(previous);
+		return false;
+	}
+	_browserVideoModeChangePending = true;
+	ScalingModesService::Get().EffectReplaced.Invoke(slot->modeIdx, slot->effectIdx);
+	Logger::Get().Info(fmt::format("Video upscaler selected: {}",
+		StrHelper::UTF16ToUTF8(sr.name)));
+	return true;
 }
 
 void ScalingService::OnTaskSwitch() {

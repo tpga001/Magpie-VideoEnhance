@@ -53,6 +53,8 @@ ScalingModeItem::ScalingModeItem(
 		auto_revoke, std::bind_front(&ScalingModeItem::_ScalingModesService_Moved, this));
 	_scalingModeNamesChangedRevoker = ScalingModesService::Get().ScalingModeNamesChanged(
 		auto_revoke, std::bind_front(&ScalingModeItem::_ScalingModesService_NamesChanged, this));
+	_effectReplacedRevoker = ScalingModesService::Get().EffectReplaced(
+		auto_revoke, std::bind_front(&ScalingModeItem::_ScalingModesService_EffectReplaced, this));
 
 	ScalingMode& data = _Data();
 	{
@@ -112,6 +114,16 @@ void ScalingModeItem::_ScalingModesService_NamesChanged() {
 	RaisePropertyChanged(L"Name");
 	RaisePropertyChanged(L"HasNameConflict");
 	RenameText(_renameText);
+}
+
+void ScalingModeItem::_ScalingModesService_EffectReplaced(uint32_t modeIdx, uint32_t effectIdx) {
+	if (_IsRemoved() || modeIdx != _index || effectIdx >= _effects.Size()) return;
+	_isMovingEffects = false;
+	GetEffectItemImpl(_effects.GetAt(effectIdx)).EffectIdx(std::numeric_limits<uint32_t>::max());
+	_effects.SetAt(effectIdx, *_CreateScalingModeEffectItem(_index, effectIdx));
+	_isMovingEffects = true;
+	_RefreshEffectDragState();
+	RaisePropertyChanged(L"HasUnkownEffects");
 }
 
 void ScalingModeItem::_Effects_VectorChanged(IObservableVector<IInspectable> const&, IVectorChangedEventArgs const& args) {
@@ -415,6 +427,7 @@ void ScalingModeItem::Detach() noexcept {
 	_scalingModeAddedRevoker.Revoke();
 	_scalingModeMovedRevoker.Revoke();
 	_scalingModeNamesChangedRevoker.Revoke();
+	_effectReplacedRevoker.Revoke();
 }
 
 ScalingMode& ScalingModeItem::_Data() noexcept {
