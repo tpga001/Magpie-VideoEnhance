@@ -1,0 +1,1683 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About_PageFrame.Title" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="Home_Activation.Header" xml:space="preserve">
+    <value>激活</value>
+  </data>
+  <data name="Home_PageFrame.Title" xml:space="preserve">
+    <value>主页</value>
+  </data>
+  <data name="Home_Activation_Timer.Header" xml:space="preserve">
+    <value>延时启用</value>
+  </data>
+  <data name="Home_Activation_Timer_Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Home_Activation_Timer_Delay.Header" xml:space="preserve">
+    <value>倒计时时长（秒）</value>
+  </data>
+  <data name="ShortcutDialog_Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="ShortcutDialog_Description.Text" xml:space="preserve">
+    <value>按组合键以更改此快捷键</value>
+  </data>
+  <data name="ShortcutDialog_InUse" xml:space="preserve">
+    <value>此快捷键已被系统或其他程序占用，请关闭占用程序或更换组合键</value>
+  </data>
+  <data name="ShortcutDialog_InvalidShortcut" xml:space="preserve">
+    <value>快捷键必须以 Windows 键、Ctrl、Alt 或 Shift 开头，请重新输入</value>
+  </data>
+  <data name="ShortcutDialog_Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="ShortcutDialog_Tip.Text" xml:space="preserve">
+    <value>只有以 Windows 键、Ctrl、Alt 或 Shift 开头的快捷键才有效。</value>
+  </data>
+  <data name="Root_About.Content" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="Root_Defaults.Content" xml:space="preserve">
+    <value>默认</value>
+  </data>
+  <data name="Root_Home.Content" xml:space="preserve">
+    <value>主页</value>
+  </data>
+  <data name="Root_NewProfile.Content" xml:space="preserve">
+    <value>新建配置</value>
+  </data>
+  <data name="Root_NewProfileFlyout_ComboBox.PlaceholderText" xml:space="preserve">
+    <value>选择一个窗口</value>
+  </data>
+  <data name="Root_NewProfileFlyout_CopyFrom.Text" xml:space="preserve">
+    <value>复制自</value>
+  </data>
+  <data name="Root_NewProfileFlyout_Create.Content" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="Root_NewProfileFlyout_Name.Text" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="Root_NewProfileFlyout_NoCandidateWindow.Text" xml:space="preserve">
+    <value>打开新窗口以创建配置文件</value>
+  </data>
+  <data name="Root_NewProfileFlyout_Title.Text" xml:space="preserve">
+    <value>新建配置</value>
+  </data>
+  <data name="Root_Profiles.Content" xml:space="preserve">
+    <value>配置文件</value>
+  </data>
+  <data name="Root_ScalingModes.Content" xml:space="preserve">
+    <value>效果组</value>
+  </data>
+  <data name="ScalingModes_PageFrame.Title" xml:space="preserve">
+    <value>效果组</value>
+  </data>
+  <data name="Home_Advanced.Header" xml:space="preserve">
+    <value>高级</value>
+  </data>
+  <data name="Settings_General.Header" xml:space="preserve">
+    <value>常规</value>
+  </data>
+  <data name="Settings_General_Language.Header" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="Settings_General_Language_System" xml:space="preserve">
+    <value>Windows 默认</value>
+  </data>
+  <data name="Settings_General_PortableMode.Header" xml:space="preserve">
+    <value>便携模式</value>
+  </data>
+  <data name="Settings_General_PortableMode_Locate.Content" xml:space="preserve">
+    <value>打开配置文件位置</value>
+  </data>
+  <data name="Settings_Launch_RunAtStartup.Header" xml:space="preserve">
+    <value>开机启动</value>
+  </data>
+  <data name="Settings_General_ShowNotifyIcon.Description" xml:space="preserve">
+    <value>主窗口被关闭后 Magpie 将在后台继续运行</value>
+  </data>
+  <data name="Settings_General_ShowNotifyIcon.Header" xml:space="preserve">
+    <value>在系统托盘上显示应用程序</value>
+  </data>
+  <data name="Settings_General_Theme.Header" xml:space="preserve">
+    <value>主题</value>
+  </data>
+  <data name="Settings_General_Theme_Dark.Content" xml:space="preserve">
+    <value>深色</value>
+  </data>
+  <data name="Settings_General_Theme_System.Content" xml:space="preserve">
+    <value>Windows 默认</value>
+  </data>
+  <data name="Settings_General_Theme_Light.Content" xml:space="preserve">
+    <value>浅色</value>
+  </data>
+  <data name="ToggleSwitch.OffContent" xml:space="preserve">
+    <value>关</value>
+  </data>
+  <data name="ToggleSwitch.OnContent" xml:space="preserve">
+    <value>开</value>
+  </data>
+  <data name="Settings_Launch.Header" xml:space="preserve">
+    <value>启动</value>
+  </data>
+  <data name="ScalingModes_General_Export.Text" xml:space="preserve">
+    <value>配置导出</value>
+  </data>
+  <data name="ScalingModes_General_Import.Text" xml:space="preserve">
+    <value>配置导入</value>
+  </data>
+  <data name="ScalingModes_General_MoreOptions.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>更多选项</value>
+  </data>
+  <data name="ScalingModes_General_Reset.Text" xml:space="preserve">
+    <value>重置配置</value>
+  </data>
+  <data name="ScalingModes_ResetDialog_Title" xml:space="preserve">
+    <value>重置效果组配置？</value>
+  </data>
+  <data name="ScalingModes_ResetDialog_Content" xml:space="preserve">
+    <value>这将删除所有当前效果组并恢复默认效果组。自定义程序配置将改为使用全局默认效果组。此操作无法撤销。</value>
+  </data>
+  <data name="ScalingModes_ResetDialog_Confirm" xml:space="preserve">
+    <value>重置</value>
+  </data>
+  <data name="ScalingModes_ResetDialog_Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Settings_Launch_AlwaysRunAsAdmin.Description" xml:space="preserve">
+    <value>以管理员身份运行时才能使用此选项</value>
+  </data>
+  <data name="Settings_Launch_AlwaysRunAsAdmin.Header" xml:space="preserve">
+    <value>始终以管理员身份运行</value>
+  </data>
+  <data name="Home_UpdateCard_AutoCheckForUpdates.Content" xml:space="preserve">
+    <value>自动检查更新</value>
+  </data>
+  <data name="Home_UpdateCard_DownloadAndInstall.Content" xml:space="preserve">
+    <value>下载并安装</value>
+  </data>
+  <data name="Home_UpdateCard_ReleaseNotes.Content" xml:space="preserve">
+    <value>查看发布页</value>
+  </data>
+  <data name="Home_UpdateCard_RemindMeLater.Content" xml:space="preserve">
+    <value>以后再提醒我</value>
+  </data>
+  <data name="Home_UpdateCard_Title" xml:space="preserve">
+    <value>{} 可用</value>
+  </data>
+  <data name="About_OtherLinks.Header" xml:space="preserve">
+    <value>其他链接</value>
+  </data>
+  <data name="About_OtherLinks_ContributionGuidelines.Text" xml:space="preserve">
+    <value>贡献指南</value>
+  </data>
+  <data name="About_OtherLinks_FAQ.Text" xml:space="preserve">
+    <value>FAQ</value>
+  </data>
+  <data name="About_OtherLinks_License.Text" xml:space="preserve">
+    <value>许可协议</value>
+  </data>
+  <data name="About_OtherLinks_Repository.Text" xml:space="preserve">
+    <value>Github 仓库</value>
+  </data>
+  <data name="ScalingModes_Parameters.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>参数</value>
+  </data>
+  <data name="ScalingModes_MoreOptions.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>更多选项</value>
+  </data>
+  <data name="ScalingModes_MoreOptionsFlyout_Delete.Text" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="ScalingModes_MoreOptionsFlyout_MoveDown.Text" xml:space="preserve">
+    <value>下移</value>
+  </data>
+  <data name="ScalingModes_MoreOptionsFlyout_MoveUp.Text" xml:space="preserve">
+    <value>上移</value>
+  </data>
+  <data name="ScalingModes_Rename.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>重命名</value>
+  </data>
+  <data name="ScalingModes_Duplicate.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="ScalingModes_DuplicateSuffix" xml:space="preserve">
+    <value> - 副本</value>
+  </data>
+  <data name="ScalingModes_DragHandle.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>拖动以重新排序</value>
+  </data>
+  <data name="ScalingModes_RenameFlyout_OK.Content" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="ScalingModes_RenameFlyout_Title.Text" xml:space="preserve">
+    <value>重命名</value>
+  </data>
+  <data name="ScalingModes_AddEffect.Text" xml:space="preserve">
+    <value>添加效果器</value>
+  </data>
+  <data name="ScalingModes_Delete.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="ScalingModes_DeleteFlyout_Delete.Text" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="ScalingModes_DeleteFlyout_Description.Text" xml:space="preserve">
+    <value>以下配置文件正在使用这个效果组:</value>
+  </data>
+  <data name="ScalingModes_DeleteFlyout_Title.Text" xml:space="preserve">
+    <value>确定删除这个效果组？</value>
+  </data>
+  <data name="ScalingModes_DragNotSupported.Text" xml:space="preserve">
+    <value>管理员身份下不支持拖拽排序</value>
+  </data>
+  <data name="ScalingModes_DragToReorder.Text" xml:space="preserve">
+    <value>拖拽以重新排序</value>
+  </data>
+  <data name="ScalingModes_MoveDown.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>下移</value>
+  </data>
+  <data name="ScalingModes_MoveUp.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>上移</value>
+  </data>
+  <data name="ScalingModes_NewScalingMode.Text" xml:space="preserve">
+    <value>新建效果组</value>
+  </data>
+  <data name="ScalingModes_NewScalingModeFlyout_Title.Text" xml:space="preserve">
+    <value>新建效果组</value>
+  </data>
+  <data name="ScalingModes_Scale.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>缩放</value>
+  </data>
+  <data name="ScalingModes_NewScalingModeFlyout_CopyFrom.Text" xml:space="preserve">
+    <value>复制自</value>
+  </data>
+  <data name="ScalingModes_NewScalingModeFlyout_CopyFrom_None" xml:space="preserve">
+    <value>无</value>
+  </data>
+  <data name="ScalingModes_NewScalingModeFlyout_Create.Content" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="ScalingModes_NewScalingModeFlyout_Name.Text" xml:space="preserve">
+    <value>名称</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_HeightFactor.Text" xml:space="preserve">
+    <value>高（缩放倍数）</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_HeightPixels.Text" xml:space="preserve">
+    <value>高（像素）</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_WidthFactor.Text" xml:space="preserve">
+    <value>宽（缩放倍数）</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_WidthPixels.Text" xml:space="preserve">
+    <value>宽（像素）</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_Type.Text" xml:space="preserve">
+    <value>类型</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_Type_Absolute" xml:space="preserve">
+    <value>绝对</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_Type_Absolute_Description" xml:space="preserve">
+    <value>指定缩放后的尺寸</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_Type_Factor" xml:space="preserve">
+    <value>倍数</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_Type_Factor_Description" xml:space="preserve">
+    <value>指定相对于输入图像的缩放倍数</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_Type_Fill" xml:space="preserve">
+    <value>填充</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_Type_Fill_Description" xml:space="preserve">
+    <value>充满屏幕，画面可能被拉伸</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_Type_Fit" xml:space="preserve">
+    <value>适应</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_Type_Fit_Description" xml:space="preserve">
+    <value>指定等比缩放到充满屏幕后的缩放倍数</value>
+  </data>
+  <data name="Profile_General.Header" xml:space="preserve">
+    <value>常规</value>
+  </data>
+  <data name="Profile_General_3DGameMode.Header" xml:space="preserve">
+    <value>3D 游戏模式</value>
+  </data>
+  <data name="Profile_General_HdrCompatibility.Header" xml:space="preserve">
+    <value>HDR 兼容</value>
+  </data>
+  <data name="Profile_General_AutoScale.Header" xml:space="preserve">
+    <value>位于前台时自动启用效果组</value>
+  </data>
+  <data name="Profile_General_CaptureMethod.Header" xml:space="preserve">
+    <value>捕获方式</value>
+  </data>
+  <data name="Profile_General_Multimonitor.Header" xml:space="preserve">
+    <value>首选的显示器</value>
+  </data>
+  <data name="Profile_General_Multimonitor_All.Content" xml:space="preserve">
+    <value>所有显示器</value>
+  </data>
+  <data name="Profile_General_Multimonitor_Closest.Content" xml:space="preserve">
+    <value>距离源窗口最近的显示器</value>
+  </data>
+  <data name="Profile_General_Multimonitor_Intersected.Content" xml:space="preserve">
+    <value>源窗口跨越的所有显示器</value>
+  </data>
+  <data name="Profile_General_Multimonitor_Unavailable" xml:space="preserve">
+    <value>未连接</value>
+  </data>
+  <data name="Profile_General_ScalingMode.Header" xml:space="preserve">
+    <value>效果组</value>
+  </data>
+  <data name="Profile_Launch.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>启动</value>
+  </data>
+  <data name="Profile_MoreOptions.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>更多选项</value>
+  </data>
+  <data name="Profile_MoreOptions_Delete.Text" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="Profile_MoreOptions_DeleteFlyout_Delete.Text" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="Profile_MoreOptions_DeleteFlyout_Title.Text" xml:space="preserve">
+    <value>确定删除此配置？</value>
+  </data>
+  <data name="Profile_MoreOptions_OpenProgramLocation.Text" xml:space="preserve">
+    <value>打开程序位置</value>
+  </data>
+  <data name="Profile_MoreOptions_Rename.Text" xml:space="preserve">
+    <value>重命名</value>
+  </data>
+  <data name="Profile_MoreOptions_RenameFlyout_OK.Content" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="Profile_MoreOptions_RenameFlyout_Title.Text" xml:space="preserve">
+    <value>重命名</value>
+  </data>
+  <data name="Profile_MoreOptions_Reorder.Text" xml:space="preserve">
+    <value>重新排序</value>
+  </data>
+  <data name="Profile_MoreOptions_ReorderFlyout_MoveDown.Text" xml:space="preserve">
+    <value>下移</value>
+  </data>
+  <data name="Profile_MoreOptions_ReorderFlyout_MoveUp.Text" xml:space="preserve">
+    <value>上移</value>
+  </data>
+  <data name="Profile_MoreOptions_ReorderFlyout_Title.Text" xml:space="preserve">
+    <value>重新排序</value>
+  </data>
+  <data name="Profile_General_ScalingMode_None" xml:space="preserve">
+    <value>无</value>
+  </data>
+  <data name="Profile_Performance.Header" xml:space="preserve">
+    <value>性能</value>
+  </data>
+  <data name="Profile_Performance_GraphicsCard.Header" xml:space="preserve">
+    <value>显示卡</value>
+  </data>
+  <data name="About_Feedback.Header" xml:space="preserve">
+    <value>反馈</value>
+  </data>
+  <data name="About_Feedback_Discussion.Header" xml:space="preserve">
+    <value>讨论区</value>
+  </data>
+  <data name="About_Feedback_ReportBug.Header" xml:space="preserve">
+    <value>报告错误</value>
+  </data>
+  <data name="About_Feedback_RequestFeature.Header" xml:space="preserve">
+    <value>建议功能</value>
+  </data>
+  <data name="About_Version_UpdateSettings_CheckForPreviewUpdates.Header" xml:space="preserve">
+    <value>检查预览版更新</value>
+  </data>
+  <data name="About_Version_UpdateSettings_AutoCheckForUpdates.Header" xml:space="preserve">
+    <value>自动检查更新</value>
+  </data>
+  <data name="About_Version_CheckForUpdates.Text" xml:space="preserve">
+    <value>检查更新</value>
+  </data>
+  <data name="About_Version_CheckForUpdatesFailed.Title" xml:space="preserve">
+    <value>检查更新失败，请稍后重试</value>
+  </data>
+  <data name="About_Version_CheckingForUpdates.Text" xml:space="preserve">
+    <value>正在检查更新</value>
+  </data>
+  <data name="About_Version_UpdateCard_Cancel.Content" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="About_Version_UpdateCard_DownloadAndInstall.Content" xml:space="preserve">
+    <value>下载并安装</value>
+  </data>
+  <data name="About_Version_UpdateCard_ReleaseNotes.Content" xml:space="preserve">
+    <value>查看发布页</value>
+  </data>
+  <data name="About_Version_UpdateCard_Retry.Content" xml:space="preserve">
+    <value>重试</value>
+  </data>
+  <data name="About_Version_UpdateCard_Title" xml:space="preserve">
+    <value>{} 可用</value>
+  </data>
+  <data name="About_Version_UpdateToDate.Title" xml:space="preserve">
+    <value>Magpie 已是最新</value>
+  </data>
+  <data name="About_Version_UpdateToDate_DownloadFailed.Text" xml:space="preserve">
+    <value>下载失败。请检查网络和磁盘空间后重试，或从发布页手动下载</value>
+  </data>
+  <data name="About_Version_UpdateToDate_Downloading.Text" xml:space="preserve">
+    <value>下载中</value>
+  </data>
+  <data name="About_Version_UpdateToDate_Installing.Text" xml:space="preserve">
+    <value>安装中</value>
+  </data>
+  <data name="Profile_Advanced.Header" xml:space="preserve">
+    <value>高级</value>
+  </data>
+  <data name="Profile_Advanced_DisableDirectFlip.Header" xml:space="preserve">
+    <value>禁用 DirectFlip</value>
+  </data>
+  <data name="Profile_Cursor.Header" xml:space="preserve">
+    <value>光标</value>
+  </data>
+  <data name="Profile_Cursor_DrawCursor_AdjustCursorSpeed.Header" xml:space="preserve">
+    <value>运行效果组时调整光标速度</value>
+  </data>
+  <data name="Profile_Cursor_DrawCursor_Interpolation.Header" xml:space="preserve">
+    <value>插值算法</value>
+  </data>
+  <data name="Profile_Cursor_DrawCursor_Interpolation_Bilinear.Content" xml:space="preserve">
+    <value>双线性</value>
+  </data>
+  <data name="Profile_Cursor_DrawCursor_Interpolation_NearestNeighbor.Content" xml:space="preserve">
+    <value>最近邻</value>
+  </data>
+  <data name="Profile_Cursor_DrawCursor_ScaleFactor.Header" xml:space="preserve">
+    <value>缩放系数</value>
+  </data>
+  <data name="Profile_Cursor_DrawCursor_ScaleFactor_Custom.Content" xml:space="preserve">
+    <value>自定义</value>
+  </data>
+  <data name="Profile_Cursor_DrawCursor_ScaleFactor_NoScaling.Content" xml:space="preserve">
+    <value>无缩放</value>
+  </data>
+  <data name="Profile_Cursor_DrawCursor_ScaleFactor_SameAsSourceWindow.Content" xml:space="preserve">
+    <value>和源窗口相同</value>
+  </data>
+  <data name="Profile_General_CaptureMethod_Default" xml:space="preserve">
+    <value>默认</value>
+  </data>
+  <data name="Profile_SourceWindow.Header" xml:space="preserve">
+    <value>源窗口</value>
+  </data>
+  <data name="Profile_SourceWindow_CaptureTitleBar.Description" xml:space="preserve">
+    <value>仅在 Graphics Capture 和 Desktop Duplication 捕获方式下可用</value>
+  </data>
+  <data name="Profile_SourceWindow_CaptureTitleBar.Header" xml:space="preserve">
+    <value>捕获标题栏</value>
+  </data>
+  <data name="Profile_SourceWindow_CustomCropping.Header" xml:space="preserve">
+    <value>自定义裁剪</value>
+  </data>
+  <data name="Profile_SourceWindow_CustomCropping_Bottom.Header" xml:space="preserve">
+    <value>下</value>
+  </data>
+  <data name="Profile_SourceWindow_CustomCropping_Left.Header" xml:space="preserve">
+    <value>左</value>
+  </data>
+  <data name="Profile_SourceWindow_CustomCropping_Pixels.Text" xml:space="preserve">
+    <value>像素</value>
+  </data>
+  <data name="Profile_SourceWindow_CustomCropping_Right.Header" xml:space="preserve">
+    <value>右</value>
+  </data>
+  <data name="Profile_SourceWindow_CustomCropping_Top.Header" xml:space="preserve">
+    <value>上</value>
+  </data>
+  <data name="Home_Advanced_InlineParams.Description" xml:space="preserve">
+    <value>稍微提高性能，但每次修改效果的参数都需重新编译该效果</value>
+  </data>
+  <data name="Home_Advanced_InlineParams.Header" xml:space="preserve">
+    <value>内联效果参数</value>
+  </data>
+  <data name="Home_Advanced_SimulateExclusiveFullscreen.Description" xml:space="preserve">
+    <value>仅适用于全屏模式。启用后可以阻止某些应用的通知和弹窗</value>
+  </data>
+  <data name="Home_Advanced_SimulateExclusiveFullscreen.Header" xml:space="preserve">
+    <value>运行效果组时模拟独占全屏</value>
+  </data>
+  <data name="AppSettings_Dialog_Error" xml:space="preserve">
+    <value>错误</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions.Description" xml:space="preserve">
+    <value>这些设置仅供开发使用</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions.Header" xml:space="preserve">
+    <value>开发者选项</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_DebugMode.Content" xml:space="preserve">
+    <value>调试模式</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_DisableEffectCache.Content" xml:space="preserve">
+    <value>禁用效果缓存</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_SaveEffectSources.Content" xml:space="preserve">
+    <value>解析效果时保存着色器源代码</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_WarningsAreErrors.Content" xml:space="preserve">
+    <value>编译效果时将警告视为错误</value>
+  </data>
+  <data name="AppSettings_Dialog_Exit" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="AppSettings_ErrorDialog_ConfigLocation" xml:space="preserve">
+    <value>配置文件位置:
+{}</value>
+  </data>
+  <data name="AppSettings_ErrorDialog_NotValidJson" xml:space="preserve">
+    <value>配置文件不是合法的 JSON</value>
+  </data>
+  <data name="AppSettings_ErrorDialog_ParseFailed" xml:space="preserve">
+    <value>解析配置文件失败</value>
+  </data>
+  <data name="AppSettings_ErrorDialog_ReadFailed" xml:space="preserve">
+    <value>读取配置文件失败</value>
+  </data>
+  <data name="NotifyIcon_Exit" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="NotifyIcon_MainWindow" xml:space="preserve">
+    <value>主窗口</value>
+  </data>
+  <data name="Settings_General_RequireRestart.Title" xml:space="preserve">
+    <value>需要重新启动才能使更改生效</value>
+  </data>
+  <data name="Settings_General_RequireRestart_ActionButton.Content" xml:space="preserve">
+    <value>重新启动 Magpie</value>
+  </data>
+  <data name="ScalingModes_Description_UnknownEffect" xml:space="preserve">
+    <value>未知效果</value>
+  </data>
+  <data name="ScalingModes_HasUnkownEffects.Title" xml:space="preserve">
+    <value>此效果组包含未知效果，暂时无法使用。请删除未知效果，或恢复对应效果文件并重新启动 Magpie。</value>
+  </data>
+  <data name="Dialog_Export_Title" xml:space="preserve">
+    <value>导出效果组</value>
+  </data>
+  <data name="Dialog_Import_Title" xml:space="preserve">
+    <value>导入效果组</value>
+  </data>
+  <data name="About_Version_UpdateSettings.Header" xml:space="preserve">
+    <value>更新设置</value>
+  </data>
+  <data name="About_Version_Version" xml:space="preserve">
+    <value>版本</value>
+  </data>
+  <data name="Profile_Advanced_LaunchParameters.Header" xml:space="preserve">
+    <value>启动参数</value>
+  </data>
+  <data name="Overlay_Profiler" xml:space="preserve">
+    <value>性能分析器</value>
+  </data>
+  <data name="Overlay_Profiler_CaptureMethod" xml:space="preserve">
+    <value>捕获方式</value>
+  </data>
+  <data name="Overlay_FPS_Opacity" xml:space="preserve">
+    <value>不透明度</value>
+  </data>
+  <data name="Overlay_Profiler_Timings" xml:space="preserve">
+    <value>渲染用时</value>
+  </data>
+  <data name="Overlay_Profiler_Timings_SwitchToEffects" xml:space="preserve">
+    <value>切换到效果</value>
+  </data>
+  <data name="Overlay_Profiler_Timings_SwitchToPasses" xml:space="preserve">
+    <value>切换到通道</value>
+  </data>
+  <data name="Overlay_Profiler_Timings_Total" xml:space="preserve">
+    <value>总计</value>
+  </data>
+  <data name="Overlay_FPS_Lock" xml:space="preserve">
+    <value>锁定</value>
+  </data>
+  <data name="Overlay_FPS_Unlock" xml:space="preserve">
+    <value>解锁</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_DisableFontCache.Content" xml:space="preserve">
+    <value>禁用字体缓存</value>
+  </data>
+  <data name="Home_Advanced_AllowScalingMaximized.Header" xml:space="preserve">
+    <value>允许为最大化或全屏窗口启用效果组</value>
+  </data>
+  <data name="Dialog_JsonFile" xml:space="preserve">
+    <value>JSON 文件</value>
+  </data>
+  <data name="Profile_MoreOptions_ChangeExecutableForLaunching.Text" xml:space="preserve">
+    <value>更改用于启动程序的可执行文件</value>
+  </data>
+  <data name="Dialog_ExeFile" xml:space="preserve">
+    <value>可执行文件</value>
+  </data>
+  <data name="Dialog_SelectLauncher_Title" xml:space="preserve">
+    <value>选择用于启动程序的可执行文件</value>
+  </data>
+  <data name="Profile_Performance_FrameRateLimiter.Header" xml:space="preserve">
+    <value>帧率限制</value>
+  </data>
+  <data name="Profile_Performance_FrameRateLimiter_MaxFrameRate.Header" xml:space="preserve">
+    <value>最大帧率</value>
+  </data>
+  <data name="About_Version_CommitId" xml:space="preserve">
+    <value>提交</value>
+  </data>
+  <data name="About_DeveloperModeEnabled" xml:space="preserve">
+    <value>开发者模式已启用。</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_DuplicateFrameDetection.Header" xml:space="preserve">
+    <value>检测重复帧</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_DuplicateFrameDetection_Always.Content" xml:space="preserve">
+    <value>总是检测</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_DuplicateFrameDetection_Dynamic.Content" xml:space="preserve">
+    <value>动态检测</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_DuplicateFrameDetection_Never.Content" xml:space="preserve">
+    <value>从不检测</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_EnableStatisticsForDynamicDetection.Content" xml:space="preserve">
+    <value>启用动态检测统计</value>
+  </data>
+  <data name="Overlay_Profiler_DynamicDetection" xml:space="preserve">
+    <value>动态检测</value>
+  </data>
+  <data name="Overlay_Profiler_FrameRate" xml:space="preserve">
+    <value>帧率</value>
+  </data>
+  <data name="Home_TouchSupport_EnableTouchSupport.Header" xml:space="preserve">
+    <value>启用触控支持</value>
+  </data>
+  <data name="Home_TouchSupport_EnableTouchSupport_Description.Text" xml:space="preserve">
+    <value>需提供管理员权限才能更改此选项</value>
+  </data>
+  <data name="Home_TouchSupport_EnableTouchSupport_LearnMore.Content" xml:space="preserve">
+    <value>了解更多</value>
+  </data>
+  <data name="Home_TouchSupport.Header" xml:space="preserve">
+    <value>触控支持</value>
+  </data>
+  <data name="Home_TouchSupport_Info.Title" xml:space="preserve">
+    <value>如果触控支持失效，Magpie 可能会在启用效果组前请求管理员权限以执行修复。</value>
+  </data>
+  <data name="Home_Advanced_SimulateExclusiveFullscreen_InfoBar.Title" xml:space="preserve">
+    <value>此选项和部分旧游戏不兼容；如果出现黑屏、焦点或弹窗异常，请关闭此选项。</value>
+  </data>
+  <data name="Message_InvalidScalingMode" xml:space="preserve">
+    <value>当前配置没有可用的效果组。请选择其他效果组，或为当前效果组添加并修复效果器。</value>
+  </data>
+  <data name="Message_TouchSupport" xml:space="preserve">
+    <value>触控支持组件启动失败。请暂时关闭触控支持后重试；如需使用触控，请以管理员身份重新启用。</value>
+  </data>
+  <data name="Message_InvalidSourceWindow" xml:space="preserve">
+    <value>无法为这个窗口启用效果组。请确认它仍在运行、未停止响应、位于显示器内且窗口尺寸不小于 64×64。</value>
+  </data>
+  <data name="Message_Maximized" xml:space="preserve">
+    <value>当前禁止为最大化或全屏窗口启用效果组。请先还原窗口，或在“主页 → 高级”中启用“允许为最大化或全屏窗口启用效果组”。</value>
+  </data>
+  <data name="Message_LowIntegrityLevel" xml:space="preserve">
+    <value>目标窗口的权限高于 Magpie。请关闭 Magpie，并以管理员身份重新运行后重试。</value>
+  </data>
+  <data name="Message_ScalingFailedGeneral" xml:space="preserve">
+    <value>效果组初始化失败。请停用效果组、重新打开目标窗口并重试；如果仍然失败，请重新启动 Magpie。</value>
+  </data>
+  <data name="Message_CaptureFailed" xml:space="preserve">
+    <value>请还原目标窗口，再启用效果组。若仍无法捕获，请打开“查看详情”，核对捕获步骤和错误码。</value>
+  </data>
+  <data name="Message_CreateFenceFailed" xml:space="preserve">
+    <value>所选显示卡未能创建同步资源。请打开下方配置 → 性能 → 显示卡，选择另一张可用显示卡后重试；若仍失败，可更新对应驱动，并提供详情和日志。</value>
+  </data>
+  <data name="Message_NvidiaVsrPathUnsupported" xml:space="preserve">
+    <value>NVIDIA VSR 暂未启动（错误 -2）。请退出 Magpie，把完整发行包重新解压到例如 C:\Magpie\ 的目录，再从该目录运行 Magpie.exe 并重试。路径兼容性是可能原因；若仍失败，请复制详情并附上日志。</value>
+  </data>
+  <data name="Message_ScalingFailed" xml:space="preserve">
+    <value>无法启用效果组</value>
+  </data>
+  <data name="Message_ScalingStarted" xml:space="preserve">
+    <value>缩放已开始，再次按下缩放快捷键停止</value>
+  </data>
+  <data name="Profile_Performance_NoGraphicsCard.Title" xml:space="preserve">
+    <value>找不到兼容的显卡，将使用性能较低的 CPU 渲染。请确认显卡驱动已经正确安装并更新。</value>
+  </data>
+  <data name="Home_Advanced_MinFrameRate.Header" xml:space="preserve">
+    <value>最小帧率</value>
+  </data>
+  <data name="Home_Advanced_MinFrameRate.Description" xml:space="preserve">
+    <value>稳定 GPU 频率以减少卡顿，但会导致功耗增加</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_DisableFP16.Content" xml:space="preserve">
+    <value>禁止在着色器中使用 FP16</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_BenchmarkMode.Content" xml:space="preserve">
+    <value>性能测试模式</value>
+  </data>
+  <data name="Root_NewProfileFlyout_NameContextFlyout_AppName" xml:space="preserve">
+    <value>填入应用名</value>
+  </data>
+  <data name="Root_NewProfileFlyout_NameContextFlyout_ProcessName" xml:space="preserve">
+    <value>填入进程名</value>
+  </data>
+  <data name="Root_NewProfileFlyout_NameContextFlyout_WindowTitle" xml:space="preserve">
+    <value>填入窗口标题</value>
+  </data>
+  <data name="TextMenuFlyout_Copy" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="TextMenuFlyout_Cut" xml:space="preserve">
+    <value>剪切</value>
+  </data>
+  <data name="TextMenuFlyout_Paste" xml:space="preserve">
+    <value>粘贴</value>
+  </data>
+  <data name="TextMenuFlyout_Redo" xml:space="preserve">
+    <value>重新操作</value>
+  </data>
+  <data name="TextMenuFlyout_SelectAll" xml:space="preserve">
+    <value>全选</value>
+  </data>
+  <data name="TextMenuFlyout_Undo" xml:space="preserve">
+    <value>取消操作</value>
+  </data>
+  <data name="Message_BannedInWindowedMode" xml:space="preserve">
+    <value>源应用已最大化或处于全屏状态。请先在源应用中切换为窗口化，并将窗口还原到小于屏幕的尺寸，再启动窗口模式效果。</value>
+  </data>
+  <data name="Message_InvalidCropping" xml:space="preserve">
+    <value>裁剪后的区域过小或无效。请减小裁剪值，确保宽高至少为 64 像素，或关闭自定义裁剪。</value>
+  </data>
+  <data name="Home_Activation.Description" xml:space="preserve">
+    <value>按下快捷键可为前台窗口启用效果组，或停用当前正在运行的效果组。</value>
+  </data>
+  <data name="Home_Activation_FullscreenScaling.Header" xml:space="preserve">
+    <value>效果组快捷键（全屏模式）</value>
+  </data>
+  <data name="Home_TouchSupport.Description" xml:space="preserve">
+    <value>由于操作系统的安全限制，Magpie 需要 UIAccess 权限来支持触控输入。</value>
+  </data>
+  <data name="Home_Activation_FullscreenScaling_ShortcutControl.Title" xml:space="preserve">
+    <value>效果组快捷键（全屏模式）</value>
+  </data>
+  <data name="Home_Activation_WindowedScaling.Header" xml:space="preserve">
+    <value>效果组快捷键（窗口模式）</value>
+  </data>
+  <data name="Home_Activation_WindowedScaling_ShortcutControl.Title" xml:space="preserve">
+    <value>效果组快捷键（窗口模式）</value>
+  </data>
+  <data name="Home_Advanced_AllowScalingMaximized.Description" xml:space="preserve">
+    <value>仅适用于全屏模式</value>
+  </data>
+  <data name="Home_Toolbar.Description" xml:space="preserve">
+    <value>工具栏位于输出窗口顶部，提供帧率显示、截图等功能；窗口模式下还可拖动工具栏移动输出窗口。</value>
+  </data>
+  <data name="Home_Toolbar.Header" xml:space="preserve">
+    <value>工具栏</value>
+  </data>
+  <data name="Home_Toolbar_InitialState.Header" xml:space="preserve">
+    <value>工具栏初始状态</value>
+  </data>
+  <data name="Home_Toolbar_InitialState_AlwaysShow.Content" xml:space="preserve">
+    <value>始终显示</value>
+  </data>
+  <data name="Home_Toolbar_InitialState_AutoHide.Content" xml:space="preserve">
+    <value>自动隐藏</value>
+  </data>
+  <data name="Home_Toolbar_InitialState_Off.Content" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="Home_Toolbar_StateToggle.Header" xml:space="preserve">
+    <value>工具栏状态切换快捷键</value>
+  </data>
+  <data name="Home_Toolbar_StateToggle_ShortcutControl.Title" xml:space="preserve">
+    <value>工具栏状态切换快捷键</value>
+  </data>
+  <data name="Message_ToolbarIn3DGameMode" xml:space="preserve">
+    <value>3D 游戏模式不支持工具栏。请停用效果组并关闭 3D 游戏模式，或使用效果组快捷键进行控制。</value>
+  </data>
+  <data name="Message_ToolbarNewState" xml:space="preserve">
+    <value>工具栏：{}</value>
+  </data>
+  <data name="Overlay_Toolbar_Close" xml:space="preserve">
+    <value>停用效果组</value>
+  </data>
+  <data name="Overlay_Toolbar_Demo" xml:space="preserve">
+    <value>ImGui 演示窗口</value>
+  </data>
+  <data name="Overlay_Toolbar_Pin" xml:space="preserve">
+    <value>固定工具栏</value>
+  </data>
+  <data name="Overlay_Toolbar_TakeScreenshot" xml:space="preserve">
+    <value>截图</value>
+  </data>
+  <data name="Overlay_Toolbar_Profiler" xml:space="preserve">
+    <value>性能分析器窗口</value>
+  </data>
+  <data name="Message_Windowed3DGameMode" xml:space="preserve">
+    <value>要使用窗口模式，请先在下方配置中关闭“3D 游戏模式”，再启用效果组。也可以保留此设置，使用主页的全屏模式快捷键启用。</value>
+  </data>
+  <data name="Profile_General_3DGameMode.Description" xml:space="preserve">
+    <value>针对 3D 游戏优化，不支持工具栏和窗口模式</value>
+  </data>
+  <data name="Profile_General_HdrCompatibility.Description" xml:space="preserve">
+    <value>启用实验性 HDR 捕获到效果兼容路径。除非正在测试 HDR 支持，请保持关闭</value>
+  </data>
+  <data name="Home_Toolbar_ScreenshotSaveDirectory.Header" xml:space="preserve">
+    <value>截图保存目录</value>
+  </data>
+  <data name="Home_Toolbar_ScreenshotSaveDirectory_Change.Content" xml:space="preserve">
+    <value>更改</value>
+  </data>
+  <data name="Dialog_SetlectScreenshotSaveDirectory_Title" xml:space="preserve">
+    <value>选择截图保存目录</value>
+  </data>
+  <data name="Message_ScreenshotSaved" xml:space="preserve">
+    <value>已保存截图 {}</value>
+  </data>
+  <data name="Message_ScreenshotFailed" xml:space="preserve">
+    <value>无法保存截图。请检查截图保存目录是否存在且可写，或在主页中更换保存位置后重试。</value>
+  </data>
+  <data name="Overlay_Toolbar_TakeScreenshot_Description" xml:space="preserve">
+    <value>保存当前选中的原图或效果图；右键可导出效果处理中间结果</value>
+  </data>
+  <data name="Overlay_Toolbar_TakeScreenshot_PopupTitle" xml:space="preserve">
+    <value>导出中间结果</value>
+  </data>
+  <data name="Profile_WindowedScaling.Header" xml:space="preserve">
+    <value>窗口模式</value>
+  </data>
+  <data name="Profile_WindowedScaling_InitialScaleFactor.Header" xml:space="preserve">
+    <value>初始缩放倍数</value>
+  </data>
+  <data name="Profile_WindowedScaling_InitialScaleFactor_Auto.Content" xml:space="preserve">
+    <value>自动</value>
+  </data>
+  <data name="Profile_WindowedScaling_InitialScaleFactor_Custom.Content" xml:space="preserve">
+    <value>自定义</value>
+  </data>
+  <data name="Profile_Advanced_DisableDirectFlip.Description" xml:space="preserve">
+    <value>可避免部分兼容性问题，但可能显著增加延迟</value>
+  </data>
+  <data name="Profile_General_AutoScale_Disabled.Content" xml:space="preserve">
+    <value>禁用</value>
+  </data>
+  <data name="Profile_General_AutoScale_Fullscreen.Content" xml:space="preserve">
+    <value>全屏模式</value>
+  </data>
+  <data name="Profile_General_AutoScale_Windowed.Content" xml:space="preserve">
+    <value>窗口模式</value>
+  </data>
+  <data name="Profile_General_Multimonitor.Description" xml:space="preserve">
+    <value>仅适用于全屏模式</value>
+  </data>
+  <data name="Home_TouchSupport_Warn.Title" xml:space="preserve">
+    <value>工具栏不支持触控输入，请使用鼠标或快捷键操作。</value>
+  </data>
+  <data name="Overlay_Toolbar_Close_Description" xml:space="preserve">
+    <value>右键以关闭工具栏</value>
+  </data>
+  <data name="Overlay_Toolbar_SwitchToFullscreen" xml:space="preserve">
+    <value>切换到全屏模式</value>
+  </data>
+  <data name="Overlay_Toolbar_SwitchToWindowed" xml:space="preserve">
+    <value>切换到窗口模式</value>
+  </data>
+  <data name="Home_Toolbar_InitialState_Fullscreen.Header" xml:space="preserve">
+    <value>全屏模式</value>
+  </data>
+  <data name="Home_Toolbar_InitialState_Windowed.Header" xml:space="preserve">
+    <value>窗口模式</value>
+  </data>
+  <data name="Message_ExportScalingModesFailed" xml:space="preserve">
+    <value>导出效果组失败。请选择可写入的位置，并检查文件是否被占用以及磁盘空间是否充足。</value>
+  </data>
+  <data name="Message_ImportScalingModesFailed" xml:space="preserve">
+    <value>导入效果组失败。请选择有效且可读取的效果组 JSON 文件，并确认文件内容没有损坏。</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_LocateLogs.Header" xml:space="preserve">
+    <value>打开日志位置</value>
+  </data>
+  <data name="Message_WindowedDesktopDuplication" xml:space="preserve">
+    <value>要使用窗口模式，请在下方配置的“捕获方式”中选择 Graphics Capture，再启用效果组。要保留 Desktop Duplication，可使用主页的全屏模式快捷键启用。</value>
+  </data>
+  <data name="Profile_General_DesktopDuplicationWarning.Title" xml:space="preserve">
+    <value>要使用窗口模式，请在上方“捕获方式”中选择 Graphics Capture；保留 Desktop Duplication 时，请使用全屏模式。</value>
+  </data>
+  <data name="Settings_Launch_RunAtStartup.Description" xml:space="preserve">
+    <value>启用了“在系统托盘上显示应用程序”时将不会显示主窗口</value>
+  </data>
+  <data name="Home_Activation_Timer_Description" xml:space="preserve">
+    <value>{} 秒后为前台窗口启用效果组</value>
+  </data>
+  <data name="Home_Activation_Timer_Start" xml:space="preserve">
+    <value>开始</value>
+  </data>
+  <data name="NotifyIcon_Timer_Fullscreen" xml:space="preserve">
+    <value>{} 秒后启用效果组（全屏模式）</value>
+  </data>
+  <data name="NotifyIcon_Timer_Windowed" xml:space="preserve">
+    <value>{} 秒后启用效果组（窗口模式）</value>
+  </data>
+  <data name="Overlay_Toolbar_Minimize" xml:space="preserve">
+    <value>最小化</value>
+  </data>
+  <data name="Profile_Cursor_AutoHide.Header" xml:space="preserve">
+    <value>光标静止时自动隐藏</value>
+  </data>
+  <data name="Profile_Cursor_AutoHide_Delay.Header" xml:space="preserve">
+    <value>隐藏延迟（秒）</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment.Description" xml:space="preserve">
+    <value>仅适用于全屏模式</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment.Header" xml:space="preserve">
+    <value>输出画面位置</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment_BottomCenter.Content" xml:space="preserve">
+    <value>底部居中</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment_BottomLeft.Content" xml:space="preserve">
+    <value>左下角</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment_BottomRight.Content" xml:space="preserve">
+    <value>右下角</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment_Center.Content" xml:space="preserve">
+    <value>居中</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment_Left.Content" xml:space="preserve">
+    <value>左对齐</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment_Right.Content" xml:space="preserve">
+    <value>右对齐</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment_TopCenter.Content" xml:space="preserve">
+    <value>顶部居中</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment_TopLeft.Content" xml:space="preserve">
+    <value>左上角</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment_TopRight.Content" xml:space="preserve">
+    <value>右上角</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_DisableTopmost.Content" xml:space="preserve">
+    <value>禁用输出窗口置顶</value>
+  </data>
+  <data name="Settings_General_SmoothMotionCompatibilityMode.Header" xml:space="preserve">
+    <value>Smooth Motion 兼容模式</value>
+  </data>
+  <data name="Settings_General_SmoothMotionCompatibilityMode.Description" xml:space="preserve">
+    <value>每次停用效果组后重启 Magpie，释放 NVIDIA Smooth Motion 驱动驻留的显存。仅在已为 Magpie 启用 Smooth Motion 时开启。</value>
+  </data>
+  <data name="Overlay_Toolbar_EffectParameters" xml:space="preserve"><value>实时参数修改</value></data>
+  <data name="Overlay_EffectParameters" xml:space="preserve"><value>效果参数</value></data>
+  <data name="Overlay_EffectParameters_Live" xml:space="preserve"><value>实时</value></data>
+  <data name="Overlay_EffectParameters_RestartRequired" xml:space="preserve"><value>重启</value></data>
+  <data name="Overlay_EffectParameters_LiveApplied" xml:space="preserve"><value>实时更改已应用</value></data>
+  <data name="Overlay_EffectParameters_RestartPending" xml:space="preserve"><value>有 {} 项等待重新启用效果组</value></data>
+  <data name="Overlay_EffectParameters_RequestPending" xml:space="preserve"><value>正在自动保存…</value></data>
+  <data name="Overlay_EffectParameters_Revert" xml:space="preserve"><value>恢复本次运行初始值</value></data>
+  <data name="Overlay_EffectParameters_ApplyAndRestart" xml:space="preserve"><value>应用并重新启用效果组</value></data>
+  <data name="Overlay_EffectParameters_NoParameters" xml:space="preserve"><value>当前效果链没有暴露参数。</value></data>
+  <data name="Overlay_EffectParameters_Saved" xml:space="preserve"><value>效果参数已保存。</value></data>
+  <data name="Overlay_EffectParameters_LiveApplyFailed" xml:space="preserve"><value>此参数暂未应用到画面，仍使用上一次成功值。请恢复此前可用值，或点击“应用并重新启用效果组”。</value></data>
+  <data name="Overlay_EffectParameters_SessionExpired" xml:space="preserve"><value>当前运行已更新，本次请求未保存。请重新打开效果参数面板，确认最新值后再调整。</value></data>
+  <data name="Overlay_EffectParameters_SourceUnavailable" xml:space="preserve"><value>目标窗口已不可用，本次重新启用未完成。请打开目标程序并切到前台，再启用效果组并确认参数。</value></data>
+  <data name="Overlay_EffectParameters_ScalingModeConflict" xml:space="preserve"><value>效果组或参数已在其他位置更新，本面板修改未保存。请停用并重新启用效果组，载入最新配置后再调整。</value></data>
+  <data name="Overlay_EffectParameters_SaveFailed" xml:space="preserve"><value>参数尚未保存。请到主页 → 最近一次问题 → 查看详情，处理原因后点击“重试保存”。</value></data>
+  <data name="Overlay_EffectParameters_Invalid" xml:space="preserve"><value>此参数暂不可调节。请重新启用效果组后再打开面板；若仍无效，请从完整发行包恢复该效果器，并提供效果器名称和日志。</value></data>
+  <data name="Overlay_EffectParameters_Reason_Inline" xml:space="preserve"><value>此参数已编译进着色器。</value></data>
+  <data name="Overlay_EffectParameters_Reason_Native" xml:space="preserve"><value>此原生效果只在启动时读取该参数。</value></data>
+  <data name="Overlay_EffectParameters_Reason_Resources" xml:space="preserve"><value>此参数会改变效果资源或处理尺寸。</value></data>
+  <data name="Overlay_EffectParameters_Reason_Guidance" xml:space="preserve"><value>此参数会改变帧引导提供器。</value></data>
+  <data name="Overlay_EffectParameters_Reason_FrameGeneration" xml:space="preserve"><value>此参数会改变帧生成 Feature 或呈现环。</value></data>
+  <data name="Message_OpticalFlowProviderUnavailable" xml:space="preserve"><value>请打开详情所列效果器，将光流改为界面中其他可选方法，或选择“无／不使用”后重新启用。当前构建未提供所请求的光流方法。</value></data>
+  <data name="Message_NvidiaOpticalFlowUnsupported" xml:space="preserve"><value>NVIDIA 光流暂未启动。请在详情中确认受影响的效果器，打开该效果组，把对应光流选项设为“无”或“不使用”，再启用。需要光流时，可尝试界面中可选的 AMD 光流。</value></data>
+  <data name="Message_NvidiaOpticalFlowQualityUnsupported" xml:space="preserve"><value>请打开详情所列效果器，降低其 NVIDIA 光流质量后重新启用效果组；也可先将光流设为“无”或“不使用”。当前档位未能通过显卡或驱动的能力检查。</value></data>
+  <data name="Message_AmdOpticalFlowUnsupported" xml:space="preserve"><value>AMD 光流暂未启动。请打开详情所列效果器，将光流设为“无”或“不使用”后重新启用；需要光流时，可尝试该效果器提供的其他方法。具体能力检查结果见详情和日志。</value></data>
+  <data name="Message_OpticalFlowInteropFailed" xml:space="preserve"><value>光流所需的共享资源创建失败。请打开详情所列效果器，将光流设为“无”或“不使用”后重新启用；需要光流时，可尝试该效果器提供的其他方法。</value></data>
+  <data name="Message_ConflictingFrameGenerationEffects" xml:space="preserve"><value>下方效果组包含多个补帧效果器。请在详情中查看实际冲突项，再打开该效果组，保留要使用的一项并移除其余补帧项，然后重新启用。</value></data>
+  <data name="Message_XeSSMfgOpticalFlowUnsupported" xml:space="preserve"><value>XeSSFG 3×/4×目前支持无光流或 AMD 光流。请选择对应光流方法，或在 NVIDIA 光流下使用 2×。</value></data>
+  <data name="Message_XeSSMfgCompatibilityUnavailable" xml:space="preserve"><value>当前运行库无法启用 XeSSFG 多帧兼容。请查看日志中的版本校验或初始化错误。</value></data>
+  <data name="Message_XeSSMfgUnsupported" xml:space="preserve"><value>当前显卡或驱动无法初始化 XeSSFG。请查看日志中的详细原因。</value></data>
+  <data name="Message_XeSSMfgMultiplierUnsupported" xml:space="preserve"><value>当前 XeSSFG 运行路径不支持所选倍率。</value></data>
+  <data name="Home_Toolbar_Profiler.Header" xml:space="preserve"><value>性能监测</value></data>
+  <data name="Home_Toolbar_Profiler_ShortcutControl.Title" xml:space="preserve"><value>性能监测</value></data>
+  <data name="Home_Toolbar_EffectParameters.Header" xml:space="preserve"><value>打开／关闭实时参数面板</value></data>
+  <data name="Home_Toolbar_EffectParameters_ShortcutControl.Title" xml:space="preserve"><value>打开／关闭实时参数面板</value></data>
+  <data name="Home_Toolbar_Screenshot.Header" xml:space="preserve"><value>截屏</value></data>
+  <data name="Home_Toolbar_Screenshot_ShortcutControl.Title" xml:space="preserve"><value>截屏</value></data>
+  <data name="Home_Toolbar_ToolbarPin.Header" xml:space="preserve"><value>固定工具栏</value></data>
+  <data name="Home_Toolbar_ToolbarPin_ShortcutControl.Title" xml:space="preserve"><value>固定工具栏</value></data>
+  <data name="Overlay_EffectParameters_AutoSaved" xml:space="preserve"><value>修改已自动保存</value></data>
+  <data name="Home_Toolbar_Shortcuts.Header" xml:space="preserve"><value>工具栏快捷键设置</value></data>
+  <data name="EffectParam_Anime4K_Anime4K_Denoise_Bilateral_Mean_intensitySigma_Label" xml:space="preserve"><value>强度</value></data>
+  <data name="EffectParam_Anime4K_Anime4K_Denoise_Bilateral_Median_intensitySigma_Label" xml:space="preserve"><value>强度</value></data>
+  <data name="EffectParam_Anime4K_Anime4K_Denoise_Bilateral_Mode_intensitySigma_Label" xml:space="preserve"><value>强度</value></data>
+  <data name="EffectParam_Anime4K_Anime4K_Thin_HQ_iterations_Label" xml:space="preserve"><value>迭代次数</value></data>
+  <data name="EffectParam_Anime4K_Anime4K_Thin_HQ_strength_Label" xml:space="preserve"><value>强度</value></data>
+  <data name="EffectParam_Bicubic_paramB_Label" xml:space="preserve"><value>B 参数</value></data>
+  <data name="EffectParam_Bicubic_paramC_Label" xml:space="preserve"><value>C 参数</value></data>
+  <data name="EffectParam_CAS_CAS_Scaling_sharpness_Label" xml:space="preserve"><value>锐度</value></data>
+  <data name="EffectParam_CAS_CAS_sharpness_Label" xml:space="preserve"><value>锐度</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_brightBoost_Label" xml:space="preserve"><value>亮度增强</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_dilation_Label" xml:space="preserve"><value>膨胀量</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_gammaInput_Label" xml:space="preserve"><value>输入伽马</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_gammaOutput_Label" xml:space="preserve"><value>输出伽马</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_maskDotHeight_Label" xml:space="preserve"><value>遮罩点高度</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_maskDotWidth_Label" xml:space="preserve"><value>遮罩点宽度</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_maskSize_Label" xml:space="preserve"><value>遮罩尺寸</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_maskStagger_Label" xml:space="preserve"><value>遮罩错位</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_maskStrength_Label" xml:space="preserve"><value>遮罩强度</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_scanlineBeamWidthMax_Label" xml:space="preserve"><value>扫描线束最大宽度</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_scanlineBeamWidthMin_Label" xml:space="preserve"><value>扫描线束最小宽度</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_scanlineBrightMax_Label" xml:space="preserve"><value>扫描线最高亮度</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_scanlineBrightMin_Label" xml:space="preserve"><value>扫描线最低亮度</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_scanlineCutoff_Label" xml:space="preserve"><value>扫描线截止阈值</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_scanlineStrength_Label" xml:space="preserve"><value>扫描线强度</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_sharpnessH_Label" xml:space="preserve"><value>水平锐度</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_sharpnessV_Label" xml:space="preserve"><value>垂直锐度</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_CRTGamma_Label" xml:space="preserve"><value>目标伽马</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_cornerSize_Label" xml:space="preserve"><value>圆角大小</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_cornerSmooth_Label" xml:space="preserve"><value>圆角平滑度</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_curvature_Label" xml:space="preserve"><value>屏幕曲率</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_distance_Label" xml:space="preserve"><value>观察距离</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_dotMask_Label" xml:space="preserve"><value>点状遮罩</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_lum_Label" xml:space="preserve"><value>明亮度增强</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_monitorGamma_Label" xml:space="preserve"><value>显示器伽马</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_overScanX_Label" xml:space="preserve"><value>水平过扫描</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_overScanY_Label" xml:space="preserve"><value>垂直过扫描</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_radius_Label" xml:space="preserve"><value>曲率半径</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_scanlineWeight_Label" xml:space="preserve"><value>扫描线权重</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_sharper_Label" xml:space="preserve"><value>锐度</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_xTilt_Label" xml:space="preserve"><value>水平倾斜</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_yTilt_Label" xml:space="preserve"><value>垂直倾斜</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_beamMaxWidth_Label" xml:space="preserve"><value>最大束宽</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_beamMinWidth_Label" xml:space="preserve"><value>最小束宽</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_blueBoost_Label" xml:space="preserve"><value>蓝色增强</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_colorBoost_Label" xml:space="preserve"><value>色彩增强</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_crtAntiRinging_Label" xml:space="preserve"><value>抗振铃</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_greenBoost_Label" xml:space="preserve"><value>绿色增强</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_inputGamma_Label" xml:space="preserve"><value>输入伽马</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_outputGamma_Label" xml:space="preserve"><value>输出伽马</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_phosphor_Label" xml:space="preserve"><value>荧光粉效果</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_redBoost_Label" xml:space="preserve"><value>红色增强</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_scanlinesStrength_Label" xml:space="preserve"><value>扫描线强度</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_sharpness_Label" xml:space="preserve"><value>锐度</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_vScanlines_Label" xml:space="preserve"><value>垂直扫描线</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_bloomAmount_Label" xml:space="preserve"><value>辉光强度</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_brightBoost_Label" xml:space="preserve"><value>亮度增强</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_hardBloomPix_Label" xml:space="preserve"><value>水平辉光柔化</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_hardBloomScan_Label" xml:space="preserve"><value>垂直辉光柔化</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_hardPix_Label" xml:space="preserve"><value>像素硬度</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_hardScan_Label" xml:space="preserve"><value>扫描线硬度</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_maskDark_Label" xml:space="preserve"><value>遮罩暗部</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_maskLight_Label" xml:space="preserve"><value>遮罩亮部</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_shadowMask_Label" xml:space="preserve"><value>荫罩样式</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_shape_Label" xml:space="preserve"><value>滤波核形状</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_warpX_Label" xml:space="preserve"><value>水平画面弯曲</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_warpY_Label" xml:space="preserve"><value>垂直画面弯曲</value></data>
+  <data name="EffectParam_CRT_GTU_v050_blackLevel_Label" xml:space="preserve"><value>黑位</value></data>
+  <data name="EffectParam_CRT_GTU_v050_compositeConnection_Label" xml:space="preserve"><value>复合视频连接</value></data>
+  <data name="EffectParam_CRT_GTU_v050_contrast_Label" xml:space="preserve"><value>对比度</value></data>
+  <data name="EffectParam_CRT_GTU_v050_noScanlines_Label" xml:space="preserve"><value>关闭扫描线</value></data>
+  <data name="EffectParam_CRT_GTU_v050_signalResolutionI_Label" xml:space="preserve"><value>I 信号分辨率</value></data>
+  <data name="EffectParam_CRT_GTU_v050_signalResolutionQ_Label" xml:space="preserve"><value>Q 信号分辨率</value></data>
+  <data name="EffectParam_CRT_GTU_v050_signalResolution_Label" xml:space="preserve"><value>Y 信号分辨率</value></data>
+  <data name="EffectParam_CRT_GTU_v050_tvVerticalResolution_Label" xml:space="preserve"><value>电视垂直分辨率</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_multiplier_Label" xml:space="preserve"><value>帧数倍率</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_Group_DLSSNR" xml:space="preserve"><value>DLSSNR</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_Group_Detail_Control" xml:space="preserve"><value>细节控制</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_enableInputResolutionScaling_Label" xml:space="preserve"><value>调整输入分辨率
+（会降低 DLSSNR 质量）</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_inputResolutionPercent_Label" xml:space="preserve"><value>输入分辨率（%）</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_intensity_Label" xml:space="preserve"><value>NR 强度</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_localStructureStrength_Label" xml:space="preserve"><value>局部结构强度</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_localToneStrength_Label" xml:space="preserve"><value>局部色调强度</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_reflectionGlowMultiplier_Label" xml:space="preserve"><value>反射／辉光控制</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_residualLightness_Label" xml:space="preserve"><value>残差明度倍率</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_residualMultiplier_Label" xml:space="preserve"><value>残差倍率</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_residualSaturation_Label" xml:space="preserve"><value>残差饱和度倍率</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_shadowStructureMultiplier_Label" xml:space="preserve"><value>阴影／结构控制</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_skinStructureStrength_Label" xml:space="preserve"><value>皮肤结构强度</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_style_Label" xml:space="preserve"><value>NR 风格
+（0 默认，1 自然，2 电影）</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_uiCorrection_Label" xml:space="preserve"><value>NR 界面修正</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_useAutoMask_Label" xml:space="preserve"><value>自动遮罩</value></data>
+  <data name="EffectParam_Deband_grain_Label" xml:space="preserve"><value>颗粒强度</value></data>
+  <data name="EffectParam_Deband_iterations_Label" xml:space="preserve"><value>迭代次数</value></data>
+  <data name="EffectParam_Deband_range_Label" xml:space="preserve"><value>范围</value></data>
+  <data name="EffectParam_Deband_threshold_Label" xml:space="preserve"><value>阈值</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_gain_Label" xml:space="preserve"><value>显示增益</value></data>
+  <data name="EffectParam_FSR_FSR_RCAS_sharpness_Label" xml:space="preserve"><value>锐度</value></data>
+  <data name="EffectParam_FrameRate_Filter_targetFrameRate_Label" xml:space="preserve"><value>自定义帧率</value></data>
+  <data name="EffectParam_ImageAdjustment_Group_Channels" xml:space="preserve"><value>通道</value></data>
+  <data name="EffectParam_ImageAdjustment_Group_Gamma" xml:space="preserve"><value>伽马</value></data>
+  <data name="EffectParam_ImageAdjustment_Group_Tone" xml:space="preserve"><value>色调</value></data>
+  <data name="EffectParam_ImageAdjustment_b_Label" xml:space="preserve"><value>蓝色通道</value></data>
+  <data name="EffectParam_ImageAdjustment_blackLevel_Label" xml:space="preserve"><value>黑位</value></data>
+  <data name="EffectParam_ImageAdjustment_brightBoost_Label" xml:space="preserve"><value>亮度增强</value></data>
+  <data name="EffectParam_ImageAdjustment_contrast_Label" xml:space="preserve"><value>对比度</value></data>
+  <data name="EffectParam_ImageAdjustment_g_Label" xml:space="preserve"><value>绿色通道</value></data>
+  <data name="EffectParam_ImageAdjustment_luminance_Label" xml:space="preserve"><value>明亮度</value></data>
+  <data name="EffectParam_ImageAdjustment_monitorGamma_Label" xml:space="preserve"><value>显示器伽马</value></data>
+  <data name="EffectParam_ImageAdjustment_r_Label" xml:space="preserve"><value>红色通道</value></data>
+  <data name="EffectParam_ImageAdjustment_saturation_Label" xml:space="preserve"><value>饱和度</value></data>
+  <data name="EffectParam_ImageAdjustment_targetGamma_Label" xml:space="preserve"><value>目标伽马</value></data>
+  <data name="EffectParam_Jinc_ARStrength_Label" xml:space="preserve"><value>抗振铃强度</value></data>
+  <data name="EffectParam_Jinc_sinc_Label" xml:space="preserve"><value>Sinc 参数</value></data>
+  <data name="EffectParam_Jinc_windowSinc_Label" xml:space="preserve"><value>窗函数 Sinc 参数</value></data>
+  <data name="EffectParam_Lanczos_ARStrength_Label" xml:space="preserve"><value>抗振铃强度</value></data>
+  <data name="EffectParam_MLAA_MLAA_strength_Label" xml:space="preserve"><value>强度</value></data>
+  <data name="EffectParam_MLAA_MLAA_threshold_Label" xml:space="preserve"><value>边缘阈值</value></data>
+  <data name="EffectParam_NIS_NIS_sharpness_Label" xml:space="preserve"><value>锐度</value></data>
+  <data name="EffectParam_NIS_NVSharpen_sharpness_Label" xml:space="preserve"><value>锐度</value></data>
+  <data name="EffectParam_SGSR_EdgeSharpness_Label" xml:space="preserve"><value>边缘锐度</value></data>
+  <data name="EffectParam_SGSR_EdgeThreshold_Label" xml:space="preserve"><value>边缘阈值</value></data>
+  <data name="EffectParam_SMAA_SMAA_4x_Experimental_historyRejection_Label" xml:space="preserve"><value>历史帧拒绝阈值</value></data>
+  <data name="EffectParam_SMAA_SMAA_4x_Experimental_historyWeight_Label" xml:space="preserve"><value>历史帧权重</value></data>
+  <data name="EffectParam_SMAA_SMAA_4x_NoJitter_Experimental_historyRejection_Label" xml:space="preserve"><value>历史帧拒绝阈值</value></data>
+  <data name="EffectParam_SMAA_SMAA_4x_NoJitter_Experimental_historyWeight_Label" xml:space="preserve"><value>历史帧权重</value></data>
+  <data name="EffectParam_SMAA_SMAA_T2x_Experimental_historyRejection_Label" xml:space="preserve"><value>历史帧拒绝阈值</value></data>
+  <data name="EffectParam_SMAA_SMAA_T2x_Experimental_historyWeight_Label" xml:space="preserve"><value>历史帧权重</value></data>
+  <data name="EffectParam_SMAA_SMAA_T2x_NoJitter_Experimental_historyRejection_Label" xml:space="preserve"><value>历史帧拒绝阈值</value></data>
+  <data name="EffectParam_SMAA_SMAA_T2x_NoJitter_Experimental_historyWeight_Label" xml:space="preserve"><value>历史帧权重</value></data>
+  <data name="EffectParam_SSimDownscaler_oversharp_Label" xml:space="preserve"><value>额外锐化</value></data>
+  <data name="EffectParam_Sharpen_AdaptiveSharpen_curveHeight_Label" xml:space="preserve"><value>锐度</value></data>
+  <data name="EffectParam_Sharpen_FineSharp_cstr_Label" xml:space="preserve"><value>均衡强度（cstr）</value></data>
+  <data name="EffectParam_Sharpen_FineSharp_sstr_Label" xml:space="preserve"><value>锐化强度（sstr）</value></data>
+  <data name="EffectParam_Sharpen_FineSharp_xrep_Label" xml:space="preserve"><value>锐化伪影修复（xrep）</value></data>
+  <data name="EffectParam_Sharpen_FineSharp_xstr_Label" xml:space="preserve"><value>最终锐化强度（xstr）</value></data>
+  <data name="EffectParam_Sharpen_LCAS_sharpness_Label" xml:space="preserve"><value>锐度</value></data>
+  <data name="EffectParam_Sharpen_LumaSharpen_offsetBias_Label" xml:space="preserve"><value>采样偏移</value></data>
+  <data name="EffectParam_Sharpen_LumaSharpen_pattern_Label" xml:space="preserve"><value>采样模式</value></data>
+  <data name="EffectParam_Sharpen_LumaSharpen_sharpClamp_Label" xml:space="preserve"><value>锐化限制</value></data>
+  <data name="EffectParam_Sharpen_LumaSharpen_sharpStrength_Label" xml:space="preserve"><value>锐化强度</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_amdOpticalFlowMode_Label" xml:space="preserve"><value>光流质量</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_amdOpticalFlowMode_Option_0" xml:space="preserve"><value>性能</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_amdOpticalFlowMode_Option_1" xml:space="preserve"><value>质量</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_nvidiaOpticalFlowQuality_Label" xml:space="preserve"><value>光流质量</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_nvidiaOpticalFlowQuality_Option_1" xml:space="preserve"><value>性能</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_nvidiaOpticalFlowQuality_Option_2" xml:space="preserve"><value>均衡（推荐）</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_nvidiaOpticalFlowQuality_Option_3" xml:space="preserve"><value>质量</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_nvidiaOpticalFlowQuality_Option_4" xml:space="preserve"><value>高质量（高开销）</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_opticalFlowMethod_Label" xml:space="preserve"><value>光流方法</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_opticalFlowMethod_Option_0" xml:space="preserve"><value>无</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_opticalFlowMethod_Option_1" xml:space="preserve"><value>AMD 光流</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_opticalFlowMethod_Option_2" xml:space="preserve"><value>NVIDIA 光流</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_multiplier_Label" xml:space="preserve"><value>帧数倍率</value></data>
+  <data name="Home_RecentIssue.Title" xml:space="preserve"><value>最近一次问题</value></data>
+  <data name="Home_RecentIssue_Details.Content" xml:space="preserve"><value>查看详情</value></data>
+  <data name="ErrorDetails_Title" xml:space="preserve"><value>问题详情</value></data>
+  <data name="ErrorDetails_Copy" xml:space="preserve"><value>复制详情</value></data>
+  <data name="ErrorDetails_Copied" xml:space="preserve"><value>已复制</value></data>
+  <data name="ErrorDetails_OpenLogs" xml:space="preserve"><value>打开日志目录</value></data>
+  <data name="ErrorDetails_Close" xml:space="preserve"><value>关闭</value></data>
+  <data name="ErrorDetails_CopyFailed" xml:space="preserve"><value>复制失败。请选中文本后按 Ctrl+C 重试。</value></data>
+  <data name="ErrorDetails_OpenLogsFailed" xml:space="preserve"><value>无法打开目录。请复制下方日志路径到文件资源管理器。</value></data>
+  <data name="ErrorDetails_HomeHint" xml:space="preserve"><value>可在主页 → 最近一次问题中查看详情和日志。</value></data>
+  <data name="ErrorDetails_Time" xml:space="preserve"><value>时间</value></data>
+  <data name="ErrorDetails_Code" xml:space="preserve"><value>问题编号</value></data>
+  <data name="ErrorDetails_Version" xml:space="preserve"><value>版本</value></data>
+  <data name="ErrorDetails_Context" xml:space="preserve"><value>失败步骤、相关项目或路径</value></data>
+  <data name="ErrorDetails_SystemCode" xml:space="preserve"><value>系统错误码</value></data>
+  <data name="ErrorDetails_Count" xml:space="preserve"><value>连续发生次数</value></data>
+  <data name="ErrorDetails_Logs" xml:space="preserve"><value>日志目录</value></data>
+  <data name="ErrorAdvice_AccessDenied" xml:space="preserve"><value>Windows 拒绝写入此位置。请使用当前账户有写入权限的目录，并检查文件是否设为只读。</value></data>
+  <data name="ErrorAdvice_FileBusy" xml:space="preserve"><value>文件正被其他程序占用。请关闭正在编辑该文件的程序或等待同步完成后重试。</value></data>
+  <data name="ErrorAdvice_DiskFull" xml:space="preserve"><value>目标磁盘空间不足。请释放空间，或选择其他磁盘上的目录后重试。</value></data>
+  <data name="ErrorAdvice_PathMissing" xml:space="preserve"><value>文件或目录已不存在。请重新连接对应磁盘，或选择现有位置后重试。</value></data>
+  <data name="Message_ScalingModeNotSelected" xml:space="preserve"><value>请打开下方配置，选择一个有效的效果组，再启用效果组。此配置目前尚未选择可用的效果组。</value></data>
+  <data name="Message_ScalingModeEmpty" xml:space="preserve"><value>下方效果组目前为空。请打开“效果组”，找到该组并添加效果器；也可以在程序配置中选择其他效果组。</value></data>
+  <data name="Message_ScalingModeUnknownEffect" xml:space="preserve"><value>请在“查看详情”中确认不可用效果器的名称和序号，再打开下方效果组，替换对应项；如需保留它，请从当前版本的完整发行包恢复对应 effects 文件后重启 Magpie。</value></data>
+  <data name="Message_GraphicsDeviceInitFailed" xml:space="preserve"><value>无法初始化图形设备。请检查所选显卡，关闭其他占用显卡较多的程序后重试；若仍失败，请更新显卡驱动并重启 Windows。</value></data>
+  <data name="Message_PresentationInitFailed" xml:space="preserve"><value>无法创建画面输出。请尝试切换窗口或全屏模式；若使用了补帧，请先尝试不含补帧的效果组。</value></data>
+  <data name="Message_EffectCompileFailed" xml:space="preserve"><value>效果器编译失败。请在详情中查看名称，从对应发行包恢复该效果器，或将其移出效果组后重试。具体编译错误见日志。</value></data>
+  <data name="Message_EffectResourceFailed" xml:space="preserve"><value>效果器无法创建纹理或渲染资源。请尝试降低输出尺寸、减少效果器数量，并检查详情所列效果器的文件。</value></data>
+  <data name="Message_NativeEffectInitFailed" xml:space="preserve"><value>下方效果器未能启动。请打开详情查看本次初始化的失败步骤，再按所列文件或错误码排查；也可打开效果组，先替换该效果器以继续使用。原因不明确时，请复制详情并附上日志。</value></data>
+  <data name="Message_FrameGenerationInitFailed" xml:space="preserve"><value>补帧暂未启动。请打开详情查看失败步骤；可在下方效果组中关闭补帧效果器的光流，或在倍率可调时降低倍率后重试。也可先使用不含补帧的效果组。</value></data>
+  <data name="Message_OverlayInitFailed" xml:space="preserve"><value>工具栏或光标叠加层初始化失败。请重新解压完整发行包后再次启用效果组；若仍失败，请提供详情和日志。</value></data>
+  <data name="Message_SharedTextureOpenFailed" xml:space="preserve"><value>图形设备无法共享输出画面。请尝试让捕获和输出使用同一显卡，或关闭补帧；若仍失败，请更新显卡驱动。</value></data>
+  <data name="Message_DlssNrUnavailable" xml:space="preserve"><value>DLSSNR 暂未参与图像处理，画面会继续显示，其他效果按原顺序处理。请打开详情查看 DLSSNR 的失败步骤，处理后重新启用效果组；恢复前，DLSSNR 参数暂不可调节。</value></data>
+  <data name="Message_FrameGenerationDisabled" xml:space="preserve"><value>补帧连续失败，已在本次运行中停用，原始帧会继续显示。请尝试降低倍率或更换光流设置，然后重新启用效果组。</value></data>
+  <data name="Message_ConfigurationWriteFailed" xml:space="preserve"><value>最近的修改尚未保存到磁盘。请先保持 Magpie 打开，在“查看详情”中核对配置路径和失败原因；处理后点击“重试保存”。保存成功后再退出。</value></data>
+  <data name="Message_EffectParameterConflict" xml:space="preserve"><value>效果组或参数已在其他位置更新，本面板的修改未覆盖保存。请停用并重新启用效果组，载入最新配置后再调整。</value></data>
+  <data name="Message_EffectParameterLiveFailed" xml:space="preserve"><value>本次更新未应用，效果器仍使用此前的运行值。请尝试较低或此前可用的参数值；若仍失败，请提供 logs\magpie.log。</value></data>
+  <data name="Message_ScreenshotDirectoryFailed" xml:space="preserve"><value>无法创建截图目录。请根据详情检查路径和权限，或在主页的“截图保存目录”中选择可写入的目录后重试。</value></data>
+  <data name="Message_ScreenshotWriteFailed" xml:space="preserve"><value>无法写入截图文件。请检查磁盘空间、文件是否只读或被占用，也可更换截图保存目录后重试。</value></data>
+  <data name="Message_ScreenshotEncodeFailed" xml:space="preserve"><value>当前画面暂未能编码为截图。请重新启用效果组后再次点击工具栏“截图”；若仍失败，请复制详情并附上日志。</value></data>
+  <data name="Message_ScreenshotReadbackFailed" xml:space="preserve"><value>无法从显卡读取截图画面。请重新启用效果组后重试；若仍失败，可尝试降低输出尺寸、减少效果器，并提供详情和日志。</value></data>
+  <data name="Overlay_EffectParameters_Unavailable" xml:space="preserve"><value>不可用</value></data>
+  <data name="Overlay_EffectParameters_BackendUnavailable" xml:space="preserve"><value>DLSSNR 后端未初始化，当前仅透传。请查看主页 → 最近一次问题，处理后重新启用效果组。</value></data>
+  <data name="Message_SourceWindowClosed" xml:space="preserve"><value>目标窗口已关闭。请重新打开，将其切到前台后再启用效果组。</value></data>
+  <data name="Message_SourceWindowUnresponsive" xml:space="preserve"><value>目标窗口暂时没有响应。请等待其恢复，或重新启动目标程序后再启用效果组。</value></data>
+  <data name="Message_SourceWindowTooSmall" xml:space="preserve"><value>可见捕获区域小于 64 × 64 像素。请放大目标窗口，并将其完整移入屏幕后重试。</value></data>
+  <data name="Message_SourceWindowOffscreen" xml:space="preserve"><value>目标窗口位于当前连接的屏幕之外。请将其移回可见屏幕后重试。</value></data>
+  <data name="Message_SourceWindowUnsupported" xml:space="preserve"><value>不支持为这种透明窗口启用效果组。请选择程序的主窗口，避开透明叠加层或悬浮组件。</value></data>
+  <data name="Message_SourceWindowGeometryFailed" xml:space="preserve"><value>无法读取或调整目标窗口的位置和尺寸。请还原窗口并移到单个屏幕内再试；全屏模式失败时可尝试窗口模式。</value></data>
+  <data name="Message_ScalingAlreadyActive" xml:space="preserve"><value>已存在其他输出窗口。请先停用当前效果组，并关闭其他 Magpie 实例后重试。</value></data>
+  <data name="Message_ScalingWindowCreationFailed" xml:space="preserve"><value>无法创建输出窗口。请重新运行 Magpie，并尝试窗口模式；若仍失败，请提供详情和日志。</value></data>
+  <data name="Message_DisplayLayoutFailed" xml:space="preserve"><value>当前显示器布局无法用于全屏模式。请改用最近的显示器或尝试窗口模式，并确认所选显示器已连接。</value></data>
+  <data name="Message_ImportReadFailed" xml:space="preserve"><value>无法读取所选文件。请确认路径可访问、文件已完成下载或同步，然后重新选择。</value></data>
+  <data name="Message_ImportEmpty" xml:space="preserve"><value>所选文件为空或不包含任何效果组。请从 Magpie 导出效果组，或取得完整的效果组文件后重试。</value></data>
+  <data name="Message_ImportInvalidJson" xml:space="preserve"><value>文件不是有效的 JSON。请重新下载或导出；详情提供出错字节位置和解析原因，便于定位损坏内容。</value></data>
+  <data name="Message_ImportWrongFileType" xml:space="preserve"><value>所选文件不是 Magpie 效果组文件。请在导出方的 Magpie“效果组”页面使用“导出”，取得导出的 JSON 文件后再导入；文件由他人提供时，请向对方索取该文件。</value></data>
+  <data name="Message_ImportIncompatible" xml:space="preserve"><value>效果组条目的结构不兼容。请使用兼容的 Magpie 版本重新导出。本次未导入该文件中的任何效果组。</value></data>
+  <data name="Message_ExportWriteFailed" xml:space="preserve"><value>效果组文件未能完整写入。请检查路径、磁盘空间和写入权限，并重新导出到可写入的目录。</value></data>
+  <data name="Message_FileDialogFailed" xml:space="preserve"><value>Windows 文件选择器无法打开或返回位置。请重新运行 Magpie 后重试；若仍失败，请提供详情和日志。</value></data>
+  <data name="Overlay_EffectParameters_ResetDefault" xml:space="preserve"><value>双击恢复效果器默认值：{}</value></data>
+  <data name="Overlay_Toolbar_PassThrough" xml:space="preserve"><value>对比</value></data>
+  <data name="Message_PassThroughUnavailable" xml:space="preserve"><value>暂时无法显示原图。请等待新捕获帧后重试；若仍无效，请停用并重新启用效果组。需要帮助时，请打开详情并提供日志。效果仍继续处理。</value></data>
+  <data name="Home_Toolbar_Comparison.Header" xml:space="preserve"><value>对比</value></data>
+  <data name="Home_Toolbar_Comparison_ShortcutControl.Title" xml:space="preserve"><value>对比</value></data>
+  <data name="Overlay_Comparison_Original" xml:space="preserve"><value>原图</value></data>
+  <data name="Overlay_Comparison_Processed" xml:space="preserve"><value>处理后</value></data>
+  <data name="Message_MixedOpticalFlow" xml:space="preserve"><value>{0} 的光流估计方法或档位不一致，目前统一使用 {1}。</value></data>
+  <data name="Motion_Nvidia_1" xml:space="preserve"><value>性能</value></data>
+  <data name="Motion_Nvidia_2" xml:space="preserve"><value>平衡</value></data>
+  <data name="Motion_Nvidia_3" xml:space="preserve"><value>质量</value></data>
+  <data name="Motion_Nvidia_4" xml:space="preserve"><value>高质量</value></data>
+  <data name="Motion_Amd_0" xml:space="preserve"><value>性能</value></data>
+  <data name="Motion_Amd_1" xml:space="preserve"><value>质量</value></data>
+  <data name="Overlay_Profiler_FrameRateWithFG" xml:space="preserve"><value>帧率（总 / 真实）</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_dlssModelPreset_Label" xml:space="preserve"><value>DLSS 模型</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_dlssModelPreset_Option_10" xml:space="preserve"><value>J（旧版 Transformer）</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_dlssModelPreset_Option_11" xml:space="preserve"><value>K（RTX 30 推荐）</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_dlssModelPreset_Option_12" xml:space="preserve"><value>L（DLSS 4.5，极高开销）</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_dlssModelPreset_Option_13" xml:space="preserve"><value>M（DLSS 4.5，高开销）</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_opticalFlowMethod_Label" xml:space="preserve"><value>光流估算方式</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_opticalFlowMethod_Option_0" xml:space="preserve"><value>不使用</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_opticalFlowMethod_Option_1" xml:space="preserve"><value>AMD OF</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_opticalFlowMethod_Option_2" xml:space="preserve"><value>NVOF</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_amdOpticalFlowMode_Label" xml:space="preserve"><value>光流质量</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_amdOpticalFlowMode_Option_0" xml:space="preserve"><value>性能</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_amdOpticalFlowMode_Option_1" xml:space="preserve"><value>质量</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_nvidiaOpticalFlowQuality_Label" xml:space="preserve"><value>光流质量</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_nvidiaOpticalFlowQuality_Option_1" xml:space="preserve"><value>性能</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_nvidiaOpticalFlowQuality_Option_2" xml:space="preserve"><value>均衡（推荐）</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_nvidiaOpticalFlowQuality_Option_3" xml:space="preserve"><value>质量</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_nvidiaOpticalFlowQuality_Option_4" xml:space="preserve"><value>高质量（高开销）</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_opticalFlowMethod_Label" xml:space="preserve"><value>光流估算方式</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_opticalFlowMethod_Option_0" xml:space="preserve"><value>不使用</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_opticalFlowMethod_Option_1" xml:space="preserve"><value>AMD OF</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_opticalFlowMethod_Option_2" xml:space="preserve"><value>NVOF</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_amdOpticalFlowMode_Label" xml:space="preserve"><value>光流质量</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_amdOpticalFlowMode_Option_0" xml:space="preserve"><value>性能</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_amdOpticalFlowMode_Option_1" xml:space="preserve"><value>质量</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_nvidiaOpticalFlowQuality_Label" xml:space="preserve"><value>光流质量</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_nvidiaOpticalFlowQuality_Option_1" xml:space="preserve"><value>性能</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_nvidiaOpticalFlowQuality_Option_2" xml:space="preserve"><value>均衡（推荐）</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_nvidiaOpticalFlowQuality_Option_3" xml:space="preserve"><value>质量</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_nvidiaOpticalFlowQuality_Option_4" xml:space="preserve"><value>高质量（高开销）</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_opticalFlowMethod_Label" xml:space="preserve"><value>光流估算方式</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_opticalFlowMethod_Option_0" xml:space="preserve"><value>不使用</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_opticalFlowMethod_Option_1" xml:space="preserve"><value>AMD OF</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_opticalFlowMethod_Option_2" xml:space="preserve"><value>NVOF</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_amdOpticalFlowMode_Label" xml:space="preserve"><value>光流质量</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_amdOpticalFlowMode_Option_0" xml:space="preserve"><value>性能</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_amdOpticalFlowMode_Option_1" xml:space="preserve"><value>质量</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_nvidiaOpticalFlowQuality_Label" xml:space="preserve"><value>光流质量</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_nvidiaOpticalFlowQuality_Option_1" xml:space="preserve"><value>性能</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_nvidiaOpticalFlowQuality_Option_2" xml:space="preserve"><value>均衡（推荐）</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_nvidiaOpticalFlowQuality_Option_3" xml:space="preserve"><value>质量</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_nvidiaOpticalFlowQuality_Option_4" xml:space="preserve"><value>高质量（高开销）</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_opticalFlowMethod_Label" xml:space="preserve"><value>光流估算方式</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_opticalFlowMethod_Option_0" xml:space="preserve"><value>不使用</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_opticalFlowMethod_Option_1" xml:space="preserve"><value>AMD OF</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_opticalFlowMethod_Option_2" xml:space="preserve"><value>NVOF</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_amdOpticalFlowMode_Label" xml:space="preserve"><value>光流质量</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_amdOpticalFlowMode_Option_0" xml:space="preserve"><value>性能</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_amdOpticalFlowMode_Option_1" xml:space="preserve"><value>质量</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_nvidiaOpticalFlowQuality_Label" xml:space="preserve"><value>光流质量</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_nvidiaOpticalFlowQuality_Option_1" xml:space="preserve"><value>性能</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_nvidiaOpticalFlowQuality_Option_2" xml:space="preserve"><value>均衡（推荐）</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_nvidiaOpticalFlowQuality_Option_3" xml:space="preserve"><value>质量</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_nvidiaOpticalFlowQuality_Option_4" xml:space="preserve"><value>高质量（高开销）</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_opticalFlowMethod_Label" xml:space="preserve"><value>光流估算方式</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_opticalFlowMethod_Option_0" xml:space="preserve"><value>不使用</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_opticalFlowMethod_Option_1" xml:space="preserve"><value>AMD OF</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_opticalFlowMethod_Option_2" xml:space="preserve"><value>NVOF</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_amdOpticalFlowMode_Label" xml:space="preserve"><value>光流质量</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_amdOpticalFlowMode_Option_0" xml:space="preserve"><value>性能</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_amdOpticalFlowMode_Option_1" xml:space="preserve"><value>质量</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_nvidiaOpticalFlowQuality_Label" xml:space="preserve"><value>光流质量</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_nvidiaOpticalFlowQuality_Option_1" xml:space="preserve"><value>性能</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_nvidiaOpticalFlowQuality_Option_2" xml:space="preserve"><value>均衡（推荐）</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_nvidiaOpticalFlowQuality_Option_3" xml:space="preserve"><value>质量</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_nvidiaOpticalFlowQuality_Option_4" xml:space="preserve"><value>高质量（高开销）</value></data>
+  <data name="Overlay_EffectParameters_NotApplied" xml:space="preserve"><value>尚未生效（当前：{0}）</value></data>
+  <data name="Overlay_EffectParameters_ApplyPending" xml:space="preserve"><value>{0} 项修改尚未生效</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_nvidiaOpticalFlowQuality_Option_5" xml:space="preserve"><value>最高质量（极高开销）</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_nvidiaOpticalFlowQuality_Option_5" xml:space="preserve"><value>最高质量（极高开销）</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_nvidiaOpticalFlowQuality_Option_5" xml:space="preserve"><value>最高质量（极高开销）</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_nvidiaOpticalFlowQuality_Option_5" xml:space="preserve"><value>最高质量（极高开销）</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_nvidiaOpticalFlowQuality_Option_5" xml:space="preserve"><value>最高质量（极高开销）</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_nvidiaOpticalFlowQuality_Option_5" xml:space="preserve"><value>最高质量（极高开销）</value></data>
+  <data name="Motion_Nvidia_5" xml:space="preserve"><value>最高质量</value></data>
+  <data name="Home_FrameSync.Header" xml:space="preserve"><value>帧同步</value></data>
+  <data name="Home_FrameSync.Description" xml:space="preserve"><value>自动保存，重新启用缩放后生效。</value></data>
+  <data name="Home_FrameSync_FrontEdgeSync.Header" xml:space="preserve"><value>启用帧同步</value></data>
+  <data name="Home_FrameSync_FrontEdgeSync.Description" xml:space="preserve"><value>控制 Magpie 的帧处理节奏。</value></data>
+  <data name="Home_FrameSync_Target.Header" xml:space="preserve"><value>目标基础帧率（FPS）</value></data>
+  <data name="Home_FrameSync_Target.Description" xml:space="preserve"><value>0 为自动，补帧时按倍率折算。请同步设置源应用帧率上限。</value></data>
+  <data name="Home_FrameSync_Target_Input.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>目标帧率</value></data>
+  <data name="Home_FrameSync_VRR.Header" xml:space="preserve"><value>VRR（可变刷新率）</value></data>
+  <data name="Home_FrameSync_VRR.Description" xml:space="preserve"><value>允许兼容 FreeSync / G-SYNC 的呈现。需同时在显示器和驱动中开启 VRR；未生效时可能出现撕裂。</value></data>
+  <data name="EffectParam_FrameRate_Filter_frameRateMode_Label" xml:space="preserve"><value>帧率模式</value></data>
+  <data name="EffectParam_FrameRate_Filter_frameRateMode_Option_0" xml:space="preserve"><value>跟随帧同步目标</value></data>
+  <data name="EffectParam_FrameRate_Filter_frameRateMode_Option_1" xml:space="preserve"><value>自定义</value></data>
+  <data name="Overlay_EffectParameters_AutoRestart" xml:space="preserve"><value>自动重启</value></data>
+  <data name="Overlay_EffectParameters_Reason_AutoRestart" xml:space="preserve"><value>编辑结束后自动停用效果组，等待 500 毫秒再重新启用，以重建 DLSSNR 历史。</value></data>
+  <data name="Overlay_FrameSync_Title" xml:space="preserve">
+    <value>帧同步</value>
+  </data>
+  <data name="Overlay_FrameSync_Target" xml:space="preserve">
+    <value>目标基础帧率（FPS）</value>
+  </data>
+  <data name="Overlay_FrameSync_Help" xml:space="preserve">
+    <value>修改自动保存，点击应用并重新启用后生效。0 为自动；源应用的帧率上限需单独设置。</value>
+  </data>
+  <data name="Message_NgxRestartRequired" xml:space="preserve">
+    <value>NVIDIA 效果运行异常。请从托盘完全退出 Magpie 并重新打开，再启用 DLSSNR 或 DLSS 补帧。</value>
+  </data>
+  <data name="Message_CaptureFailed_TryGraphicsCapture" xml:space="preserve"><value>请还原目标窗口，再打开下方配置，将“捕获方式”改为 Graphics Capture 后重新启用效果组。仍失败时，请复制详情并附上日志。</value></data>
+  <data name="Message_CaptureFailed_AlreadyGraphicsCapture" xml:space="preserve"><value>当前已使用 Graphics Capture。请还原目标窗口并重新启用效果组；若仍失败，请在详情中核对失败步骤和错误码，复制详情并附上日志。</value></data>
+  <data name="Message_CreateFenceFailed_SingleAdapter" xml:space="preserve"><value>显示卡未能创建同步资源。请更新该显示卡驱动，重新启动 Magpie 后重试；若仍失败，请复制详情并附上日志。</value></data>
+  <data name="Message_ScreenshotIntermediateEncodeFailed" xml:space="preserve"><value>此中间结果暂未能保存。请直接点击工具栏“截图”，尝试保存当前画面；当前画面会自动保存为 PNG。若仍失败，请复制详情并附上日志。</value></data>
+  <data name="Message_ConfigurationRecoveredBackup" xml:space="preserve"><value>配置文件出现损坏，已载入备份。请检查效果组和程序配置是否符合预期；损坏原件已保留，具体路径见详情，可点击“打开配置目录”查看。</value></data>
+  <data name="Message_ConfigurationRecoveredPartial" xml:space="preserve"><value>配置文件出现损坏，已载入能够恢复的项目，其余设置使用默认值。请检查效果组和快捷键；损坏原件已保留，具体路径见详情，可点击“打开配置目录”查看。</value></data>
+  <data name="ErrorAdvice_ReadAccessDenied" xml:space="preserve"><value>Windows 拒绝读取此文件。请在文件资源管理器中确认当前账户有读取权限，并确认文件已下载到本机后重新选择。</value></data>
+  <data name="ErrorAdvice_OperationAccessDenied" xml:space="preserve"><value>Windows 拒绝了此步骤的访问请求。请按上方提示重试，并在仍失败时提供下方操作步骤和错误码。</value></data>
+  <data name="ErrorDetails_Profile" xml:space="preserve"><value>配置</value></data>
+  <data name="ErrorDetails_Group" xml:space="preserve"><value>效果组</value></data>
+  <data name="ErrorDetails_Window" xml:space="preserve"><value>目标窗口</value></data>
+  <data name="ErrorDetails_Capture" xml:space="preserve"><value>捕获方式</value></data>
+  <data name="ErrorDetails_RetrySave" xml:space="preserve"><value>重试保存</value></data>
+  <data name="ErrorDetails_OpenProfile" xml:space="preserve"><value>打开此配置</value></data>
+  <data name="ErrorDetails_OpenEffects" xml:space="preserve"><value>打开效果组</value></data>
+  <data name="ErrorDetails_OpenConfigDirectory" xml:space="preserve"><value>打开配置目录</value></data>
+  <data name="ErrorDetails_OpenConfigFailed" xml:space="preserve"><value>目录暂未能打开。请把配置路径复制到文件资源管理器，查看其所在目录。</value></data>
+  <data name="ErrorDetails_ProfileChanged" xml:space="preserve"><value>该配置已被删除、改名或更换匹配规则。请关闭详情，在左侧配置列表中选择要调整的配置。</value></data>
+  <data name="ErrorDetails_Saving" xml:space="preserve"><value>正在保存当前修改…</value></data>
+  <data name="ErrorDetails_SaveSucceeded" xml:space="preserve"><value>本次修改已保存到磁盘。</value></data>
+  <data name="ErrorDetails_SaveStillFailed" xml:space="preserve"><value>保存仍未完成。请关闭并重新打开详情，查看最新原因；处理后可再次点击“重试保存”。</value></data>
+  <data name="ErrorDetails_PreviousRun" xml:space="preserve"><value>上次运行：{}</value></data>
+  <data name="ErrorDetails_PreviousRunHint" xml:space="preserve"><value>以下是上次运行保留的诊断。旧会话的未保存修改不会随此记录恢复；请先核对当前状态，再参考下方步骤。日志仍保留在所列目录。</value></data>
+  <data name="ErrorDetails_SaveFailedToast" xml:space="preserve"><value>修改尚未保存，请保持 Magpie 打开并到主页重试保存。</value></data>
+  <data name="ErrorDetails_RecoveryToast" xml:space="preserve"><value>已从损坏配置中恢复设置，请到主页检查恢复说明。</value></data>
+  <data name="Home_RecentIssue_Reopen.Content" xml:space="preserve"><value>查看最近问题</value></data>
+  <data name="AppSettings_ReadFailedGuidance" xml:space="preserve"><value>请在文件资源管理器中打开下方位置，确认磁盘已连接、文件已下载到本机且当前账户可以读取，然后重新启动 Magpie。原配置未被修改。</value></data>
+  <data name="AppSettings_ReadAccessDenied" xml:space="preserve"><value>请在文件资源管理器中打开下方位置，确认当前账户具有该文件的读取权限，然后重新启动 Magpie。原配置未被修改。</value></data>
+  <data name="AppSettings_CopyFailed" xml:space="preserve"><value>暂未能复制。请记录下方路径和错误码，处理后重新启动 Magpie。</value></data>
+  <data name="AppSettings_ConfigLocationFailed" xml:space="preserve"><value>暂未能访问配置位置。请确认配置所在磁盘已连接、当前账户有访问和写入权限，然后重新启动 Magpie。相关位置：</value></data>
+  <data name="AppSettings_BackupFailed" xml:space="preserve"><value>暂未能保留配置原件。请检查下方备份路径的写入权限和磁盘空间，再重新启动 Magpie；原配置仍可用于恢复。备份目标：</value></data>
+  <data name="Message_ConfigurationRepaired" xml:space="preserve"><value>已修复旧配置中的失效设置，其余设置已保留。请检查效果组和程序配置后重新尝试缩放；详情列出了修复项目，可点击“打开配置目录”查看原件备份。</value></data>
+  <data name="Message_ConfigurationResetDefaults" xml:space="preserve"><value>原配置及备份均无法恢复，已生成默认设置。可以重新尝试缩放，再按需设置效果组和快捷键；点击“打开配置目录”可查看保留的原配置。</value></data>
+  <data name="AppSettings_RecoveredGroup" xml:space="preserve"><value>已恢复的效果组</value></data>
+  <data name="AppSettings_RecoveryRecordFailed" xml:space="preserve"><value>已找到这份配置的恢复记录，但记录暂不可用。请打开下方目录，从保留的原件或其他备份中选择可用配置，替换 config.json 后重新启动 Magpie。</value></data>
+  <data name="AppSettings_RecoveryWriteFailed" xml:space="preserve"><value>暂未能完成配置恢复。请检查配置目录的写入权限、文件占用及磁盘空间，再重新启动 Magpie；已保存的恢复结果会继续使用。相关位置：</value></data>
+  <data name="Message_CaptureMethodUnavailable" xml:space="preserve"><value>当前系统会话无法使用所选捕获方式。请打开下方配置，改选另一种捕获方式后重试（可先尝试 Graphics Capture，若已选用则尝试 GDI）。仍失败时，请复制详情并附上日志。</value></data>
+  <data name="Overlay_EffectParameters_Applying" xml:space="preserve">
+    <value>正在应用参数…</value>
+  </data>
+  <data name="Overlay_EffectParameters_ApplyRolledBack" xml:space="preserve">
+    <value>已恢复原档位。请尝试较低档位；仍失败时提供日志。</value>
+  </data>
+  <data name="EffectParam_RTXVideo_RTXVideo_Denoise_strength_Label" xml:space="preserve">
+    <value>强度</value>
+  </data>
+  <data name="EffectParam_RTXVideo_RTXVideo_Denoise_strength_Option_0" xml:space="preserve">
+    <value>低</value>
+  </data>
+  <data name="EffectParam_RTXVideo_RTXVideo_Denoise_strength_Option_1" xml:space="preserve">
+    <value>中</value>
+  </data>
+  <data name="EffectParam_RTXVideo_RTXVideo_Denoise_strength_Option_2" xml:space="preserve">
+    <value>高</value>
+  </data>
+  <data name="EffectParam_RTXVideo_RTXVideo_Denoise_strength_Option_3" xml:space="preserve">
+    <value>极高</value>
+  </data>
+  <data name="EffectParam_RTXVideo_RTXVideo_VSR_strength_Label" xml:space="preserve">
+    <value>强度</value>
+  </data>
+  <data name="EffectParam_RTXVideo_RTXVideo_VSR_strength_Option_0" xml:space="preserve">
+    <value>低</value>
+  </data>
+  <data name="EffectParam_RTXVideo_RTXVideo_VSR_strength_Option_1" xml:space="preserve">
+    <value>中</value>
+  </data>
+  <data name="EffectParam_RTXVideo_RTXVideo_VSR_strength_Option_2" xml:space="preserve">
+    <value>高</value>
+  </data>
+  <data name="EffectParam_RTXVideo_RTXVideo_VSR_strength_Option_3" xml:space="preserve">
+    <value>极高</value>
+  </data>
+  <data name="Message_HdrComponentExpectedHdr" xml:space="preserve"><value>HDR → SDR 前面的画面已经是 SDR。请移除重复的 HDR → SDR，或把它移到产生 HDR 的组件之后。</value></data>
+  <data name="Message_HdrComponentExpectedSdr" xml:space="preserve"><value>SDR → HDR 或 RTX Video HDR 需要 SDR 输入。请移除前一个 HDR 扩展组件，或在本项之前添加 HDR → SDR。</value></data>
+  <data name="Message_HdrComponentMissingPair" xml:space="preserve"><value>当前没有可恢复的兼容映射。请在前面添加 HDR → SDR 并选择兼容配对，或将 SDR → HDR 改为自动／原生 SDR 映射。</value></data>
+  <data name="Message_HdrComponentInvalidParameters" xml:space="preserve"><value>HDR 组件参数超出可用范围。请打开效果组参数，恢复该组件的默认值后重试；仍有问题时复制详情。</value></data>
+  <data name="Message_HdrCaptureRequired" xml:space="preserve"><value>HDR → SDR 需要保留 HDR 源画面。请在 Windows 显示设置中开启源应用所在屏幕的 HDR；处理原生 SDR 时可直接使用 SDR 效果，再按需添加 SDR → HDR。</value></data>
+  <data name="Message_HdrDisplayRequired" xml:space="preserve"><value>效果组输出 HDR。请在 Windows 显示设置中开启目标屏幕的 HDR，或在效果组末尾使用 HDR → SDR 的显示映射。跨屏输出时，各目标屏幕都需要开启 HDR。</value></data>
+  <data name="Message_HdrCaptureMethodRequired" xml:space="preserve"><value>请在当前配置中将捕获方式改为 Graphics Capture，再尝试 HDR → SDR。该路径可以保留 HDR 捕获的亮度范围。</value></data>
+  <data name="Message_RtxHdrUnavailable" xml:space="preserve"><value>RTX Video HDR 未能完成处理。请更新 NVIDIA 驱动，确认使用 RTX 20 系或更新显卡，并检查本程序目录中的 Magpie.RtxVideo.dll 与 nvngx_truehdr.dll 是否完整。可先将本项替换为 SDR → HDR 的原生 SDR 映射；仍失败时完全退出 Magpie，重新打开并复制详情。</value></data>
+  <data name="EffectParam_Color_HDR_to_SDR_mode_Label" xml:space="preserve"><value>转换模式</value></data>
+  <data name="EffectParam_Color_HDR_to_SDR_mode_Option_0" xml:space="preserve"><value>兼容配对</value></data>
+  <data name="EffectParam_Color_HDR_to_SDR_mode_Option_1" xml:space="preserve"><value>SDR 显示映射</value></data>
+  <data name="EffectParam_Color_HDR_to_SDR_whiteNits_Label" xml:space="preserve"><value>SDR 白点（尼特）</value></data>
+  <data name="EffectParam_Color_HDR_to_SDR_peakNits_Label" xml:space="preserve"><value>HDR 峰值（尼特）</value></data>
+  <data name="EffectParam_Color_HDR_to_SDR_exposure_Label" xml:space="preserve"><value>曝光</value></data>
+  <data name="EffectParam_Color_HDR_to_SDR_shoulder_Label" xml:space="preserve"><value>高光压缩</value></data>
+  <data name="EffectParam_Color_SDR_to_HDR_mode_Label" xml:space="preserve"><value>转换模式</value></data>
+  <data name="EffectParam_Color_SDR_to_HDR_mode_Option_0" xml:space="preserve"><value>自动：配对恢复／SDR 白点映射</value></data>
+  <data name="EffectParam_Color_SDR_to_HDR_mode_Option_1" xml:space="preserve"><value>原生 SDR 白点映射</value></data>
+  <data name="EffectParam_Color_SDR_to_HDR_mode_Option_2" xml:space="preserve"><value>恢复兼容配对</value></data>
+  <data name="EffectParam_Color_SDR_to_HDR_whiteNits_Label" xml:space="preserve"><value>原生 SDR 白点（尼特）</value></data>
+  <data name="EffectParam_Color_SDR_to_HDR_exposure_Label" xml:space="preserve"><value>原生 SDR 曝光</value></data>
+  <data name="EffectParam_RTXVideo_RTXVideo_HDR_contrast_Label" xml:space="preserve"><value>对比度</value></data>
+  <data name="EffectParam_RTXVideo_RTXVideo_HDR_saturation_Label" xml:space="preserve"><value>饱和度</value></data>
+  <data name="EffectParam_RTXVideo_RTXVideo_HDR_middleGray_Label" xml:space="preserve"><value>中间灰</value></data>
+  <data name="EffectParam_RTXVideo_RTXVideo_HDR_peakNits_Label" xml:space="preserve"><value>峰值亮度（尼特）</value></data>
+  <data name="FrameSync_Mode_FrontEdge.Content" xml:space="preserve"><value>Front Edge Sync</value></data>
+  <data name="FrameSync_Mode_Async.Content" xml:space="preserve"><value>Async</value></data>
+  <data name="FrameSync_Mode_Reflex.Content" xml:space="preserve"><value>NVIDIA Reflex</value></data>
+  <data name="Home_FrameSync_Mode.Header" xml:space="preserve"><value>同步模式</value></data>
+  <data name="Home_FrameSync_Mode.Description" xml:space="preserve"><value>Front Edge：提交节奏；Async：捕获间隔；Reflex：驱动基础限帧，包含 DLSS FG。</value></data>
+  <data name="Overlay_FrameSync_Enable" xml:space="preserve"><value>启用帧同步</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_amdOpticalFlowMode_Label" xml:space="preserve"><value>光流质量</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_amdOpticalFlowMode_Option_0" xml:space="preserve"><value>性能</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_amdOpticalFlowMode_Option_1" xml:space="preserve"><value>质量</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_nvidiaOpticalFlowQuality_Label" xml:space="preserve"><value>光流质量</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_nvidiaOpticalFlowQuality_Option_1" xml:space="preserve"><value>性能</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_nvidiaOpticalFlowQuality_Option_2" xml:space="preserve"><value>均衡</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_nvidiaOpticalFlowQuality_Option_3" xml:space="preserve"><value>质量</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_nvidiaOpticalFlowQuality_Option_4" xml:space="preserve"><value>高质量（高开销）</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_opticalFlowMethod_Label" xml:space="preserve"><value>光流方法</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_opticalFlowMethod_Option_0" xml:space="preserve"><value>无</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_opticalFlowMethod_Option_1" xml:space="preserve"><value>AMD 光流</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_opticalFlowMethod_Option_2" xml:space="preserve"><value>NVIDIA 光流</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_nvidiaOpticalFlowQuality_Option_5" xml:space="preserve"><value>最高质量（极高开销）</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_amdOpticalFlowMode_Label" xml:space="preserve"><value>光流质量</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_amdOpticalFlowMode_Option_0" xml:space="preserve"><value>性能</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_amdOpticalFlowMode_Option_1" xml:space="preserve"><value>质量</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_nvidiaOpticalFlowQuality_Label" xml:space="preserve"><value>光流质量</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_nvidiaOpticalFlowQuality_Option_1" xml:space="preserve"><value>性能</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_nvidiaOpticalFlowQuality_Option_2" xml:space="preserve"><value>均衡（推荐）</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_nvidiaOpticalFlowQuality_Option_3" xml:space="preserve"><value>质量</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_nvidiaOpticalFlowQuality_Option_4" xml:space="preserve"><value>高质量（高开销）</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_opticalFlowMethod_Label" xml:space="preserve"><value>光流方法</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_opticalFlowMethod_Option_0" xml:space="preserve"><value>无</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_opticalFlowMethod_Option_1" xml:space="preserve"><value>AMD 光流</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_opticalFlowMethod_Option_2" xml:space="preserve"><value>NVIDIA 光流</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_nvidiaOpticalFlowQuality_Option_5" xml:space="preserve"><value>最高质量（极高开销）</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_amdOpticalFlowMode_Label" xml:space="preserve"><value>光流质量</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_amdOpticalFlowMode_Option_0" xml:space="preserve"><value>性能</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_amdOpticalFlowMode_Option_1" xml:space="preserve"><value>质量</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_nvidiaOpticalFlowQuality_Label" xml:space="preserve"><value>光流质量</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_nvidiaOpticalFlowQuality_Option_1" xml:space="preserve"><value>性能</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_nvidiaOpticalFlowQuality_Option_2" xml:space="preserve"><value>均衡（推荐）</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_nvidiaOpticalFlowQuality_Option_3" xml:space="preserve"><value>质量</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_nvidiaOpticalFlowQuality_Option_4" xml:space="preserve"><value>高质量（高开销）</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_opticalFlowMethod_Label" xml:space="preserve"><value>光流方法</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_opticalFlowMethod_Option_0" xml:space="preserve"><value>无</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_opticalFlowMethod_Option_1" xml:space="preserve"><value>AMD 光流</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_opticalFlowMethod_Option_2" xml:space="preserve"><value>NVIDIA 光流</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_nvidiaOpticalFlowQuality_Option_5" xml:space="preserve"><value>最高质量（极高开销）</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_amdOpticalFlowMode_Label" xml:space="preserve"><value>光流质量</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_amdOpticalFlowMode_Option_0" xml:space="preserve"><value>性能</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_amdOpticalFlowMode_Option_1" xml:space="preserve"><value>质量</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_nvidiaOpticalFlowQuality_Label" xml:space="preserve"><value>光流质量</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_nvidiaOpticalFlowQuality_Option_1" xml:space="preserve"><value>性能</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_nvidiaOpticalFlowQuality_Option_2" xml:space="preserve"><value>均衡（推荐）</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_nvidiaOpticalFlowQuality_Option_3" xml:space="preserve"><value>质量</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_nvidiaOpticalFlowQuality_Option_4" xml:space="preserve"><value>高质量（高开销）</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_opticalFlowMethod_Label" xml:space="preserve"><value>光流方法</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_opticalFlowMethod_Option_0" xml:space="preserve"><value>无</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_opticalFlowMethod_Option_1" xml:space="preserve"><value>AMD 光流</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_opticalFlowMethod_Option_2" xml:space="preserve"><value>NVIDIA 光流</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_nvidiaOpticalFlowQuality_Option_5" xml:space="preserve"><value>最高质量（极高开销）</value></data>
+  <data name="ScalingModes_RecoveryInvalid_Name" xml:space="preserve"><value>失效效果器</value></data>
+  <data name="ScalingModes_RecoveryInvalid_Description" xml:space="preserve"><value>此项配置无法完整恢复。请移除此项，并重新添加所需效果器。</value></data>
+  <data name="ScalingModes_MissingEffect_Description" xml:space="preserve"><value>找不到对应效果文件。请恢复该文件，或移除此项并添加替代效果器。</value></data>
+  <data name="ScalingModes_NameRequired" xml:space="preserve"><value>请输入效果组名称。</value></data>
+  <data name="ScalingModes_NameAlreadyExists" xml:space="preserve"><value>名称已存在，请换一个名称；仅修改大小写或首尾空格不能区分效果组。</value></data>
+  <data name="ScalingModes_DuplicateNames.Title" xml:space="preserve"><value>请更新重名效果组</value></data>
+  <data name="ScalingModes_DuplicateNames.Message" xml:space="preserve"><value>旧配置中存在同名效果组，请使用铅笔按钮逐个修改名称；效果内容和关联配置已保留。</value></data>
+  <data name="ScalingModes_NameConflict.Message" xml:space="preserve"><value>此名称与其他效果组重复，请点击铅笔按钮修改名称。</value></data>
+  <data name="ScalingModes_ImportRenamed" xml:space="preserve"><value>效果组已全部导入，重复名称已自动添加序号；可使用铅笔按钮重新命名。</value></data>
+  <data name="Message_DuplicateScalingModeNames" xml:space="preserve"><value>旧配置中存在同名效果组，请打开“效果组”，使用铅笔按钮修改名称；全部效果组已保留。</value></data>
+  <data name="Overlay_Parameters_Edit" xml:space="preserve"><value>编辑</value></data>
+  <data name="Overlay_Parameters_Preview" xml:space="preserve"><value>预览</value></data>
+  <data name="Overlay_Parameters_InputHint" xml:space="preserve"><value>Ctrl+单击滑条输入数值。Esc：编辑→预览→关闭；点击预览面板继续编辑。面板开关快捷键：</value></data>
+  <data name="Overlay_Parameters_FocusFailed" xml:space="preserve"><value>请点击游戏窗口恢复控制</value></data>
+  <data name="Profile_Advanced_ParameterFocusSwitching.Header" xml:space="preserve"><value>参数调整焦点切换</value></data>
+  <data name="Profile_Advanced_ParameterFocusSwitching.Description" xml:space="preserve"><value>参数实时调整时启用焦点切换，但在部分窗口上运行时可能不稳定。</value></data>
+  <data name="Home_Advanced_StopEffectsOnTaskSwitch.Header" xml:space="preserve"><value>切屏时自动停用生效效果组</value></data>
+  <data name="Home_Advanced_StopEffectsOnTaskSwitch.Description" xml:space="preserve"><value>如果在使用 DLSSNR 时进行切屏，会让你感觉像吃了毒蘑菇，你可以尝试启用它。</value></data>
+  <data name="EffectPicker_CustomSummary" xml:space="preserve"><value>自定义效果器；请参考作者说明。</value></data>
+  <data name="EffectPicker_CustomDetails" xml:space="preserve"><value>此效果器尚无用途评审。请参考作者提供的用途、参数与组合说明。HDR 兼容性待验证。</value></data>
+  <data name="EffectPicker_All" xml:space="preserve"><value>全部</value></data>
+  <data name="EffectPicker_AllDescription" xml:space="preserve"><value>查看已安装效果器的用途、适用场景和组合建议。</value></data>
+  <data name="EffectPicker_DetailScrollHint" xml:space="preserve"><value>Ctrl + 滚轮：滚动说明</value></data>
+  <data name="EffectPicker_NameSeparator" xml:space="preserve"><value>，</value></data>
+  <data name="EffectPicker_EffectCountSuffix" xml:space="preserve"><value> 个效果器</value></data>
+  <data name="EffectPicker_GettingStarted" xml:space="preserve"><value>入门</value></data>
+  <data name="EffectPicker_GettingStartedDescription" xml:space="preserve"><value>按适用场景选择容易上手的效果器，先从一个开始比较画面。</value></data>
+  <data name="EffectPicker_Advanced" xml:space="preserve"><value>进阶</value></data>
+  <data name="EffectPicker_AdvancedDescription" xml:space="preserve"><value>视频超分、补帧、AI 画面重塑与帧率调节，按显卡条件和目标画面选择。</value></data>
+  <data name="EffectPicker_CustomCategory" xml:space="preserve"><value>自定义／未归类</value></data>
+  <data name="EffectPicker_CustomCategoryDescription" xml:space="preserve"><value>已安装但尚无用途说明的效果器。请参考作者说明选择参数和组合位置。</value></data>
+  <data name="EffectPicker_SearchPlaceholder" xml:space="preserve"><value>搜索效果器、用途或关键词……</value></data>
+  <data name="EffectPicker_SearchAutomationName" xml:space="preserve"><value>搜索全部效果器</value></data>
+  <data name="EffectPicker_JumpTo" xml:space="preserve"><value>定位 </value></data>
+  <data name="EffectPicker_AlphabetIndexAutomationName" xml:space="preserve"><value>按首字母定位效果器</value></data>
+  <data name="EffectPicker_Selected" xml:space="preserve"><value>已选中</value></data>
+  <data name="EffectPicker_ChildSelected" xml:space="preserve"><value>已选中其子分组</value></data>
+  <data name="EffectPicker_Expanded" xml:space="preserve"><value>已展开</value></data>
+  <data name="EffectPicker_Collapsed" xml:space="preserve"><value>已收起</value></data>
+  <data name="EffectPicker_SearchAllCategories" xml:space="preserve"><value>搜索全部分类</value></data>
+  <data name="EffectPicker_NoMatches" xml:space="preserve"><value>没有匹配的效果器</value></data>
+  <data name="EffectPicker_NoMatchesDescription" xml:space="preserve"><value>尝试缩短关键词、搜索算法家族名，或选择“全部”查看已安装效果器。</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_multiPass_Label" xml:space="preserve"><value>Multi Pass</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_Group_DLSSNR____Pass_1" xml:space="preserve"><value>DLSSNR · Pass 1</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_Group_DLSSNR____Pass_2" xml:space="preserve"><value>DLSSNR · Pass 2</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_Group_DLSSNR____Pass_3" xml:space="preserve"><value>DLSSNR · Pass 3</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_antiFlicker_Label" xml:space="preserve"><value>抗闪烁</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_antiFlicker_Option_0" xml:space="preserve"><value>无</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_antiFlicker_Option_1" xml:space="preserve"><value>静态累积</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_antiFlicker_Option_2" xml:space="preserve"><value>光流累积</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_antiFlicker_Option_3" xml:space="preserve"><value>光流累积+</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_antiFlicker_Option_4" xml:space="preserve"><value>低频时域重建</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_duplicateFrameFiltering_Label" xml:space="preserve"><value>重复帧过滤</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_duplicateFrameFiltering_Label" xml:space="preserve"><value>重复帧过滤</value></data>
+</root>

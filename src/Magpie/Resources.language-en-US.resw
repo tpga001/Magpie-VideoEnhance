@@ -1,0 +1,1683 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Microsoft ResX Schema
+
+    Version 2.0
+
+    The primary goals of this format is to allow a simple XML format
+    that is mostly human readable. The generation and parsing of the
+    various data types are done through the TypeConverter classes
+    associated with the data types.
+
+    Example:
+
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+
+    There are any number of "resheader" rows that contain simple
+    name/value pairs.
+
+    Each data row contains a name, and value. The row also contains a
+    type or mimetype. Type corresponds to a .NET class that support
+    text/value conversion through the TypeConverter architecture.
+    Classes that don't support this are serialized and stored with the
+    mimetype set.
+
+    The mimetype is used for serialized objects, and tells the
+    ResXResourceReader how to depersist the object. This is currently not
+    extensible. For a given mimetype the value must be set accordingly:
+
+    Note - application/x-microsoft.net.object.binary.base64 is the format
+    that the ResXResourceWriter will generate, however the reader can
+    read any of the formats listed below.
+
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About_PageFrame.Title" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Home_Activation.Header" xml:space="preserve">
+    <value>Activation</value>
+  </data>
+  <data name="Home_PageFrame.Title" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Home_Activation_Timer.Header" xml:space="preserve">
+    <value>Delayed activation</value>
+  </data>
+  <data name="Home_Activation_Timer_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Home_Activation_Timer_Delay.Header" xml:space="preserve">
+    <value>Delay in seconds</value>
+  </data>
+  <data name="ShortcutDialog_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ShortcutDialog_Description.Text" xml:space="preserve">
+    <value>Press a combination of keys to change this shortcut</value>
+  </data>
+  <data name="ShortcutDialog_InUse" xml:space="preserve">
+    <value>This shortcut is already used by Windows or another app. Close the conflicting app or choose another shortcut.</value>
+  </data>
+  <data name="ShortcutDialog_InvalidShortcut" xml:space="preserve">
+    <value>A shortcut must start with the Windows key, Ctrl, Alt, or Shift. Enter another shortcut.</value>
+  </data>
+  <data name="ShortcutDialog_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ShortcutDialog_Tip.Text" xml:space="preserve">
+    <value>Only shortcuts that starts with Windows key, Ctrl, Alt or Shift are valid.</value>
+  </data>
+  <data name="Root_About.Content" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Root_Defaults.Content" xml:space="preserve">
+    <value>Defaults</value>
+  </data>
+  <data name="Root_Home.Content" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Root_NewProfile.Content" xml:space="preserve">
+    <value>New profile</value>
+  </data>
+  <data name="Root_NewProfileFlyout_ComboBox.PlaceholderText" xml:space="preserve">
+    <value>Select a window</value>
+  </data>
+  <data name="Root_NewProfileFlyout_CopyFrom.Text" xml:space="preserve">
+    <value>Copy from</value>
+  </data>
+  <data name="Root_NewProfileFlyout_Create.Content" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="Root_NewProfileFlyout_Name.Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Root_NewProfileFlyout_NoCandidateWindow.Text" xml:space="preserve">
+    <value>Open a new window to create a profile</value>
+  </data>
+  <data name="Root_NewProfileFlyout_Title.Text" xml:space="preserve">
+    <value>New profile</value>
+  </data>
+  <data name="Root_Profiles.Content" xml:space="preserve">
+    <value>Profiles</value>
+  </data>
+  <data name="Root_ScalingModes.Content" xml:space="preserve">
+    <value>Effect groups</value>
+  </data>
+  <data name="ScalingModes_PageFrame.Title" xml:space="preserve">
+    <value>Effect groups</value>
+  </data>
+  <data name="Home_Advanced.Header" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="Settings_General.Header" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Settings_General_Language.Header" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Settings_General_Language_System" xml:space="preserve">
+    <value>Windows default</value>
+  </data>
+  <data name="Settings_General_PortableMode.Header" xml:space="preserve">
+    <value>Portable mode</value>
+  </data>
+  <data name="Settings_General_PortableMode_Locate.Content" xml:space="preserve">
+    <value>Open configuration file location</value>
+  </data>
+  <data name="Settings_Launch_RunAtStartup.Header" xml:space="preserve">
+    <value>Run at startup</value>
+  </data>
+  <data name="Settings_General_ShowNotifyIcon.Description" xml:space="preserve">
+    <value>Magpie will continue to run in the background after the main window is closed</value>
+  </data>
+  <data name="Settings_General_ShowNotifyIcon.Header" xml:space="preserve">
+    <value>Display the app on the system tray</value>
+  </data>
+  <data name="Settings_General_Theme.Header" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="Settings_General_Theme_Dark.Content" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="Settings_General_Theme_System.Content" xml:space="preserve">
+    <value>Windows default</value>
+  </data>
+  <data name="Settings_General_Theme_Light.Content" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="ToggleSwitch.OffContent" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="ToggleSwitch.OnContent" xml:space="preserve">
+    <value>On</value>
+  </data>
+  <data name="Settings_Launch.Header" xml:space="preserve">
+    <value>Launch</value>
+  </data>
+  <data name="ScalingModes_General_Export.Text" xml:space="preserve">
+    <value>Export configuration</value>
+  </data>
+  <data name="ScalingModes_General_Import.Text" xml:space="preserve">
+    <value>Import configuration</value>
+  </data>
+  <data name="ScalingModes_General_MoreOptions.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>More options</value>
+  </data>
+  <data name="ScalingModes_General_Reset.Text" xml:space="preserve">
+    <value>Reset configuration</value>
+  </data>
+  <data name="ScalingModes_ResetDialog_Title" xml:space="preserve">
+    <value>Reset effect group configuration?</value>
+  </data>
+  <data name="ScalingModes_ResetDialog_Content" xml:space="preserve">
+    <value>This deletes all current effect groups and restores the defaults. Custom application profiles will use the global default effect group. This action cannot be undone.</value>
+  </data>
+  <data name="ScalingModes_ResetDialog_Confirm" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="ScalingModes_ResetDialog_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Settings_Launch_AlwaysRunAsAdmin.Description" xml:space="preserve">
+    <value>You need to run as administrator to use this setting</value>
+  </data>
+  <data name="Settings_Launch_AlwaysRunAsAdmin.Header" xml:space="preserve">
+    <value>Always run as administrator</value>
+  </data>
+  <data name="Home_UpdateCard_AutoCheckForUpdates.Content" xml:space="preserve">
+    <value>Check for updates periodically</value>
+  </data>
+  <data name="Home_UpdateCard_DownloadAndInstall.Content" xml:space="preserve">
+    <value>Download and install</value>
+  </data>
+  <data name="Home_UpdateCard_ReleaseNotes.Content" xml:space="preserve">
+    <value>View release page</value>
+  </data>
+  <data name="Home_UpdateCard_RemindMeLater.Content" xml:space="preserve">
+    <value>Remind me later</value>
+  </data>
+  <data name="Home_UpdateCard_Title" xml:space="preserve">
+    <value>{} is available</value>
+  </data>
+  <data name="About_OtherLinks.Header" xml:space="preserve">
+    <value>Other links</value>
+  </data>
+  <data name="About_OtherLinks_ContributionGuidelines.Text" xml:space="preserve">
+    <value>Contribution guidelines</value>
+  </data>
+  <data name="About_OtherLinks_FAQ.Text" xml:space="preserve">
+    <value>FAQ</value>
+  </data>
+  <data name="About_OtherLinks_License.Text" xml:space="preserve">
+    <value>License</value>
+  </data>
+  <data name="About_OtherLinks_Repository.Text" xml:space="preserve">
+    <value>Github repository</value>
+  </data>
+  <data name="ScalingModes_Parameters.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Parameters</value>
+  </data>
+  <data name="ScalingModes_MoreOptions.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>More options</value>
+  </data>
+  <data name="ScalingModes_MoreOptionsFlyout_Delete.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ScalingModes_MoreOptionsFlyout_MoveDown.Text" xml:space="preserve">
+    <value>Move down</value>
+  </data>
+  <data name="ScalingModes_MoreOptionsFlyout_MoveUp.Text" xml:space="preserve">
+    <value>Move up</value>
+  </data>
+  <data name="ScalingModes_Rename.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="ScalingModes_Duplicate.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Duplicate</value>
+  </data>
+  <data name="ScalingModes_DuplicateSuffix" xml:space="preserve">
+    <value> - Copy</value>
+  </data>
+  <data name="ScalingModes_DragHandle.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Drag to reorder</value>
+  </data>
+  <data name="ScalingModes_RenameFlyout_OK.Content" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="ScalingModes_RenameFlyout_Title.Text" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="ScalingModes_AddEffect.Text" xml:space="preserve">
+    <value>Add effect</value>
+  </data>
+  <data name="ScalingModes_Delete.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ScalingModes_DeleteFlyout_Delete.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ScalingModes_DeleteFlyout_Description.Text" xml:space="preserve">
+    <value>It is being used by the following profiles:</value>
+  </data>
+  <data name="ScalingModes_DeleteFlyout_Title.Text" xml:space="preserve">
+    <value>Are you sure you want to delete this effect group?</value>
+  </data>
+  <data name="ScalingModes_DragNotSupported.Text" xml:space="preserve">
+    <value>Drag and drop is not supported when running as administrator</value>
+  </data>
+  <data name="ScalingModes_DragToReorder.Text" xml:space="preserve">
+    <value>Drag to reorder</value>
+  </data>
+  <data name="ScalingModes_MoveDown.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Move down</value>
+  </data>
+  <data name="ScalingModes_MoveUp.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Move up</value>
+  </data>
+  <data name="ScalingModes_NewScalingMode.Text" xml:space="preserve">
+    <value>New effect group</value>
+  </data>
+  <data name="ScalingModes_NewScalingModeFlyout_Title.Text" xml:space="preserve">
+    <value>New effect group</value>
+  </data>
+  <data name="ScalingModes_Scale.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Scale</value>
+  </data>
+  <data name="ScalingModes_NewScalingModeFlyout_CopyFrom.Text" xml:space="preserve">
+    <value>Copy from</value>
+  </data>
+  <data name="ScalingModes_NewScalingModeFlyout_CopyFrom_None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="ScalingModes_NewScalingModeFlyout_Create.Content" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="ScalingModes_NewScalingModeFlyout_Name.Text" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_HeightFactor.Text" xml:space="preserve">
+    <value>Height (scale factor)</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_HeightPixels.Text" xml:space="preserve">
+    <value>Height (pixels)</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_WidthFactor.Text" xml:space="preserve">
+    <value>Width (scale factor)</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_WidthPixels.Text" xml:space="preserve">
+    <value>Width (pixels)</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_Type.Text" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_Type_Absolute" xml:space="preserve">
+    <value>Absolute</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_Type_Absolute_Description" xml:space="preserve">
+    <value>Set the size after scaling</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_Type_Factor" xml:space="preserve">
+    <value>Factor</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_Type_Factor_Description" xml:space="preserve">
+    <value>Set the scale factor relative to the input image</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_Type_Fill" xml:space="preserve">
+    <value>Fill</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_Type_Fill_Description" xml:space="preserve">
+    <value>Fills screen, image may be stretched</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_Type_Fit" xml:space="preserve">
+    <value>Fit</value>
+  </data>
+  <data name="ScalingModes_ScaleFlyout_Type_Fit_Description" xml:space="preserve">
+    <value>Set the scale factor after filling the screen with proportional scaling</value>
+  </data>
+  <data name="Profile_General.Header" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Profile_General_3DGameMode.Header" xml:space="preserve">
+    <value>3D game mode</value>
+  </data>
+  <data name="Profile_General_HdrCompatibility.Header" xml:space="preserve">
+    <value>HDR compatibility</value>
+  </data>
+  <data name="Profile_General_AutoScale.Header" xml:space="preserve">
+    <value>Automatically enable effect group when in foreground</value>
+  </data>
+  <data name="Profile_General_CaptureMethod.Header" xml:space="preserve">
+    <value>Capture method</value>
+  </data>
+  <data name="Profile_General_Multimonitor.Header" xml:space="preserve">
+    <value>Preferred monitors</value>
+  </data>
+  <data name="Profile_General_Multimonitor_All.Content" xml:space="preserve">
+    <value>All monitors</value>
+  </data>
+  <data name="Profile_General_Multimonitor_Closest.Content" xml:space="preserve">
+    <value>Monitor closest to the source window</value>
+  </data>
+  <data name="Profile_General_Multimonitor_Intersected.Content" xml:space="preserve">
+    <value>Monitors intersected by the source window</value>
+  </data>
+  <data name="Profile_General_Multimonitor_Unavailable" xml:space="preserve">
+    <value>Disconnected</value>
+  </data>
+  <data name="Profile_General_ScalingMode.Header" xml:space="preserve">
+    <value>Effect group</value>
+  </data>
+  <data name="Profile_Launch.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Launch</value>
+  </data>
+  <data name="Profile_MoreOptions.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>More options</value>
+  </data>
+  <data name="Profile_MoreOptions_Delete.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Profile_MoreOptions_DeleteFlyout_Delete.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Profile_MoreOptions_DeleteFlyout_Title.Text" xml:space="preserve">
+    <value>Are you sure you want to delete this profile?</value>
+  </data>
+  <data name="Profile_MoreOptions_OpenProgramLocation.Text" xml:space="preserve">
+    <value>Open program location</value>
+  </data>
+  <data name="Profile_MoreOptions_Rename.Text" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="Profile_MoreOptions_RenameFlyout_OK.Content" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Profile_MoreOptions_RenameFlyout_Title.Text" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="Profile_MoreOptions_Reorder.Text" xml:space="preserve">
+    <value>Reorder</value>
+  </data>
+  <data name="Profile_MoreOptions_ReorderFlyout_MoveDown.Text" xml:space="preserve">
+    <value>Move down</value>
+  </data>
+  <data name="Profile_MoreOptions_ReorderFlyout_MoveUp.Text" xml:space="preserve">
+    <value>Move up</value>
+  </data>
+  <data name="Profile_MoreOptions_ReorderFlyout_Title.Text" xml:space="preserve">
+    <value>Reorder</value>
+  </data>
+  <data name="Profile_General_ScalingMode_None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Profile_Performance.Header" xml:space="preserve">
+    <value>Performance</value>
+  </data>
+  <data name="Profile_Performance_GraphicsCard.Header" xml:space="preserve">
+    <value>Graphics card</value>
+  </data>
+  <data name="About_Feedback.Header" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+  <data name="About_Feedback_Discussion.Header" xml:space="preserve">
+    <value>Discussions</value>
+  </data>
+  <data name="About_Feedback_ReportBug.Header" xml:space="preserve">
+    <value>Report a bug</value>
+  </data>
+  <data name="About_Feedback_RequestFeature.Header" xml:space="preserve">
+    <value>Request a feature</value>
+  </data>
+  <data name="About_Version_UpdateSettings_CheckForPreviewUpdates.Header" xml:space="preserve">
+    <value>Check for preview updates</value>
+  </data>
+  <data name="About_Version_UpdateSettings_AutoCheckForUpdates.Header" xml:space="preserve">
+    <value>Check for updates automatically</value>
+  </data>
+  <data name="About_Version_CheckForUpdates.Text" xml:space="preserve">
+    <value>Check for updates</value>
+  </data>
+  <data name="About_Version_CheckForUpdatesFailed.Title" xml:space="preserve">
+    <value>Failed to check for updates, please try again later</value>
+  </data>
+  <data name="About_Version_CheckingForUpdates.Text" xml:space="preserve">
+    <value>Checking for updates</value>
+  </data>
+  <data name="About_Version_UpdateCard_Cancel.Content" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="About_Version_UpdateCard_DownloadAndInstall.Content" xml:space="preserve">
+    <value>Download and install</value>
+  </data>
+  <data name="About_Version_UpdateCard_ReleaseNotes.Content" xml:space="preserve">
+    <value>View release page</value>
+  </data>
+  <data name="About_Version_UpdateCard_Retry.Content" xml:space="preserve">
+    <value>Try again</value>
+  </data>
+  <data name="About_Version_UpdateCard_Title" xml:space="preserve">
+    <value>{} is available</value>
+  </data>
+  <data name="About_Version_UpdateToDate.Title" xml:space="preserve">
+    <value>Magpie is up to date</value>
+  </data>
+  <data name="About_Version_UpdateToDate_DownloadFailed.Text" xml:space="preserve">
+    <value>Download failed. Check your network connection and free disk space, then retry or download manually from the release page.</value>
+  </data>
+  <data name="About_Version_UpdateToDate_Downloading.Text" xml:space="preserve">
+    <value>Downloading</value>
+  </data>
+  <data name="About_Version_UpdateToDate_Installing.Text" xml:space="preserve">
+    <value>Installing</value>
+  </data>
+  <data name="Profile_Advanced.Header" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="Profile_Advanced_DisableDirectFlip.Header" xml:space="preserve">
+    <value>Disable DirectFlip</value>
+  </data>
+  <data name="Profile_Cursor.Header" xml:space="preserve">
+    <value>Cursor</value>
+  </data>
+  <data name="Profile_Cursor_DrawCursor_AdjustCursorSpeed.Header" xml:space="preserve">
+    <value>Adjust cursor speed while the effect group is active</value>
+  </data>
+  <data name="Profile_Cursor_DrawCursor_Interpolation.Header" xml:space="preserve">
+    <value>Interpolation algorithm</value>
+  </data>
+  <data name="Profile_Cursor_DrawCursor_Interpolation_Bilinear.Content" xml:space="preserve">
+    <value>Bilinear</value>
+  </data>
+  <data name="Profile_Cursor_DrawCursor_Interpolation_NearestNeighbor.Content" xml:space="preserve">
+    <value>Nearest-neighbor</value>
+  </data>
+  <data name="Profile_Cursor_DrawCursor_ScaleFactor.Header" xml:space="preserve">
+    <value>Scale factor</value>
+  </data>
+  <data name="Profile_Cursor_DrawCursor_ScaleFactor_Custom.Content" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="Profile_Cursor_DrawCursor_ScaleFactor_NoScaling.Content" xml:space="preserve">
+    <value>No scaling</value>
+  </data>
+  <data name="Profile_Cursor_DrawCursor_ScaleFactor_SameAsSourceWindow.Content" xml:space="preserve">
+    <value>Same as source window</value>
+  </data>
+  <data name="Profile_General_CaptureMethod_Default" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="Profile_SourceWindow.Header" xml:space="preserve">
+    <value>Source window</value>
+  </data>
+  <data name="Profile_SourceWindow_CaptureTitleBar.Description" xml:space="preserve">
+    <value>Limited to Graphics Capture and Desktop Duplication</value>
+  </data>
+  <data name="Profile_SourceWindow_CaptureTitleBar.Header" xml:space="preserve">
+    <value>Capture title bar</value>
+  </data>
+  <data name="Profile_SourceWindow_CustomCropping.Header" xml:space="preserve">
+    <value>Custom cropping</value>
+  </data>
+  <data name="Profile_SourceWindow_CustomCropping_Bottom.Header" xml:space="preserve">
+    <value>Bottom</value>
+  </data>
+  <data name="Profile_SourceWindow_CustomCropping_Left.Header" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="Profile_SourceWindow_CustomCropping_Pixels.Text" xml:space="preserve">
+    <value>px</value>
+  </data>
+  <data name="Profile_SourceWindow_CustomCropping_Right.Header" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="Profile_SourceWindow_CustomCropping_Top.Header" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="Home_Advanced_InlineParams.Description" xml:space="preserve">
+    <value>Gives a small performance boost. However, effects must be recompiled each time their parameters are changed</value>
+  </data>
+  <data name="Home_Advanced_InlineParams.Header" xml:space="preserve">
+    <value>Make effect parameters inline</value>
+  </data>
+  <data name="Home_Advanced_SimulateExclusiveFullscreen.Description" xml:space="preserve">
+    <value>Applies only to fullscreen mode. Suppresses certain app notifications and pop-ups when enabled</value>
+  </data>
+  <data name="Home_Advanced_SimulateExclusiveFullscreen.Header" xml:space="preserve">
+    <value>Simulate exclusive fullscreen while the effect group is active</value>
+  </data>
+  <data name="AppSettings_Dialog_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions.Description" xml:space="preserve">
+    <value>These settings are for development use only</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions.Header" xml:space="preserve">
+    <value>Developer options</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_DebugMode.Content" xml:space="preserve">
+    <value>Debug mode</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_DisableEffectCache.Content" xml:space="preserve">
+    <value>Disable effect cache</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_SaveEffectSources.Content" xml:space="preserve">
+    <value>Save shader source code when parsing effects</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_WarningsAreErrors.Content" xml:space="preserve">
+    <value>Treat warnings as errors when compiling effects</value>
+  </data>
+  <data name="AppSettings_Dialog_Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="AppSettings_ErrorDialog_ConfigLocation" xml:space="preserve">
+    <value>Configuration file location:
+{}</value>
+  </data>
+  <data name="AppSettings_ErrorDialog_NotValidJson" xml:space="preserve">
+    <value>Configuration file is not a valid JSON</value>
+  </data>
+  <data name="AppSettings_ErrorDialog_ParseFailed" xml:space="preserve">
+    <value>Failed to parse configuration file</value>
+  </data>
+  <data name="AppSettings_ErrorDialog_ReadFailed" xml:space="preserve">
+    <value>Failed to read configuration file</value>
+  </data>
+  <data name="NotifyIcon_Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="NotifyIcon_MainWindow" xml:space="preserve">
+    <value>Main window</value>
+  </data>
+  <data name="Settings_General_RequireRestart.Title" xml:space="preserve">
+    <value>A restart is required for the change to take effect</value>
+  </data>
+  <data name="Settings_General_RequireRestart_ActionButton.Content" xml:space="preserve">
+    <value>Restart Magpie</value>
+  </data>
+  <data name="ScalingModes_Description_UnknownEffect" xml:space="preserve">
+    <value>Unknown effect</value>
+  </data>
+  <data name="ScalingModes_HasUnkownEffects.Title" xml:space="preserve">
+    <value>This effect group contains unknown effects and cannot be used. Remove them, or restore the effect files and restart Magpie.</value>
+  </data>
+  <data name="Dialog_Export_Title" xml:space="preserve">
+    <value>Export effect groups</value>
+  </data>
+  <data name="Dialog_Import_Title" xml:space="preserve">
+    <value>Import effect groups</value>
+  </data>
+  <data name="About_Version_UpdateSettings.Header" xml:space="preserve">
+    <value>Update settings</value>
+  </data>
+  <data name="About_Version_Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="Profile_Advanced_LaunchParameters.Header" xml:space="preserve">
+    <value>Launch parameters</value>
+  </data>
+  <data name="Overlay_Profiler" xml:space="preserve">
+    <value>Profiler</value>
+  </data>
+  <data name="Overlay_Profiler_CaptureMethod" xml:space="preserve">
+    <value>Capture method</value>
+  </data>
+  <data name="Overlay_FPS_Lock" xml:space="preserve">
+    <value>Lock</value>
+  </data>
+  <data name="Overlay_FPS_Opacity" xml:space="preserve">
+    <value>Opacity</value>
+  </data>
+  <data name="Overlay_FPS_Unlock" xml:space="preserve">
+    <value>Unlock</value>
+  </data>
+  <data name="Overlay_Profiler_Timings" xml:space="preserve">
+    <value>Timings</value>
+  </data>
+  <data name="Overlay_Profiler_Timings_SwitchToEffects" xml:space="preserve">
+    <value>Switch to effects</value>
+  </data>
+  <data name="Overlay_Profiler_Timings_SwitchToPasses" xml:space="preserve">
+    <value>Switch to passes</value>
+  </data>
+  <data name="Overlay_Profiler_Timings_Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_DisableFontCache.Content" xml:space="preserve">
+    <value>Disable font cache</value>
+  </data>
+  <data name="Home_Advanced_AllowScalingMaximized.Header" xml:space="preserve">
+    <value>Allow effect groups for maximized or fullscreen windows</value>
+  </data>
+  <data name="Dialog_JsonFile" xml:space="preserve">
+    <value>JSON file</value>
+  </data>
+  <data name="Profile_MoreOptions_ChangeExecutableForLaunching.Text" xml:space="preserve">
+    <value>Change the executable file for launching</value>
+  </data>
+  <data name="Dialog_ExeFile" xml:space="preserve">
+    <value>Executable file</value>
+  </data>
+  <data name="Dialog_SelectLauncher_Title" xml:space="preserve">
+    <value>Choose the executable file to launch the program</value>
+  </data>
+  <data name="Profile_Performance_FrameRateLimiter.Header" xml:space="preserve">
+    <value>Frame rate limiter</value>
+  </data>
+  <data name="Profile_Performance_FrameRateLimiter_MaxFrameRate.Header" xml:space="preserve">
+    <value>Maximum frame rate</value>
+  </data>
+  <data name="About_Version_CommitId" xml:space="preserve">
+    <value>Commit</value>
+  </data>
+  <data name="About_DeveloperModeEnabled" xml:space="preserve">
+    <value>Developer mode is enabled.</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_DuplicateFrameDetection.Header" xml:space="preserve">
+    <value>Duplicate frame detection</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_DuplicateFrameDetection_Always.Content" xml:space="preserve">
+    <value>Always</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_DuplicateFrameDetection_Dynamic.Content" xml:space="preserve">
+    <value>Dynamic</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_DuplicateFrameDetection_Never.Content" xml:space="preserve">
+    <value>Never</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_EnableStatisticsForDynamicDetection.Content" xml:space="preserve">
+    <value>Enable statistics for dynamic detection</value>
+  </data>
+  <data name="Overlay_Profiler_DynamicDetection" xml:space="preserve">
+    <value>Dynamic detection</value>
+  </data>
+  <data name="Overlay_Profiler_FrameRate" xml:space="preserve">
+    <value>Frame rate</value>
+  </data>
+  <data name="Home_TouchSupport_EnableTouchSupport.Header" xml:space="preserve">
+    <value>Enable touch support</value>
+  </data>
+  <data name="Home_TouchSupport_EnableTouchSupport_Description.Text" xml:space="preserve">
+    <value>You'll need to provide administrator privileges to change this setting</value>
+  </data>
+  <data name="Home_TouchSupport_EnableTouchSupport_LearnMore.Content" xml:space="preserve">
+    <value>Learn more</value>
+  </data>
+  <data name="Home_TouchSupport.Header" xml:space="preserve">
+    <value>Touch support</value>
+  </data>
+  <data name="Home_TouchSupport_Info.Title" xml:space="preserve">
+    <value>If touch support fails, Magpie may request administrator privileges before enabling the effect group to perform repairs.</value>
+  </data>
+  <data name="Home_Advanced_SimulateExclusiveFullscreen_InfoBar.Title" xml:space="preserve">
+    <value>This option is incompatible with some older games. Disable it if you see a black screen, focus problems, or abnormal pop-ups.</value>
+  </data>
+  <data name="Message_InvalidScalingMode" xml:space="preserve">
+    <value>The current profile has no usable effect group. Select another effect group, or add and repair the effects in this group.</value>
+  </data>
+  <data name="Message_TouchSupport" xml:space="preserve">
+    <value>The touch support component could not start. Disable touch support and retry, or run Magpie as administrator and enable it again.</value>
+  </data>
+  <data name="Message_InvalidSourceWindow" xml:space="preserve">
+    <value>The effect group cannot be enabled for this window. Make sure it is running, responsive, on a display, and at least 64×64 pixels.</value>
+  </data>
+  <data name="Message_Maximized" xml:space="preserve">
+    <value>Effect groups are disabled for maximized or fullscreen windows. Restore the window, or enable “Allow effect groups for maximized or fullscreen windows” under Home → Advanced.</value>
+  </data>
+  <data name="Message_LowIntegrityLevel" xml:space="preserve">
+    <value>The target window has higher privileges than Magpie. Close Magpie and run it as administrator, then try again.</value>
+  </data>
+  <data name="Message_ScalingFailedGeneral" xml:space="preserve">
+    <value>The effect group could not initialize. Disable it, reopen the target window and retry. If it still fails, restart Magpie.</value>
+  </data>
+  <data name="Message_CaptureFailed" xml:space="preserve">
+    <value>Restore the source window and enable the effect group again. If capture still fails, open View details to check the capture step and error code.</value>
+  </data>
+  <data name="Message_CreateFenceFailed" xml:space="preserve">
+    <value>The selected graphics card could not create synchronization resources. Open the profile below, go to Performance → Graphics card and select another available card. If it still fails, update its driver and provide details and logs.</value>
+  </data>
+  <data name="Message_NvidiaVsrPathUnsupported" xml:space="preserve">
+    <value>NVIDIA VSR did not start (error -2). Exit Magpie, extract the complete package to a folder such as C:\Magpie\, then run Magpie.exe from that folder and retry. Path compatibility is a possible cause. If it still fails, copy the details and include the logs.</value>
+  </data>
+  <data name="Message_ScalingFailed" xml:space="preserve">
+    <value>Could not enable effect group</value>
+  </data>
+  <data name="Message_ScalingStarted" xml:space="preserve">
+    <value>Scaling started. Press the scaling shortcut again to stop.</value>
+  </data>
+  <data name="Profile_Performance_NoGraphicsCard.Title" xml:space="preserve">
+    <value>No compatible graphics card was found, so slower CPU rendering will be used. Make sure your graphics driver is installed and up to date.</value>
+  </data>
+  <data name="Home_Advanced_MinFrameRate.Header" xml:space="preserve">
+    <value>Minimum frame rate</value>
+  </data>
+  <data name="Home_Advanced_MinFrameRate.Description" xml:space="preserve">
+    <value>Stabilizes GPU frequency to reduce stuttering, but may lead to higher power consumption</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_DisableFP16.Content" xml:space="preserve">
+    <value>Disable the use of FP16 in shaders</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_BenchmarkMode.Content" xml:space="preserve">
+    <value>Benchmark mode</value>
+  </data>
+  <data name="Root_NewProfileFlyout_NameContextFlyout_AppName" xml:space="preserve">
+    <value>Fill with application name</value>
+  </data>
+  <data name="Root_NewProfileFlyout_NameContextFlyout_ProcessName" xml:space="preserve">
+    <value>Fill with process name</value>
+  </data>
+  <data name="Root_NewProfileFlyout_NameContextFlyout_WindowTitle" xml:space="preserve">
+    <value>Fill with window title</value>
+  </data>
+  <data name="TextMenuFlyout_Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="TextMenuFlyout_Cut" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="TextMenuFlyout_Paste" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="TextMenuFlyout_Redo" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="TextMenuFlyout_SelectAll" xml:space="preserve">
+    <value>Select All</value>
+  </data>
+  <data name="TextMenuFlyout_Undo" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="Message_BannedInWindowedMode" xml:space="preserve">
+    <value>The source application is maximized or fullscreen. Switch it to windowed mode and restore its window to a size smaller than the screen, then start windowed effects again.</value>
+  </data>
+  <data name="Message_InvalidCropping" xml:space="preserve">
+    <value>The cropped area is too small or invalid. Reduce the crop values so both dimensions are at least 64 pixels, or disable custom cropping.</value>
+  </data>
+  <data name="Home_TouchSupport.Description" xml:space="preserve">
+    <value>Due to system security restrictions, Magpie requires UIAccess privilege to support touch input.</value>
+  </data>
+  <data name="Home_Activation.Description" xml:space="preserve">
+    <value>Press the shortcut to enable the effect group for the foreground window, or disable the active effect group.</value>
+  </data>
+  <data name="Home_Activation_FullscreenScaling.Header" xml:space="preserve">
+    <value>Effect group shortcut (fullscreen mode)</value>
+  </data>
+  <data name="Home_Activation_FullscreenScaling_ShortcutControl.Title" xml:space="preserve">
+    <value>Effect group shortcut (fullscreen mode)</value>
+  </data>
+  <data name="Home_Activation_WindowedScaling.Header" xml:space="preserve">
+    <value>Effect group shortcut (windowed mode)</value>
+  </data>
+  <data name="Home_Activation_WindowedScaling_ShortcutControl.Title" xml:space="preserve">
+    <value>Effect group shortcut (windowed mode)</value>
+  </data>
+  <data name="Home_Advanced_AllowScalingMaximized.Description" xml:space="preserve">
+    <value>Applies only to fullscreen mode</value>
+  </data>
+  <data name="Home_Toolbar.Description" xml:space="preserve">
+    <value>The toolbar is at the top of the output window and provides FPS display and screenshots. In windowed mode, drag the toolbar to move the output window.</value>
+  </data>
+  <data name="Home_Toolbar.Header" xml:space="preserve">
+    <value>Toolbar</value>
+  </data>
+  <data name="Home_Toolbar_InitialState.Header" xml:space="preserve">
+    <value>Initial toolbar state</value>
+  </data>
+  <data name="Home_Toolbar_InitialState_AlwaysShow.Content" xml:space="preserve">
+    <value>Always show</value>
+  </data>
+  <data name="Home_Toolbar_InitialState_AutoHide.Content" xml:space="preserve">
+    <value>Auto-hide</value>
+  </data>
+  <data name="Home_Toolbar_InitialState_Off.Content" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="Home_Toolbar_StateToggle.Header" xml:space="preserve">
+    <value>Toolbar state toggle shortcut</value>
+  </data>
+  <data name="Home_Toolbar_StateToggle_ShortcutControl.Title" xml:space="preserve">
+    <value>Toolbar state toggle shortcut</value>
+  </data>
+  <data name="Message_ToolbarIn3DGameMode" xml:space="preserve">
+    <value>The toolbar is unavailable in 3D game mode. Disable the effect group and disable 3D game mode, or use effect group shortcuts.</value>
+  </data>
+  <data name="Message_ToolbarNewState" xml:space="preserve">
+    <value>Toolbar: {}</value>
+  </data>
+  <data name="Overlay_Toolbar_Close" xml:space="preserve">
+    <value>Disable effect group</value>
+  </data>
+  <data name="Overlay_Toolbar_Demo" xml:space="preserve">
+    <value>ImGui Demo Window</value>
+  </data>
+  <data name="Overlay_Toolbar_Pin" xml:space="preserve">
+    <value>Pin Toolbar</value>
+  </data>
+  <data name="Overlay_Toolbar_TakeScreenshot" xml:space="preserve">
+    <value>Take Screenshot</value>
+  </data>
+  <data name="Overlay_Toolbar_Profiler" xml:space="preserve">
+    <value>Profiler Window</value>
+  </data>
+  <data name="Message_Windowed3DGameMode" xml:space="preserve">
+    <value>For windowed mode, open the profile below and turn off 3D game mode. To keep this setting, use the fullscreen shortcut shown on Home.</value>
+  </data>
+  <data name="Profile_General_3DGameMode.Description" xml:space="preserve">
+    <value>Enables optimizations for 3D games, but is incompatible with the toolbar and windowed mode</value>
+  </data>
+  <data name="Profile_General_HdrCompatibility.Description" xml:space="preserve">
+    <value>Enable the experimental HDR capture-to-effect compatibility path. Keep disabled unless you are testing HDR support</value>
+  </data>
+  <data name="Home_Toolbar_ScreenshotSaveDirectory.Header" xml:space="preserve">
+    <value>Screenshot save directory</value>
+  </data>
+  <data name="Home_Toolbar_ScreenshotSaveDirectory_Change.Content" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="Dialog_SetlectScreenshotSaveDirectory_Title" xml:space="preserve">
+    <value>Select a directory to save screenshots</value>
+  </data>
+  <data name="Message_ScreenshotSaved" xml:space="preserve">
+    <value>Screenshot saved as {}</value>
+  </data>
+  <data name="Message_ScreenshotFailed" xml:space="preserve">
+    <value>The screenshot could not be saved. Check that the screenshot folder exists and is writable, or choose another folder on the Home page.</value>
+  </data>
+  <data name="Overlay_Toolbar_TakeScreenshot_Description" xml:space="preserve">
+    <value>Save the selected original or processed image; right-click to export intermediate processing results</value>
+  </data>
+  <data name="Overlay_Toolbar_TakeScreenshot_PopupTitle" xml:space="preserve">
+    <value>Export intermediate result</value>
+  </data>
+  <data name="Profile_WindowedScaling.Header" xml:space="preserve">
+    <value>Windowed mode</value>
+  </data>
+  <data name="Profile_WindowedScaling_InitialScaleFactor.Header" xml:space="preserve">
+    <value>Initial scale factor</value>
+  </data>
+  <data name="Profile_WindowedScaling_InitialScaleFactor_Auto.Content" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="Profile_WindowedScaling_InitialScaleFactor_Custom.Content" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="Profile_Advanced_DisableDirectFlip.Description" xml:space="preserve">
+    <value>Helps avoid certain compatibility issues but may significantly increase latency</value>
+  </data>
+  <data name="Profile_General_AutoScale_Disabled.Content" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="Profile_General_AutoScale_Fullscreen.Content" xml:space="preserve">
+    <value>Fullscreen mode</value>
+  </data>
+  <data name="Profile_General_AutoScale_Windowed.Content" xml:space="preserve">
+    <value>Windowed mode</value>
+  </data>
+  <data name="Profile_General_Multimonitor.Description" xml:space="preserve">
+    <value>Applies to fullscreen mode only</value>
+  </data>
+  <data name="Home_TouchSupport_Warn.Title" xml:space="preserve">
+    <value>The toolbar does not support touch input. Use a mouse or keyboard shortcuts instead.</value>
+  </data>
+  <data name="Overlay_Toolbar_Close_Description" xml:space="preserve">
+    <value>Right-click to close toolbar</value>
+  </data>
+  <data name="Overlay_Toolbar_SwitchToFullscreen" xml:space="preserve">
+    <value>Switch to Fullscreen Mode</value>
+  </data>
+  <data name="Overlay_Toolbar_SwitchToWindowed" xml:space="preserve">
+    <value>Switch to Windowed Mode</value>
+  </data>
+  <data name="Home_Toolbar_InitialState_Fullscreen.Header" xml:space="preserve">
+    <value>Fullscreen mode</value>
+  </data>
+  <data name="Home_Toolbar_InitialState_Windowed.Header" xml:space="preserve">
+    <value>Windowed mode</value>
+  </data>
+  <data name="Message_ExportScalingModesFailed" xml:space="preserve">
+    <value>Effect groups could not be exported. Choose a writable location and check that the file is not in use and sufficient disk space is available.</value>
+  </data>
+  <data name="Message_ImportScalingModesFailed" xml:space="preserve">
+    <value>Effect groups could not be imported. Select a readable effect-group JSON file and make sure its contents are not corrupted.</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_LocateLogs.Header" xml:space="preserve">
+    <value>Open logs location</value>
+  </data>
+  <data name="Message_WindowedDesktopDuplication" xml:space="preserve">
+    <value>For windowed mode, open the profile below and select Graphics Capture as the capture method. To keep Desktop Duplication, use the fullscreen shortcut shown on Home.</value>
+  </data>
+  <data name="Profile_General_DesktopDuplicationWarning.Title" xml:space="preserve">
+    <value>For windowed mode, select Graphics Capture above. Use fullscreen mode to keep Desktop Duplication.</value>
+  </data>
+  <data name="Settings_Launch_RunAtStartup.Description" xml:space="preserve">
+    <value>The main window will not appear if "Display the app on the system tray" is enabled</value>
+  </data>
+  <data name="Home_Activation_Timer_Description" xml:space="preserve">
+    <value>Enable the effect group for the foreground window after {}s</value>
+  </data>
+  <data name="Home_Activation_Timer_Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="NotifyIcon_Timer_Fullscreen" xml:space="preserve">
+    <value>Enable effect group after {}s (Fullscreen)</value>
+  </data>
+  <data name="NotifyIcon_Timer_Windowed" xml:space="preserve">
+    <value>Enable effect group after {}s (Windowed)</value>
+  </data>
+  <data name="Overlay_Toolbar_Minimize" xml:space="preserve">
+    <value>Minimize</value>
+  </data>
+  <data name="Profile_Cursor_AutoHide.Header" xml:space="preserve">
+    <value>Auto-hide cursor when idle</value>
+  </data>
+  <data name="Profile_Cursor_AutoHide_Delay.Header" xml:space="preserve">
+    <value>Hide delay in seconds</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment.Description" xml:space="preserve">
+    <value>Applies only to fullscreen mode</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment.Header" xml:space="preserve">
+    <value>Output alignment</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment_BottomCenter.Content" xml:space="preserve">
+    <value>Bottom center</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment_BottomLeft.Content" xml:space="preserve">
+    <value>Bottom left</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment_BottomRight.Content" xml:space="preserve">
+    <value>Bottom right</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment_Center.Content" xml:space="preserve">
+    <value>Center</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment_Left.Content" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment_Right.Content" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment_TopCenter.Content" xml:space="preserve">
+    <value>Top center</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment_TopLeft.Content" xml:space="preserve">
+    <value>Top left</value>
+  </data>
+  <data name="Profile_Advanced_DestAlignment_TopRight.Content" xml:space="preserve">
+    <value>Top right</value>
+  </data>
+  <data name="Home_Advanced_DeveloperOptions_DisableTopmost.Content" xml:space="preserve">
+    <value>Disable always-on-top</value>
+  </data>
+  <data name="Settings_General_SmoothMotionCompatibilityMode.Header" xml:space="preserve">
+    <value>Smooth Motion compatibility mode</value>
+  </data>
+  <data name="Settings_General_SmoothMotionCompatibilityMode.Description" xml:space="preserve">
+    <value>Restart Magpie after each effect session to release GPU memory retained by NVIDIA Smooth Motion. Enable only when Smooth Motion is configured for Magpie.</value>
+  </data>
+  <data name="Overlay_Toolbar_EffectParameters" xml:space="preserve"><value>Effect parameters</value></data>
+  <data name="Overlay_EffectParameters" xml:space="preserve"><value>Effect parameters</value></data>
+  <data name="Overlay_EffectParameters_Live" xml:space="preserve"><value>Live</value></data>
+  <data name="Overlay_EffectParameters_RestartRequired" xml:space="preserve"><value>Restart</value></data>
+  <data name="Overlay_EffectParameters_LiveApplied" xml:space="preserve"><value>Live changes applied</value></data>
+  <data name="Overlay_EffectParameters_RestartPending" xml:space="preserve"><value>{} parameter(s) waiting for the effect group to restart</value></data>
+  <data name="Overlay_EffectParameters_RequestPending" xml:space="preserve"><value>Saving automatically…</value></data>
+  <data name="Overlay_EffectParameters_Revert" xml:space="preserve"><value>Restore session values</value></data>
+  <data name="Overlay_EffectParameters_ApplyAndRestart" xml:space="preserve"><value>Apply and restart effect group</value></data>
+  <data name="Overlay_EffectParameters_NoParameters" xml:space="preserve"><value>The current effect chain has no exposed parameters.</value></data>
+  <data name="Overlay_EffectParameters_Saved" xml:space="preserve"><value>Effect parameters saved.</value></data>
+  <data name="Overlay_EffectParameters_LiveApplyFailed" xml:space="preserve"><value>The image still uses the last working value. Restore that value, or click Apply and restart effect group to try the new value.</value></data>
+  <data name="Overlay_EffectParameters_SessionExpired" xml:space="preserve"><value>The active run changed and this request was not saved. Reopen the effect parameters panel, check the latest values, then adjust them.</value></data>
+  <data name="Overlay_EffectParameters_SourceUnavailable" xml:space="preserve"><value>The source window is unavailable and re-enabling did not complete. Open the source program, bring it to the foreground, then enable the group and check the parameters.</value></data>
+  <data name="Overlay_EffectParameters_ScalingModeConflict" xml:space="preserve"><value>The group or parameters changed elsewhere. This panel’s changes were not saved. Disable and re-enable the group to load the latest settings before adjusting again.</value></data>
+  <data name="Overlay_EffectParameters_SaveFailed" xml:space="preserve"><value>Parameters are not saved. Open Home → Most recent issue → View details, resolve the cause, then click Retry save.</value></data>
+  <data name="Overlay_EffectParameters_Invalid" xml:space="preserve"><value>This parameter cannot be adjusted yet. Re-enable the group and reopen the panel. If it remains unavailable, restore this effect from the complete package and provide its name and logs.</value></data>
+  <data name="Overlay_EffectParameters_Reason_Inline" xml:space="preserve"><value>This parameter is compiled into the shader.</value></data>
+  <data name="Overlay_EffectParameters_Reason_Native" xml:space="preserve"><value>This native effect only reads the parameter during startup.</value></data>
+  <data name="Overlay_EffectParameters_Reason_Resources" xml:space="preserve"><value>This parameter changes effect resources or processing size.</value></data>
+  <data name="Overlay_EffectParameters_Reason_Guidance" xml:space="preserve"><value>This parameter changes the frame-guidance provider.</value></data>
+  <data name="Overlay_EffectParameters_Reason_FrameGeneration" xml:space="preserve"><value>This parameter changes the frame-generation feature or presentation ring.</value></data>
+  <data name="Message_OpticalFlowProviderUnavailable" xml:space="preserve"><value>Open the effects listed in details and select another optical flow method offered by the effect, or disable optical flow, then enable the group again. This build does not provide the requested method.</value></data>
+  <data name="Message_NvidiaOpticalFlowUnsupported" xml:space="preserve"><value>NVIDIA optical flow did not start. Check the affected effects in details, open that group and choose the option that disables optical flow, then enable the group again. If you need optical flow, try AMD optical flow when offered by the effect.</value></data>
+  <data name="Message_NvidiaOpticalFlowQualityUnsupported" xml:space="preserve"><value>Open the effects listed in details and lower their NVIDIA optical flow quality, then enable the group again. You can also disable optical flow first. The selected quality did not pass the GPU or driver capability check.</value></data>
+  <data name="Message_AmdOpticalFlowUnsupported" xml:space="preserve"><value>AMD optical flow did not start. Open the effects listed in details, disable optical flow and enable the group again. If you need optical flow, try another method offered by the effect. See details and logs for the capability check results.</value></data>
+  <data name="Message_OpticalFlowInteropFailed" xml:space="preserve"><value>Optical flow shared resources could not be created. Open the effects listed in details, disable optical flow and enable the group again. If you need optical flow, try another method offered by the effect.</value></data>
+  <data name="Message_ConflictingFrameGenerationEffects" xml:space="preserve"><value>The effect group below contains multiple frame generation effects. Check the conflicting entries in details, open this group and keep the one you want to use. Remove the other frame generation entries, then enable the group again.</value></data>
+  <data name="Message_XeSSMfgOpticalFlowUnsupported" xml:space="preserve"><value>XeSSFG 3×/4× currently supports None or AMD optical flow. Select either method, or use 2× with NVIDIA optical flow.</value></data>
+  <data name="Message_XeSSMfgCompatibilityUnavailable" xml:space="preserve"><value>XeSSFG compatibility could not be enabled for this runtime. Check the log for version or initialization details.</value></data>
+  <data name="Message_XeSSMfgUnsupported" xml:space="preserve"><value>XeSSFG could not initialize on this adapter or driver. Check the log for details.</value></data>
+  <data name="Message_XeSSMfgMultiplierUnsupported" xml:space="preserve"><value>The XeSSFG runtime does not support the requested multiplier on this path.</value></data>
+  <data name="Home_Toolbar_Profiler.Header" xml:space="preserve"><value>Performance monitor</value></data>
+  <data name="Home_Toolbar_Profiler_ShortcutControl.Title" xml:space="preserve"><value>Performance monitor</value></data>
+  <data name="Home_Toolbar_EffectParameters.Header" xml:space="preserve"><value>Open / close parameter panel</value></data>
+  <data name="Home_Toolbar_EffectParameters_ShortcutControl.Title" xml:space="preserve"><value>Open / close parameter panel</value></data>
+  <data name="Home_Toolbar_Screenshot.Header" xml:space="preserve"><value>Take screenshot</value></data>
+  <data name="Home_Toolbar_Screenshot_ShortcutControl.Title" xml:space="preserve"><value>Take screenshot</value></data>
+  <data name="Home_Toolbar_ToolbarPin.Header" xml:space="preserve"><value>Pin toolbar</value></data>
+  <data name="Home_Toolbar_ToolbarPin_ShortcutControl.Title" xml:space="preserve"><value>Pin toolbar</value></data>
+  <data name="Overlay_EffectParameters_AutoSaved" xml:space="preserve"><value>Changes saved automatically</value></data>
+  <data name="Home_Toolbar_Shortcuts.Header" xml:space="preserve"><value>Toolbar shortcut settings</value></data>
+  <data name="EffectParam_Anime4K_Anime4K_Denoise_Bilateral_Mean_intensitySigma_Label" xml:space="preserve"><value>Strength</value></data>
+  <data name="EffectParam_Anime4K_Anime4K_Denoise_Bilateral_Median_intensitySigma_Label" xml:space="preserve"><value>Strength</value></data>
+  <data name="EffectParam_Anime4K_Anime4K_Denoise_Bilateral_Mode_intensitySigma_Label" xml:space="preserve"><value>Strength</value></data>
+  <data name="EffectParam_Anime4K_Anime4K_Thin_HQ_iterations_Label" xml:space="preserve"><value>Iterations</value></data>
+  <data name="EffectParam_Anime4K_Anime4K_Thin_HQ_strength_Label" xml:space="preserve"><value>Strength</value></data>
+  <data name="EffectParam_Bicubic_paramB_Label" xml:space="preserve"><value>B</value></data>
+  <data name="EffectParam_Bicubic_paramC_Label" xml:space="preserve"><value>C</value></data>
+  <data name="EffectParam_CAS_CAS_Scaling_sharpness_Label" xml:space="preserve"><value>Sharpness</value></data>
+  <data name="EffectParam_CAS_CAS_sharpness_Label" xml:space="preserve"><value>Sharpness</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_brightBoost_Label" xml:space="preserve"><value>Brightness Boost</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_dilation_Label" xml:space="preserve"><value>Dilation</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_gammaInput_Label" xml:space="preserve"><value>Gamma Input</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_gammaOutput_Label" xml:space="preserve"><value>Gamma Output</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_maskDotHeight_Label" xml:space="preserve"><value>Mask Dot Height</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_maskDotWidth_Label" xml:space="preserve"><value>Mask Dot Width</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_maskSize_Label" xml:space="preserve"><value>Mask Size</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_maskStagger_Label" xml:space="preserve"><value>Mask Stagger</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_maskStrength_Label" xml:space="preserve"><value>Mask Strength</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_scanlineBeamWidthMax_Label" xml:space="preserve"><value>Scanline Beam Width Max</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_scanlineBeamWidthMin_Label" xml:space="preserve"><value>Scanline Beam Width Min</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_scanlineBrightMax_Label" xml:space="preserve"><value>Scanline Brightness Max</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_scanlineBrightMin_Label" xml:space="preserve"><value>Scanline Brightness Min</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_scanlineCutoff_Label" xml:space="preserve"><value>Scanline Cutoff</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_scanlineStrength_Label" xml:space="preserve"><value>Scanline Strength</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_sharpnessH_Label" xml:space="preserve"><value>Sharpness Horizontal</value></data>
+  <data name="EffectParam_CRT_CRT_Easymode_sharpnessV_Label" xml:space="preserve"><value>Sharpness Vertical</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_CRTGamma_Label" xml:space="preserve"><value>Target Gamma</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_cornerSize_Label" xml:space="preserve"><value>Corner Size</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_cornerSmooth_Label" xml:space="preserve"><value>Corner Smoothness</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_curvature_Label" xml:space="preserve"><value>Curvature</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_distance_Label" xml:space="preserve"><value>Distance</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_dotMask_Label" xml:space="preserve"><value>Dot Mask</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_lum_Label" xml:space="preserve"><value>Luminance Boost</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_monitorGamma_Label" xml:space="preserve"><value>Monitor Gamma</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_overScanX_Label" xml:space="preserve"><value>Horizontal Overscan</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_overScanY_Label" xml:space="preserve"><value>Vertical Overscan</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_radius_Label" xml:space="preserve"><value>Curvature Radius</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_scanlineWeight_Label" xml:space="preserve"><value>Scanline Weight</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_sharper_Label" xml:space="preserve"><value>Sharpness</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_xTilt_Label" xml:space="preserve"><value>Horizontal Tilt</value></data>
+  <data name="EffectParam_CRT_CRT_Geom_yTilt_Label" xml:space="preserve"><value>Vertical Tilt</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_beamMaxWidth_Label" xml:space="preserve"><value>Max Beam Width</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_beamMinWidth_Label" xml:space="preserve"><value>Min Beam Width</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_blueBoost_Label" xml:space="preserve"><value>Blue Boost</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_colorBoost_Label" xml:space="preserve"><value>Color Boost</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_crtAntiRinging_Label" xml:space="preserve"><value>Anti-Ringing</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_greenBoost_Label" xml:space="preserve"><value>Green Boost</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_inputGamma_Label" xml:space="preserve"><value>Input Gamma</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_outputGamma_Label" xml:space="preserve"><value>Output Gamma</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_phosphor_Label" xml:space="preserve"><value>Phosphor</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_redBoost_Label" xml:space="preserve"><value>Red Boost</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_scanlinesStrength_Label" xml:space="preserve"><value>Scanline Strength</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_sharpness_Label" xml:space="preserve"><value>Sharpness</value></data>
+  <data name="EffectParam_CRT_CRT_Hyllian_vScanlines_Label" xml:space="preserve"><value>Vertical Scanlines</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_bloomAmount_Label" xml:space="preserve"><value>Bloom Amount</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_brightBoost_Label" xml:space="preserve"><value>Brightness Boost</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_hardBloomPix_Label" xml:space="preserve"><value>Bloom-X Soft</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_hardBloomScan_Label" xml:space="preserve"><value>Bloom-Y Soft</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_hardPix_Label" xml:space="preserve"><value>Pixel Hardness</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_hardScan_Label" xml:space="preserve"><value>Scanline Hardness</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_maskDark_Label" xml:space="preserve"><value>Mask Dark</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_maskLight_Label" xml:space="preserve"><value>Mask Light</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_shadowMask_Label" xml:space="preserve"><value>Shadow Mask</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_shape_Label" xml:space="preserve"><value>Filter Kernel Shape</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_warpX_Label" xml:space="preserve"><value>Horizontal Display Warp</value></data>
+  <data name="EffectParam_CRT_CRT_Lottes_warpY_Label" xml:space="preserve"><value>Vertical Display Warp</value></data>
+  <data name="EffectParam_CRT_GTU_v050_blackLevel_Label" xml:space="preserve"><value>Black Level</value></data>
+  <data name="EffectParam_CRT_GTU_v050_compositeConnection_Label" xml:space="preserve"><value>Composite Connection</value></data>
+  <data name="EffectParam_CRT_GTU_v050_contrast_Label" xml:space="preserve"><value>Contrast</value></data>
+  <data name="EffectParam_CRT_GTU_v050_noScanlines_Label" xml:space="preserve"><value>No Scanlines</value></data>
+  <data name="EffectParam_CRT_GTU_v050_signalResolutionI_Label" xml:space="preserve"><value>Signal Resolution I</value></data>
+  <data name="EffectParam_CRT_GTU_v050_signalResolutionQ_Label" xml:space="preserve"><value>Signal Resolution Q</value></data>
+  <data name="EffectParam_CRT_GTU_v050_signalResolution_Label" xml:space="preserve"><value>Signal Resolution Y</value></data>
+  <data name="EffectParam_CRT_GTU_v050_tvVerticalResolution_Label" xml:space="preserve"><value>TV Vertical Resolution</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_multiplier_Label" xml:space="preserve"><value>Frame Multiplier</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_Group_DLSSNR" xml:space="preserve"><value>DLSSNR</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_Group_Detail_Control" xml:space="preserve"><value>Detail Control</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_enableInputResolutionScaling_Label" xml:space="preserve"><value>Adjust Input Resolution
+(Reduces DLSSNR Quality)</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_inputResolutionPercent_Label" xml:space="preserve"><value>Input Resolution (%)</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_intensity_Label" xml:space="preserve"><value>NR Intensity</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_localStructureStrength_Label" xml:space="preserve"><value>Local Structure Strength</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_localToneStrength_Label" xml:space="preserve"><value>Local Tone Strength</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_reflectionGlowMultiplier_Label" xml:space="preserve"><value>Reflection / Glow Control</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_residualLightness_Label" xml:space="preserve"><value>Residual Lightness Multiplier</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_residualMultiplier_Label" xml:space="preserve"><value>Residual Multiplier</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_residualSaturation_Label" xml:space="preserve"><value>Residual Saturation Multiplier</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_shadowStructureMultiplier_Label" xml:space="preserve"><value>Shadow / Structure Control</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_skinStructureStrength_Label" xml:space="preserve"><value>Skin Structure Strength</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_style_Label" xml:space="preserve"><value>NR Style
+(0 Default, 1 Natural, 2 Cinematic)</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_uiCorrection_Label" xml:space="preserve"><value>NR UI Correction</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_useAutoMask_Label" xml:space="preserve"><value>Automatic Mask</value></data>
+  <data name="EffectParam_Deband_grain_Label" xml:space="preserve"><value>Grain</value></data>
+  <data name="EffectParam_Deband_iterations_Label" xml:space="preserve"><value>Iterations</value></data>
+  <data name="EffectParam_Deband_range_Label" xml:space="preserve"><value>Range</value></data>
+  <data name="EffectParam_Deband_threshold_Label" xml:space="preserve"><value>Threshold</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_gain_Label" xml:space="preserve"><value>Display Gain</value></data>
+  <data name="EffectParam_FSR_FSR_RCAS_sharpness_Label" xml:space="preserve"><value>Sharpness</value></data>
+  <data name="EffectParam_FrameRate_Filter_targetFrameRate_Label" xml:space="preserve"><value>Custom Frame Rate</value></data>
+  <data name="EffectParam_ImageAdjustment_Group_Channels" xml:space="preserve"><value>Channels</value></data>
+  <data name="EffectParam_ImageAdjustment_Group_Gamma" xml:space="preserve"><value>Gamma</value></data>
+  <data name="EffectParam_ImageAdjustment_Group_Tone" xml:space="preserve"><value>Tone</value></data>
+  <data name="EffectParam_ImageAdjustment_b_Label" xml:space="preserve"><value>Blue Channel</value></data>
+  <data name="EffectParam_ImageAdjustment_blackLevel_Label" xml:space="preserve"><value>Black Level</value></data>
+  <data name="EffectParam_ImageAdjustment_brightBoost_Label" xml:space="preserve"><value>Brightness Boost</value></data>
+  <data name="EffectParam_ImageAdjustment_contrast_Label" xml:space="preserve"><value>Contrast</value></data>
+  <data name="EffectParam_ImageAdjustment_g_Label" xml:space="preserve"><value>Green Channel</value></data>
+  <data name="EffectParam_ImageAdjustment_luminance_Label" xml:space="preserve"><value>Luminance</value></data>
+  <data name="EffectParam_ImageAdjustment_monitorGamma_Label" xml:space="preserve"><value>Monitor Gamma</value></data>
+  <data name="EffectParam_ImageAdjustment_r_Label" xml:space="preserve"><value>Red Channel</value></data>
+  <data name="EffectParam_ImageAdjustment_saturation_Label" xml:space="preserve"><value>Saturation</value></data>
+  <data name="EffectParam_ImageAdjustment_targetGamma_Label" xml:space="preserve"><value>Target Gamma</value></data>
+  <data name="EffectParam_Jinc_ARStrength_Label" xml:space="preserve"><value>Anti-ringing Strength</value></data>
+  <data name="EffectParam_Jinc_sinc_Label" xml:space="preserve"><value>Sinc Param</value></data>
+  <data name="EffectParam_Jinc_windowSinc_Label" xml:space="preserve"><value>Window Sinc Param</value></data>
+  <data name="EffectParam_Lanczos_ARStrength_Label" xml:space="preserve"><value>Anti-ringing Strength</value></data>
+  <data name="EffectParam_MLAA_MLAA_strength_Label" xml:space="preserve"><value>Strength</value></data>
+  <data name="EffectParam_MLAA_MLAA_threshold_Label" xml:space="preserve"><value>Edge threshold</value></data>
+  <data name="EffectParam_NIS_NIS_sharpness_Label" xml:space="preserve"><value>Sharpness</value></data>
+  <data name="EffectParam_NIS_NVSharpen_sharpness_Label" xml:space="preserve"><value>Sharpness</value></data>
+  <data name="EffectParam_SGSR_EdgeSharpness_Label" xml:space="preserve"><value>Edge Sharpness</value></data>
+  <data name="EffectParam_SGSR_EdgeThreshold_Label" xml:space="preserve"><value>Edge Threshold</value></data>
+  <data name="EffectParam_SMAA_SMAA_4x_Experimental_historyRejection_Label" xml:space="preserve"><value>History rejection</value></data>
+  <data name="EffectParam_SMAA_SMAA_4x_Experimental_historyWeight_Label" xml:space="preserve"><value>History weight</value></data>
+  <data name="EffectParam_SMAA_SMAA_4x_NoJitter_Experimental_historyRejection_Label" xml:space="preserve"><value>History rejection</value></data>
+  <data name="EffectParam_SMAA_SMAA_4x_NoJitter_Experimental_historyWeight_Label" xml:space="preserve"><value>History weight</value></data>
+  <data name="EffectParam_SMAA_SMAA_T2x_Experimental_historyRejection_Label" xml:space="preserve"><value>History rejection</value></data>
+  <data name="EffectParam_SMAA_SMAA_T2x_Experimental_historyWeight_Label" xml:space="preserve"><value>History weight</value></data>
+  <data name="EffectParam_SMAA_SMAA_T2x_NoJitter_Experimental_historyRejection_Label" xml:space="preserve"><value>History rejection</value></data>
+  <data name="EffectParam_SMAA_SMAA_T2x_NoJitter_Experimental_historyWeight_Label" xml:space="preserve"><value>History weight</value></data>
+  <data name="EffectParam_SSimDownscaler_oversharp_Label" xml:space="preserve"><value>Oversharp</value></data>
+  <data name="EffectParam_Sharpen_AdaptiveSharpen_curveHeight_Label" xml:space="preserve"><value>Sharpness</value></data>
+  <data name="EffectParam_Sharpen_FineSharp_cstr_Label" xml:space="preserve"><value>cstr</value></data>
+  <data name="EffectParam_Sharpen_FineSharp_sstr_Label" xml:space="preserve"><value>sstr</value></data>
+  <data name="EffectParam_Sharpen_FineSharp_xrep_Label" xml:space="preserve"><value>xrep</value></data>
+  <data name="EffectParam_Sharpen_FineSharp_xstr_Label" xml:space="preserve"><value>xstr</value></data>
+  <data name="EffectParam_Sharpen_LCAS_sharpness_Label" xml:space="preserve"><value>Sharpness</value></data>
+  <data name="EffectParam_Sharpen_LumaSharpen_offsetBias_Label" xml:space="preserve"><value>Offset Bias</value></data>
+  <data name="EffectParam_Sharpen_LumaSharpen_pattern_Label" xml:space="preserve"><value>Sample Pattern</value></data>
+  <data name="EffectParam_Sharpen_LumaSharpen_sharpClamp_Label" xml:space="preserve"><value>Sharpening Limit</value></data>
+  <data name="EffectParam_Sharpen_LumaSharpen_sharpStrength_Label" xml:space="preserve"><value>Sharpening Strength</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_amdOpticalFlowMode_Label" xml:space="preserve"><value>OF Quality</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_amdOpticalFlowMode_Option_0" xml:space="preserve"><value>Performance</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_amdOpticalFlowMode_Option_1" xml:space="preserve"><value>Quality</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_nvidiaOpticalFlowQuality_Label" xml:space="preserve"><value>OF Quality</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_nvidiaOpticalFlowQuality_Option_1" xml:space="preserve"><value>Performance</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_nvidiaOpticalFlowQuality_Option_2" xml:space="preserve"><value>Balanced (Recommended)</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_nvidiaOpticalFlowQuality_Option_3" xml:space="preserve"><value>Quality</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_nvidiaOpticalFlowQuality_Option_4" xml:space="preserve"><value>High Quality (High Cost)</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_opticalFlowMethod_Label" xml:space="preserve"><value>Optical Flow Method</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_opticalFlowMethod_Option_0" xml:space="preserve"><value>None</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_opticalFlowMethod_Option_1" xml:space="preserve"><value>AMDOF</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_opticalFlowMethod_Option_2" xml:space="preserve"><value>NVOF</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_multiplier_Label" xml:space="preserve"><value>Frame Multiplier</value></data>
+  <data name="Home_RecentIssue.Title" xml:space="preserve"><value>Most recent issue</value></data>
+  <data name="Home_RecentIssue_Details.Content" xml:space="preserve"><value>View details</value></data>
+  <data name="ErrorDetails_Title" xml:space="preserve"><value>Issue details</value></data>
+  <data name="ErrorDetails_Copy" xml:space="preserve"><value>Copy details</value></data>
+  <data name="ErrorDetails_Copied" xml:space="preserve"><value>Copied</value></data>
+  <data name="ErrorDetails_OpenLogs" xml:space="preserve"><value>Open logs folder</value></data>
+  <data name="ErrorDetails_Close" xml:space="preserve"><value>Close</value></data>
+  <data name="ErrorDetails_CopyFailed" xml:space="preserve"><value>Copy failed. Select the text and press Ctrl+C to try again.</value></data>
+  <data name="ErrorDetails_OpenLogsFailed" xml:space="preserve"><value>Could not open the folder. Copy the logs path below into File Explorer.</value></data>
+  <data name="ErrorDetails_HomeHint" xml:space="preserve"><value>Open Home → Most recent issue for details and logs.</value></data>
+  <data name="ErrorDetails_Time" xml:space="preserve"><value>Time</value></data>
+  <data name="ErrorDetails_Code" xml:space="preserve"><value>Issue code</value></data>
+  <data name="ErrorDetails_Version" xml:space="preserve"><value>Version</value></data>
+  <data name="ErrorDetails_Context" xml:space="preserve"><value>Failed step, related items or path</value></data>
+  <data name="ErrorDetails_SystemCode" xml:space="preserve"><value>System code</value></data>
+  <data name="ErrorDetails_Count" xml:space="preserve"><value>Consecutive occurrences</value></data>
+  <data name="ErrorDetails_Logs" xml:space="preserve"><value>Logs folder</value></data>
+  <data name="ErrorAdvice_AccessDenied" xml:space="preserve"><value>Windows denied writing to this location. Use a folder your account can write to, and check the file&#x27;s read-only setting.</value></data>
+  <data name="ErrorAdvice_FileBusy" xml:space="preserve"><value>Another program is using the file. Close its editor or synchronization operation, then retry.</value></data>
+  <data name="ErrorAdvice_DiskFull" xml:space="preserve"><value>The destination drive is full. Free some space or choose a folder on another drive, then retry.</value></data>
+  <data name="ErrorAdvice_PathMissing" xml:space="preserve"><value>The file or folder no longer exists. Reconnect the drive or select an existing location, then retry.</value></data>
+  <data name="Message_ScalingModeNotSelected" xml:space="preserve"><value>Open the profile below and select an available effect group, then enable it. This profile currently has no valid effect group selected.</value></data>
+  <data name="Message_ScalingModeEmpty" xml:space="preserve"><value>The effect group below is empty. Open Effect groups, find this group and add an effect, or select another effect group in the profile.</value></data>
+  <data name="Message_ScalingModeUnknownEffect" xml:space="preserve"><value>Check the unavailable effect names and positions in View details, then open the effect group below and replace those entries. To keep them, restore the corresponding effects files from the complete package for this version and restart Magpie.</value></data>
+  <data name="Message_GraphicsDeviceInitFailed" xml:space="preserve"><value>The graphics device could not be initialized. Check the selected GPU, close other GPU-heavy apps, and try again. If it persists, update the graphics driver and restart Windows.</value></data>
+  <data name="Message_PresentationInitFailed" xml:space="preserve"><value>The presentation output could not be created. Try switching between windowed and fullscreen mode; if using frame generation, try an effect group without it.</value></data>
+  <data name="Message_EffectCompileFailed" xml:space="preserve"><value>An effect failed to compile. See details for its name; restore that effect from the matching release package, or remove it from the effect group and retry. Compiler output is in the log.</value></data>
+  <data name="Message_EffectResourceFailed" xml:space="preserve"><value>An effect could not create its textures or rendering resources. Try a smaller output size or fewer effects, then check the effect files listed in details.</value></data>
+  <data name="Message_NativeEffectInitFailed" xml:space="preserve"><value>The effect below could not start. Open details to inspect the failed initialization step and any reported file or error code. You can also open the effect group and replace this effect to continue. If the cause is unclear, copy the details and include the logs.</value></data>
+  <data name="Message_FrameGenerationInitFailed" xml:space="preserve"><value>Frame generation did not start. Check the failed step in details. In the effect group below, disable its optical flow, or lower the multiplier if adjustable, then retry. You can also use a group without frame generation.</value></data>
+  <data name="Message_OverlayInitFailed" xml:space="preserve"><value>The toolbar or cursor overlay could not initialize. Extract the full release package again and enable the effect group again. If it persists, share the details and log.</value></data>
+  <data name="Message_SharedTextureOpenFailed" xml:space="preserve"><value>The graphics device could not share the frame output. Try the same GPU for capture and output, or disable frame generation; update the driver if it persists.</value></data>
+  <data name="Message_DlssNrUnavailable" xml:space="preserve"><value>DLSSNR is not processing the image; the image continues to display and other effects keep their order. Open details to check the DLSSNR initialization failure, then enable the group again after resolving it. DLSSNR parameters remain unavailable until it starts successfully.</value></data>
+  <data name="Message_FrameGenerationDisabled" xml:space="preserve"><value>Frame generation was disabled for this session after repeated failures. Original frames will continue. Try a lower multiplier or different optical flow settings, then restart the effect group.</value></data>
+  <data name="Message_ConfigurationWriteFailed" xml:space="preserve"><value>Recent changes have not been saved to disk. Keep Magpie open and check the configuration path and cause in View details. Resolve the problem, then click Retry save. Exit after saving succeeds.</value></data>
+  <data name="Message_EffectParameterConflict" xml:space="preserve"><value>The group or parameters changed elsewhere. This panel’s changes did not overwrite them. Disable and re-enable the group to load the latest settings before adjusting again.</value></data>
+  <data name="Message_EffectParameterLiveFailed" xml:space="preserve"><value>The update could not be applied; the effect is still using its previous values. Try a lower or previously working value. If it still fails, share logs\magpie.log.</value></data>
+  <data name="Message_ScreenshotDirectoryFailed" xml:space="preserve"><value>The screenshot folder could not be created. Check its path and permissions in details, or choose a writable folder under Home → Screenshot save directory and retry.</value></data>
+  <data name="Message_ScreenshotWriteFailed" xml:space="preserve"><value>The screenshot file could not be written. Check free disk space and whether the file is read-only or in use; try another screenshot folder.</value></data>
+  <data name="Message_ScreenshotEncodeFailed" xml:space="preserve"><value>The image could not be encoded as a screenshot. Re-enable the effect group and click Take Screenshot on the toolbar again. If it still fails, copy the details and include the logs.</value></data>
+  <data name="Message_ScreenshotReadbackFailed" xml:space="preserve"><value>The frame could not be read from the GPU. Restart the effect group and try again; if it persists, try a smaller output size or fewer effects and share the details and log.</value></data>
+  <data name="Overlay_EffectParameters_Unavailable" xml:space="preserve"><value>Unavailable</value></data>
+  <data name="Overlay_EffectParameters_BackendUnavailable" xml:space="preserve"><value>DLSSNR is passing through because its backend did not initialize. Check Home → Most recent issue, then restart the effect group.</value></data>
+  <data name="Message_SourceWindowClosed" xml:space="preserve"><value>The target window has closed. Open it again, bring it to the foreground and enable the effect group.</value></data>
+  <data name="Message_SourceWindowUnresponsive" xml:space="preserve"><value>The target window is not responding. Wait for it to respond, or restart that application before enabling the effect group.</value></data>
+  <data name="Message_SourceWindowTooSmall" xml:space="preserve"><value>The visible capture area is smaller than 64 × 64 pixels. Enlarge the target window and move it fully onto the screen, then retry.</value></data>
+  <data name="Message_SourceWindowOffscreen" xml:space="preserve"><value>The target window is outside the connected displays. Move it onto a visible display and try again.</value></data>
+  <data name="Message_SourceWindowUnsupported" xml:space="preserve"><value>Effect groups cannot be enabled for this transparent window type. Select the application’s main window instead of a transparent overlay or floating widget.</value></data>
+  <data name="Message_SourceWindowGeometryFailed" xml:space="preserve"><value>The target window&#x27;s position or size could not be obtained or adjusted. Restore and move it onto one display, then retry; try windowed mode if fullscreen fails.</value></data>
+  <data name="Message_ScalingAlreadyActive" xml:space="preserve"><value>Another output window already exists. Stop the current effect session and close any other Magpie instance, then retry.</value></data>
+  <data name="Message_ScalingWindowCreationFailed" xml:space="preserve"><value>The output window could not be created. Restart Magpie and try windowed mode; if it persists, share the details and log.</value></data>
+  <data name="Message_DisplayLayoutFailed" xml:space="preserve"><value>The display layout could not be used for fullscreen mode. Select the closest display or try windowed mode; check that the configured display is connected.</value></data>
+  <data name="Message_ImportReadFailed" xml:space="preserve"><value>The selected file could not be read. Check that the path is accessible and the file has finished downloading or syncing, then select it again.</value></data>
+  <data name="Message_ImportEmpty" xml:space="preserve"><value>The selected file is empty or contains no effect groups. Export an effect group from Magpie or obtain a complete effect group file, then retry.</value></data>
+  <data name="Message_ImportInvalidJson" xml:space="preserve"><value>The file is not valid JSON. Download or export it again; details include the byte offset and parsing reason to help locate damaged content.</value></data>
+  <data name="Message_ImportWrongFileType" xml:space="preserve"><value>This is not a Magpie effect group file. Use Export on the source Magpie’s Effect groups page, then import the exported JSON file here. If someone shared the file, ask them for the Magpie export.</value></data>
+  <data name="Message_ImportIncompatible" xml:space="preserve"><value>An effect group entry has an incompatible structure. Export it again from a compatible Magpie version. No effect groups from this file were imported.</value></data>
+  <data name="Message_ExportWriteFailed" xml:space="preserve"><value>The effect-groups file could not be completely written. Check the path, free space and write permission; export again to a writable folder.</value></data>
+  <data name="Message_FileDialogFailed" xml:space="preserve"><value>The Windows file picker failed to open or return a location. Restart Magpie and try again; if it persists, share the details and log.</value></data>
+  <data name="Overlay_EffectParameters_ResetDefault" xml:space="preserve"><value>Double-click to restore the effect default: {}</value></data>
+  <data name="Overlay_Toolbar_PassThrough" xml:space="preserve"><value>Compare</value></data>
+  <data name="Message_PassThroughUnavailable" xml:space="preserve"><value>The original image is unavailable. Wait for a new captured frame and try again. If the problem persists, stop and reactivate the effect group; open details and share the log if needed. Effects continue processing.</value></data>
+  <data name="Home_Toolbar_Comparison.Header" xml:space="preserve"><value>Compare</value></data>
+  <data name="Home_Toolbar_Comparison_ShortcutControl.Title" xml:space="preserve"><value>Compare</value></data>
+  <data name="Overlay_Comparison_Original" xml:space="preserve"><value>Original</value></data>
+  <data name="Overlay_Comparison_Processed" xml:space="preserve"><value>Processed</value></data>
+  <data name="Message_MixedOpticalFlow" xml:space="preserve"><value>{0} request different optical-flow methods or quality levels. Currently using {1} for all of them.</value></data>
+  <data name="Motion_Nvidia_1" xml:space="preserve"><value>Performance</value></data>
+  <data name="Motion_Nvidia_2" xml:space="preserve"><value>Balanced</value></data>
+  <data name="Motion_Nvidia_3" xml:space="preserve"><value>Quality</value></data>
+  <data name="Motion_Nvidia_4" xml:space="preserve"><value>High quality</value></data>
+  <data name="Motion_Amd_0" xml:space="preserve"><value>Performance</value></data>
+  <data name="Motion_Amd_1" xml:space="preserve"><value>Quality</value></data>
+  <data name="Overlay_Profiler_FrameRateWithFG" xml:space="preserve"><value>Frame rate (total / real)</value></data>
+  <data name="Overlay_EffectParameters_NotApplied" xml:space="preserve"><value>Not applied (current: {0})</value></data>
+  <data name="Overlay_EffectParameters_ApplyPending" xml:space="preserve"><value>{0} change(s) not yet applied</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_dlssModelPreset_Label" xml:space="preserve"><value>DLSS Model</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_dlssModelPreset_Option_10" xml:space="preserve"><value>J (Legacy Transformer)</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_dlssModelPreset_Option_11" xml:space="preserve"><value>K (RTX 30 Recommended)</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_dlssModelPreset_Option_12" xml:space="preserve"><value>L (DLSS 4.5, Very High Cost)</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_dlssModelPreset_Option_13" xml:space="preserve"><value>M (DLSS 4.5, High Cost)</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_opticalFlowMethod_Label" xml:space="preserve"><value>Optical Flow Method</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_opticalFlowMethod_Option_0" xml:space="preserve"><value>None</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_opticalFlowMethod_Option_1" xml:space="preserve"><value>AMD OF</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_opticalFlowMethod_Option_2" xml:space="preserve"><value>NVOF</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_amdOpticalFlowMode_Label" xml:space="preserve"><value>OF Quality</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_amdOpticalFlowMode_Option_0" xml:space="preserve"><value>Performance</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_amdOpticalFlowMode_Option_1" xml:space="preserve"><value>Quality</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_nvidiaOpticalFlowQuality_Label" xml:space="preserve"><value>OF Quality</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_nvidiaOpticalFlowQuality_Option_1" xml:space="preserve"><value>Performance</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_nvidiaOpticalFlowQuality_Option_2" xml:space="preserve"><value>Balanced (Recommended)</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_nvidiaOpticalFlowQuality_Option_3" xml:space="preserve"><value>Quality</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_nvidiaOpticalFlowQuality_Option_4" xml:space="preserve"><value>High Quality (High Cost)</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_opticalFlowMethod_Label" xml:space="preserve"><value>Optical Flow Method</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_opticalFlowMethod_Option_0" xml:space="preserve"><value>None</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_opticalFlowMethod_Option_1" xml:space="preserve"><value>AMD OF</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_opticalFlowMethod_Option_2" xml:space="preserve"><value>NVOF</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_amdOpticalFlowMode_Label" xml:space="preserve"><value>OF Quality</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_amdOpticalFlowMode_Option_0" xml:space="preserve"><value>Performance</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_amdOpticalFlowMode_Option_1" xml:space="preserve"><value>Quality</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_nvidiaOpticalFlowQuality_Label" xml:space="preserve"><value>OF Quality</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_nvidiaOpticalFlowQuality_Option_1" xml:space="preserve"><value>Performance</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_nvidiaOpticalFlowQuality_Option_2" xml:space="preserve"><value>Balanced (Recommended)</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_nvidiaOpticalFlowQuality_Option_3" xml:space="preserve"><value>Quality</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_nvidiaOpticalFlowQuality_Option_4" xml:space="preserve"><value>High Quality (High Cost)</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_opticalFlowMethod_Label" xml:space="preserve"><value>Optical Flow Method</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_opticalFlowMethod_Option_0" xml:space="preserve"><value>None</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_opticalFlowMethod_Option_1" xml:space="preserve"><value>AMD OF</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_opticalFlowMethod_Option_2" xml:space="preserve"><value>NVOF</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_amdOpticalFlowMode_Label" xml:space="preserve"><value>OF Quality</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_amdOpticalFlowMode_Option_0" xml:space="preserve"><value>Performance</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_amdOpticalFlowMode_Option_1" xml:space="preserve"><value>Quality</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_nvidiaOpticalFlowQuality_Label" xml:space="preserve"><value>OF Quality</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_nvidiaOpticalFlowQuality_Option_1" xml:space="preserve"><value>Performance</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_nvidiaOpticalFlowQuality_Option_2" xml:space="preserve"><value>Balanced (Recommended)</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_nvidiaOpticalFlowQuality_Option_3" xml:space="preserve"><value>Quality</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_nvidiaOpticalFlowQuality_Option_4" xml:space="preserve"><value>High Quality (High Cost)</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_opticalFlowMethod_Label" xml:space="preserve"><value>Optical Flow Method</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_opticalFlowMethod_Option_0" xml:space="preserve"><value>None</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_opticalFlowMethod_Option_1" xml:space="preserve"><value>AMD OF</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_opticalFlowMethod_Option_2" xml:space="preserve"><value>NVOF</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_amdOpticalFlowMode_Label" xml:space="preserve"><value>OF Quality</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_amdOpticalFlowMode_Option_0" xml:space="preserve"><value>Performance</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_amdOpticalFlowMode_Option_1" xml:space="preserve"><value>Quality</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_nvidiaOpticalFlowQuality_Label" xml:space="preserve"><value>OF Quality</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_nvidiaOpticalFlowQuality_Option_1" xml:space="preserve"><value>Performance</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_nvidiaOpticalFlowQuality_Option_2" xml:space="preserve"><value>Balanced (Recommended)</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_nvidiaOpticalFlowQuality_Option_3" xml:space="preserve"><value>Quality</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_nvidiaOpticalFlowQuality_Option_4" xml:space="preserve"><value>High Quality (High Cost)</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_opticalFlowMethod_Label" xml:space="preserve"><value>Optical Flow Method</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_opticalFlowMethod_Option_0" xml:space="preserve"><value>None</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_opticalFlowMethod_Option_1" xml:space="preserve"><value>AMD OF</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_opticalFlowMethod_Option_2" xml:space="preserve"><value>NVOF</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_amdOpticalFlowMode_Label" xml:space="preserve"><value>OF Quality</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_amdOpticalFlowMode_Option_0" xml:space="preserve"><value>Performance</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_amdOpticalFlowMode_Option_1" xml:space="preserve"><value>Quality</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_nvidiaOpticalFlowQuality_Label" xml:space="preserve"><value>OF Quality</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_nvidiaOpticalFlowQuality_Option_1" xml:space="preserve"><value>Performance</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_nvidiaOpticalFlowQuality_Option_2" xml:space="preserve"><value>Balanced (Recommended)</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_nvidiaOpticalFlowQuality_Option_3" xml:space="preserve"><value>Quality</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_nvidiaOpticalFlowQuality_Option_4" xml:space="preserve"><value>High Quality (High Cost)</value></data>
+  <data name="EffectParam_DLSS_DLSS_SR_nvidiaOpticalFlowQuality_Option_5" xml:space="preserve"><value>Highest Quality (Very High Cost)</value></data>
+  <data name="EffectParam_FSR2_FSR2_SR_nvidiaOpticalFlowQuality_Option_5" xml:space="preserve"><value>Highest Quality (Very High Cost)</value></data>
+  <data name="EffectParam_FSR3_FSR3_SR_nvidiaOpticalFlowQuality_Option_5" xml:space="preserve"><value>Highest Quality (Very High Cost)</value></data>
+  <data name="EffectParam_FSR4_FSR4_SR_nvidiaOpticalFlowQuality_Option_5" xml:space="preserve"><value>Highest Quality (Very High Cost)</value></data>
+  <data name="EffectParam_XeSS_XeSS_SR_nvidiaOpticalFlowQuality_Option_5" xml:space="preserve"><value>Highest Quality (Very High Cost)</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_nvidiaOpticalFlowQuality_Option_5" xml:space="preserve"><value>Highest Quality (Very High Cost)</value></data>
+  <data name="Motion_Nvidia_5" xml:space="preserve"><value>Highest Quality</value></data>
+  <data name="Home_FrameSync.Header" xml:space="preserve"><value>Frame synchronization</value></data>
+  <data name="Home_FrameSync.Description" xml:space="preserve"><value>Saved automatically. Restart scaling to apply.</value></data>
+  <data name="Home_FrameSync_FrontEdgeSync.Header" xml:space="preserve"><value>Enable frame synchronization</value></data>
+  <data name="Home_FrameSync_FrontEdgeSync.Description" xml:space="preserve"><value>Control Magpie's frame pacing.</value></data>
+  <data name="Home_FrameSync_Target.Header" xml:space="preserve"><value>Target base frame rate (FPS)</value></data>
+  <data name="Home_FrameSync_Target.Description" xml:space="preserve"><value>0 is automatic, adjusted for FG. Match the source application's frame cap.</value></data>
+  <data name="Home_FrameSync_Target_Input.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve"><value>Target frame rate</value></data>
+  <data name="Home_FrameSync_VRR.Header" xml:space="preserve"><value>VRR (variable refresh rate)</value></data>
+  <data name="Home_FrameSync_VRR.Description" xml:space="preserve"><value>Allow compatible FreeSync / G-SYNC presentation. Enable VRR on both the display and driver; tearing may occur when VRR is inactive.</value></data>
+  <data name="EffectParam_FrameRate_Filter_frameRateMode_Label" xml:space="preserve"><value>Frame Rate Mode</value></data>
+  <data name="EffectParam_FrameRate_Filter_frameRateMode_Option_0" xml:space="preserve"><value>Follow frame synchronization</value></data>
+  <data name="EffectParam_FrameRate_Filter_frameRateMode_Option_1" xml:space="preserve"><value>Custom</value></data>
+  <data name="Overlay_EffectParameters_AutoRestart" xml:space="preserve"><value>Auto restart</value></data>
+  <data name="Overlay_EffectParameters_Reason_AutoRestart" xml:space="preserve"><value>After editing, the effect group stops and restarts after 500 ms to rebuild DLSSNR history.</value></data>
+  <data name="Overlay_FrameSync_Title" xml:space="preserve">
+    <value>Frame sync</value>
+  </data>
+  <data name="Overlay_FrameSync_Target" xml:space="preserve">
+    <value>Target base frame rate (FPS)</value>
+  </data>
+  <data name="Overlay_FrameSync_Help" xml:space="preserve">
+    <value>Saved automatically; use Apply and restart to apply changes. 0 is automatic. Set the source application frame cap separately.</value>
+  </data>
+  <data name="Message_NgxRestartRequired" xml:space="preserve">
+    <value>NVIDIA effects encountered an error. Fully exit Magpie from the system tray and start it again before enabling DLSSNR or DLSS Frame Generation.</value>
+  </data>
+  <data name="Message_CaptureFailed_TryGraphicsCapture" xml:space="preserve"><value>Restore the source window. Open the profile below, select Graphics Capture as the capture method, then enable the effect group again. If it still fails, copy the details and include the logs.</value></data>
+  <data name="Message_CaptureFailed_AlreadyGraphicsCapture" xml:space="preserve"><value>Graphics Capture is already selected. Restore the source window and enable the effect group again. If it still fails, check the failed step and error code in details, then copy the details and include the logs.</value></data>
+  <data name="Message_CreateFenceFailed_SingleAdapter" xml:space="preserve"><value>The graphics card could not create synchronization resources. Update its driver, restart Magpie and retry. If it still fails, copy the details and include the logs.</value></data>
+  <data name="Message_ScreenshotIntermediateEncodeFailed" xml:space="preserve"><value>This intermediate result could not be saved. Click Take Screenshot on the toolbar to try saving the displayed image, which is saved as PNG automatically. If it still fails, copy the details and include the logs.</value></data>
+  <data name="Message_ConfigurationRecoveredBackup" xml:space="preserve"><value>The configuration was damaged and a backup has been loaded. Check your effect groups and profiles. The damaged original was preserved; its path is in details. Click Open configuration folder to inspect it.</value></data>
+  <data name="Message_ConfigurationRecoveredPartial" xml:space="preserve"><value>The configuration was damaged. Recoverable entries were loaded and remaining settings use defaults. Check your effect groups and shortcuts. The damaged original was preserved; its path is in details. Click Open configuration folder to inspect it.</value></data>
+  <data name="ErrorAdvice_ReadAccessDenied" xml:space="preserve"><value>Windows denied reading this file. In File Explorer, check that your account has read access and that the file is downloaded locally, then select it again.</value></data>
+  <data name="ErrorAdvice_OperationAccessDenied" xml:space="preserve"><value>Windows denied access for this operation. Follow the steps above and retry. If it still fails, provide the operation and error code below.</value></data>
+  <data name="ErrorDetails_Profile" xml:space="preserve"><value>Profile</value></data>
+  <data name="ErrorDetails_Group" xml:space="preserve"><value>Effect group</value></data>
+  <data name="ErrorDetails_Window" xml:space="preserve"><value>Source window</value></data>
+  <data name="ErrorDetails_Capture" xml:space="preserve"><value>Capture method</value></data>
+  <data name="ErrorDetails_RetrySave" xml:space="preserve"><value>Retry save</value></data>
+  <data name="ErrorDetails_OpenProfile" xml:space="preserve"><value>Open this profile</value></data>
+  <data name="ErrorDetails_OpenEffects" xml:space="preserve"><value>Open effect groups</value></data>
+  <data name="ErrorDetails_OpenConfigDirectory" xml:space="preserve"><value>Open configuration folder</value></data>
+  <data name="ErrorDetails_OpenConfigFailed" xml:space="preserve"><value>The folder could not be opened. Copy the configuration path into File Explorer to inspect its location.</value></data>
+  <data name="ErrorDetails_ProfileChanged" xml:space="preserve"><value>This profile was removed, renamed or had its matching rules changed. Close details and select the profile you want to edit from the sidebar.</value></data>
+  <data name="ErrorDetails_Saving" xml:space="preserve"><value>Saving current changes…</value></data>
+  <data name="ErrorDetails_SaveSucceeded" xml:space="preserve"><value>These changes have been saved to disk.</value></data>
+  <data name="ErrorDetails_SaveStillFailed" xml:space="preserve"><value>Saving still failed. Close and reopen details to inspect the latest cause, resolve it, then click Retry save again.</value></data>
+  <data name="ErrorDetails_PreviousRun" xml:space="preserve"><value>Previous run: {}</value></data>
+  <data name="ErrorDetails_PreviousRunHint" xml:space="preserve"><value>This diagnostic was retained from a previous run. It does not restore that run’s unsaved changes. Check the current state before following its steps. Logs remain in the listed folder.</value></data>
+  <data name="ErrorDetails_SaveFailedToast" xml:space="preserve"><value>Changes are not saved. Keep Magpie open and use Home to retry saving.</value></data>
+  <data name="ErrorDetails_RecoveryToast" xml:space="preserve"><value>Settings were recovered from a damaged configuration. Open Home to review the recovery.</value></data>
+  <data name="Home_RecentIssue_Reopen.Content" xml:space="preserve"><value>View most recent issue</value></data>
+  <data name="AppSettings_ReadFailedGuidance" xml:space="preserve"><value>Open the location below in File Explorer. Check that the drive is connected, the file is downloaded locally and your account can read it, then restart Magpie. The original configuration was not changed.</value></data>
+  <data name="AppSettings_ReadAccessDenied" xml:space="preserve"><value>Open the location below in File Explorer and check that your account can read this file, then restart Magpie. The original configuration was not changed.</value></data>
+  <data name="AppSettings_CopyFailed" xml:space="preserve"><value>Copying failed. Record the path and error code below, resolve the problem, then restart Magpie.</value></data>
+  <data name="AppSettings_ConfigLocationFailed" xml:space="preserve"><value>The configuration location could not be accessed. Check that its drive is connected and your account has access and write permission, then restart Magpie. Related location:</value></data>
+  <data name="AppSettings_BackupFailed" xml:space="preserve"><value>The original configuration could not be preserved. Check write permission and free space at the backup path below, then restart Magpie. The original remains available for recovery. Backup destination:</value></data>
+  <data name="Message_ConfigurationRepaired" xml:space="preserve"><value>Invalid settings in the old configuration have been repaired; other settings were retained. Check your effect groups and profiles, then try scaling again. Details list the repaired entries. Click Open configuration folder to inspect the original backup.</value></data>
+  <data name="Message_ConfigurationResetDefaults" xml:space="preserve"><value>The original configuration and its backup could not be recovered, so default settings were created. Try scaling again, then configure your effect groups and shortcuts. Click Open configuration folder to inspect the preserved original.</value></data>
+  <data name="AppSettings_RecoveredGroup" xml:space="preserve"><value>Recovered effect group</value></data>
+  <data name="AppSettings_RecoveryRecordFailed" xml:space="preserve"><value>A recovery record exists for this configuration but is unavailable. Open the folder below, choose a usable configuration from the preserved original or another backup, replace config.json, then restart Magpie.</value></data>
+  <data name="AppSettings_RecoveryWriteFailed" xml:space="preserve"><value>Configuration recovery could not be completed. Check write permission, file locks and free disk space in the configuration folder, then restart Magpie. Any saved recovery result will be reused. Related location:</value></data>
+  <data name="Message_CaptureMethodUnavailable" xml:space="preserve"><value>The selected capture method is unavailable in this system session. Open the profile below and try another capture method (start with Graphics Capture, or try GDI if it is already selected). If it still fails, copy the details and include the logs.</value></data>
+  <data name="Overlay_EffectParameters_Applying" xml:space="preserve">
+    <value>Applying parameters…</value>
+  </data>
+  <data name="Overlay_EffectParameters_ApplyRolledBack" xml:space="preserve">
+    <value>Previous quality restored. Try a lower level; if it still fails, share the log.</value>
+  </data>
+  <data name="EffectParam_RTXVideo_RTXVideo_Denoise_strength_Label" xml:space="preserve">
+    <value>Strength</value>
+  </data>
+  <data name="EffectParam_RTXVideo_RTXVideo_Denoise_strength_Option_0" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="EffectParam_RTXVideo_RTXVideo_Denoise_strength_Option_1" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="EffectParam_RTXVideo_RTXVideo_Denoise_strength_Option_2" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="EffectParam_RTXVideo_RTXVideo_Denoise_strength_Option_3" xml:space="preserve">
+    <value>Ultra</value>
+  </data>
+  <data name="EffectParam_RTXVideo_RTXVideo_VSR_strength_Label" xml:space="preserve">
+    <value>Strength</value>
+  </data>
+  <data name="EffectParam_RTXVideo_RTXVideo_VSR_strength_Option_0" xml:space="preserve">
+    <value>Low</value>
+  </data>
+  <data name="EffectParam_RTXVideo_RTXVideo_VSR_strength_Option_1" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+  <data name="EffectParam_RTXVideo_RTXVideo_VSR_strength_Option_2" xml:space="preserve">
+    <value>High</value>
+  </data>
+  <data name="EffectParam_RTXVideo_RTXVideo_VSR_strength_Option_3" xml:space="preserve">
+    <value>Ultra</value>
+  </data>
+  <data name="Message_HdrComponentExpectedHdr" xml:space="preserve"><value>The input to HDR to SDR is already SDR. Remove the duplicate conversion, or move it after a component that produces HDR.</value></data>
+  <data name="Message_HdrComponentExpectedSdr" xml:space="preserve"><value>SDR to HDR and RTX Video HDR need SDR input. Remove the preceding HDR expansion, or add HDR to SDR before this component.</value></data>
+  <data name="Message_HdrComponentMissingPair" xml:space="preserve"><value>No compatibility pair is available. Add an earlier HDR to SDR in compatibility mode, or select Auto / Native SDR mapping in SDR to HDR.</value></data>
+  <data name="Message_HdrComponentInvalidParameters" xml:space="preserve"><value>An HDR component parameter is outside its supported range. Restore the component defaults in the effect group and retry; copy the details if it still fails.</value></data>
+  <data name="Message_HdrCaptureRequired" xml:space="preserve"><value>HDR to SDR needs HDR capture. Enable HDR for the source display in Windows settings. For native SDR, use SDR effects directly and optionally append SDR to HDR.</value></data>
+  <data name="Message_HdrDisplayRequired" xml:space="preserve"><value>This group outputs HDR. Enable HDR for the target display in Windows settings, or finish the group with HDR to SDR in display mode. Enable HDR on every target when spanning displays.</value></data>
+  <data name="Message_HdrCaptureMethodRequired" xml:space="preserve"><value>Select Graphics Capture in this profile, then retry HDR to SDR. This capture path preserves the HDR brightness range.</value></data>
+  <data name="Message_RtxHdrUnavailable" xml:space="preserve"><value>RTX Video HDR could not process this frame. Update the NVIDIA driver, use an RTX 20-series or newer GPU, and restore Magpie.RtxVideo.dll and nvngx_truehdr.dll from the complete package. You can replace this component with native SDR mapping in SDR to HDR. If it still fails, fully restart Magpie and copy the details.</value></data>
+  <data name="EffectParam_Color_HDR_to_SDR_mode_Label" xml:space="preserve"><value>Mapping</value></data>
+  <data name="EffectParam_Color_HDR_to_SDR_mode_Option_0" xml:space="preserve"><value>Compatibility pair</value></data>
+  <data name="EffectParam_Color_HDR_to_SDR_mode_Option_1" xml:space="preserve"><value>SDR display tone map</value></data>
+  <data name="EffectParam_Color_HDR_to_SDR_whiteNits_Label" xml:space="preserve"><value>SDR white (nits)</value></data>
+  <data name="EffectParam_Color_HDR_to_SDR_peakNits_Label" xml:space="preserve"><value>HDR peak (nits)</value></data>
+  <data name="EffectParam_Color_HDR_to_SDR_exposure_Label" xml:space="preserve"><value>Exposure</value></data>
+  <data name="EffectParam_Color_HDR_to_SDR_shoulder_Label" xml:space="preserve"><value>Shoulder</value></data>
+  <data name="EffectParam_Color_SDR_to_HDR_mode_Label" xml:space="preserve"><value>Mapping</value></data>
+  <data name="EffectParam_Color_SDR_to_HDR_mode_Option_0" xml:space="preserve"><value>Auto: restore pair or map SDR white</value></data>
+  <data name="EffectParam_Color_SDR_to_HDR_mode_Option_1" xml:space="preserve"><value>Native SDR white mapping</value></data>
+  <data name="EffectParam_Color_SDR_to_HDR_mode_Option_2" xml:space="preserve"><value>Restore compatibility pair</value></data>
+  <data name="EffectParam_Color_SDR_to_HDR_whiteNits_Label" xml:space="preserve"><value>Native SDR white (nits)</value></data>
+  <data name="EffectParam_Color_SDR_to_HDR_exposure_Label" xml:space="preserve"><value>Native SDR exposure</value></data>
+  <data name="EffectParam_RTXVideo_RTXVideo_HDR_contrast_Label" xml:space="preserve"><value>Contrast</value></data>
+  <data name="EffectParam_RTXVideo_RTXVideo_HDR_saturation_Label" xml:space="preserve"><value>Saturation</value></data>
+  <data name="EffectParam_RTXVideo_RTXVideo_HDR_middleGray_Label" xml:space="preserve"><value>Middle gray</value></data>
+  <data name="EffectParam_RTXVideo_RTXVideo_HDR_peakNits_Label" xml:space="preserve"><value>Peak brightness (nits)</value></data>
+  <data name="FrameSync_Mode_FrontEdge.Content" xml:space="preserve"><value>Front Edge Sync</value></data>
+  <data name="FrameSync_Mode_Async.Content" xml:space="preserve"><value>Async</value></data>
+  <data name="FrameSync_Mode_Reflex.Content" xml:space="preserve"><value>NVIDIA Reflex</value></data>
+  <data name="Home_FrameSync_Mode.Header" xml:space="preserve"><value>Pacing mode</value></data>
+  <data name="Home_FrameSync_Mode.Description" xml:space="preserve"><value>Front Edge: steady submissions; Async: capture intervals; Reflex: driver base pacing, including DLSS FG.</value></data>
+  <data name="Overlay_FrameSync_Enable" xml:space="preserve"><value>Enable frame synchronization</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_amdOpticalFlowMode_Label" xml:space="preserve"><value>OF Quality</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_amdOpticalFlowMode_Option_0" xml:space="preserve"><value>Performance</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_amdOpticalFlowMode_Option_1" xml:space="preserve"><value>Quality</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_nvidiaOpticalFlowQuality_Label" xml:space="preserve"><value>OF Quality</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_nvidiaOpticalFlowQuality_Option_1" xml:space="preserve"><value>Performance</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_nvidiaOpticalFlowQuality_Option_2" xml:space="preserve"><value>Balanced</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_nvidiaOpticalFlowQuality_Option_3" xml:space="preserve"><value>Quality</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_nvidiaOpticalFlowQuality_Option_4" xml:space="preserve"><value>High Quality (High Cost)</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_opticalFlowMethod_Label" xml:space="preserve"><value>Optical Flow Method</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_opticalFlowMethod_Option_0" xml:space="preserve"><value>None</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_opticalFlowMethod_Option_1" xml:space="preserve"><value>AMDOF</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_opticalFlowMethod_Option_2" xml:space="preserve"><value>NVOF</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_nvidiaOpticalFlowQuality_Option_5" xml:space="preserve"><value>Highest Quality (Very High Cost)</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_amdOpticalFlowMode_Label" xml:space="preserve"><value>OF Quality</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_amdOpticalFlowMode_Option_0" xml:space="preserve"><value>Performance</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_amdOpticalFlowMode_Option_1" xml:space="preserve"><value>Quality</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_nvidiaOpticalFlowQuality_Label" xml:space="preserve"><value>OF Quality</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_nvidiaOpticalFlowQuality_Option_1" xml:space="preserve"><value>Performance</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_nvidiaOpticalFlowQuality_Option_2" xml:space="preserve"><value>Balanced (Recommended)</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_nvidiaOpticalFlowQuality_Option_3" xml:space="preserve"><value>Quality</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_nvidiaOpticalFlowQuality_Option_4" xml:space="preserve"><value>High Quality (High Cost)</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_opticalFlowMethod_Label" xml:space="preserve"><value>Optical Flow Method</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_opticalFlowMethod_Option_0" xml:space="preserve"><value>None</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_opticalFlowMethod_Option_1" xml:space="preserve"><value>AMDOF</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_opticalFlowMethod_Option_2" xml:space="preserve"><value>NVOF</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_nvidiaOpticalFlowQuality_Option_5" xml:space="preserve"><value>Highest Quality (Very High Cost)</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_amdOpticalFlowMode_Label" xml:space="preserve"><value>OF Quality</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_amdOpticalFlowMode_Option_0" xml:space="preserve"><value>Performance</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_amdOpticalFlowMode_Option_1" xml:space="preserve"><value>Quality</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_nvidiaOpticalFlowQuality_Label" xml:space="preserve"><value>OF Quality</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_nvidiaOpticalFlowQuality_Option_1" xml:space="preserve"><value>Performance</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_nvidiaOpticalFlowQuality_Option_2" xml:space="preserve"><value>Balanced (Recommended)</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_nvidiaOpticalFlowQuality_Option_3" xml:space="preserve"><value>Quality</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_nvidiaOpticalFlowQuality_Option_4" xml:space="preserve"><value>High Quality (High Cost)</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_opticalFlowMethod_Label" xml:space="preserve"><value>Optical Flow Method</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_opticalFlowMethod_Option_0" xml:space="preserve"><value>None</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_opticalFlowMethod_Option_1" xml:space="preserve"><value>AMDOF</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_opticalFlowMethod_Option_2" xml:space="preserve"><value>NVOF</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Motion_nvidiaOpticalFlowQuality_Option_5" xml:space="preserve"><value>Highest Quality (Very High Cost)</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_amdOpticalFlowMode_Label" xml:space="preserve"><value>OF Quality</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_amdOpticalFlowMode_Option_0" xml:space="preserve"><value>Performance</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_amdOpticalFlowMode_Option_1" xml:space="preserve"><value>Quality</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_nvidiaOpticalFlowQuality_Label" xml:space="preserve"><value>OF Quality</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_nvidiaOpticalFlowQuality_Option_1" xml:space="preserve"><value>Performance</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_nvidiaOpticalFlowQuality_Option_2" xml:space="preserve"><value>Balanced (Recommended)</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_nvidiaOpticalFlowQuality_Option_3" xml:space="preserve"><value>Quality</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_nvidiaOpticalFlowQuality_Option_4" xml:space="preserve"><value>High Quality (High Cost)</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_opticalFlowMethod_Label" xml:space="preserve"><value>Optical Flow Method</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_opticalFlowMethod_Option_0" xml:space="preserve"><value>None</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_opticalFlowMethod_Option_1" xml:space="preserve"><value>AMDOF</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_opticalFlowMethod_Option_2" xml:space="preserve"><value>NVOF</value></data>
+  <data name="EffectParam_Diagnostics_FrameGuidance_Confidence_nvidiaOpticalFlowQuality_Option_5" xml:space="preserve"><value>Highest Quality (Very High Cost)</value></data>
+  <data name="ScalingModes_RecoveryInvalid_Name" xml:space="preserve"><value>Invalid effect</value></data>
+  <data name="ScalingModes_RecoveryInvalid_Description" xml:space="preserve"><value>This item could not be fully recovered. Remove it and add the effect you want.</value></data>
+  <data name="ScalingModes_MissingEffect_Description" xml:space="preserve"><value>The effect file is unavailable. Restore its file, or remove this item and add a replacement.</value></data>
+  <data name="ScalingModes_NameRequired" xml:space="preserve"><value>Enter a name for this effect group.</value></data>
+  <data name="ScalingModes_NameAlreadyExists" xml:space="preserve"><value>This name is already in use. Choose a different name; capitalization and surrounding spaces do not distinguish names.</value></data>
+  <data name="ScalingModes_DuplicateNames.Title" xml:space="preserve"><value>Update duplicate group names</value></data>
+  <data name="ScalingModes_DuplicateNames.Message" xml:space="preserve"><value>Existing settings contain groups with the same name. Rename them individually using the pencil button; all effects and profile links have been retained.</value></data>
+  <data name="ScalingModes_NameConflict.Message" xml:space="preserve"><value>Another group uses this name. Use the pencil button to choose a different name.</value></data>
+  <data name="ScalingModes_ImportRenamed" xml:space="preserve"><value>Imported all effect groups; duplicate names received numbered suffixes. You can rename them using the pencil button.</value></data>
+  <data name="Message_DuplicateScalingModeNames" xml:space="preserve"><value>Existing settings contain duplicate effect-group names. Open Effect groups and rename them using the pencil button; all groups have been retained.</value></data>
+  <data name="Overlay_Parameters_Edit" xml:space="preserve"><value>Edit</value></data>
+  <data name="Overlay_Parameters_Preview" xml:space="preserve"><value>Preview</value></data>
+  <data name="Overlay_Parameters_InputHint" xml:space="preserve"><value>Ctrl+click a slider to enter its value. Esc: Edit → Preview → Closed. Click the preview panel to edit. Open / close shortcut:</value></data>
+  <data name="Overlay_Parameters_FocusFailed" xml:space="preserve"><value>Click the game window to restore control</value></data>
+  <data name="Profile_Advanced_ParameterFocusSwitching.Header" xml:space="preserve"><value>Switch focus for parameter adjustment</value></data>
+  <data name="Profile_Advanced_ParameterFocusSwitching.Description" xml:space="preserve"><value>Enable focus switching during live parameter adjustment. This may be unstable with some windows.</value></data>
+  <data name="Home_Advanced_StopEffectsOnTaskSwitch.Header" xml:space="preserve"><value>Disable active effects when switching tasks</value></data>
+  <data name="Home_Advanced_StopEffectsOnTaskSwitch.Description" xml:space="preserve"><value>If switching tasks while using DLSSNR makes you feel like you have eaten poisonous mushrooms, try enabling this.</value></data>
+  <data name="EffectPicker_CustomSummary" xml:space="preserve"><value>Custom effect; see the author's documentation.</value></data>
+  <data name="EffectPicker_CustomDetails" xml:space="preserve"><value>This effect has not been reviewed yet. See the author's documentation for its purpose, parameters, and recommended position in an effect chain. HDR compatibility has not been verified.</value></data>
+  <data name="EffectPicker_All" xml:space="preserve"><value>All</value></data>
+  <data name="EffectPicker_AllDescription" xml:space="preserve"><value>Browse the purpose, recommended scenarios, and combination guidance for installed effects.</value></data>
+  <data name="EffectPicker_DetailScrollHint" xml:space="preserve"><value>Ctrl + wheel: scroll description</value></data>
+  <data name="EffectPicker_NameSeparator" xml:space="preserve"><value>, </value></data>
+  <data name="EffectPicker_EffectCountSuffix" xml:space="preserve"><value> effects</value></data>
+  <data name="EffectPicker_GettingStarted" xml:space="preserve"><value>Getting started</value></data>
+  <data name="EffectPicker_GettingStartedDescription" xml:space="preserve"><value>Choose an approachable effect for your scenario, then compare the image before adding more.</value></data>
+  <data name="EffectPicker_Advanced" xml:space="preserve"><value>Advanced</value></data>
+  <data name="EffectPicker_AdvancedDescription" xml:space="preserve"><value>Video super resolution, frame generation, AI image enhancement, and frame-rate control. Choose according to your GPU and target image.</value></data>
+  <data name="EffectPicker_CustomCategory" xml:space="preserve"><value>Custom / uncategorized</value></data>
+  <data name="EffectPicker_CustomCategoryDescription" xml:space="preserve"><value>Installed effects without catalog guidance. See the author's documentation for parameters and chain placement.</value></data>
+  <data name="EffectPicker_SearchPlaceholder" xml:space="preserve"><value>Search effects, purposes, or keywords…</value></data>
+  <data name="EffectPicker_SearchAutomationName" xml:space="preserve"><value>Search all effects</value></data>
+  <data name="EffectPicker_JumpTo" xml:space="preserve"><value>Jump to </value></data>
+  <data name="EffectPicker_AlphabetIndexAutomationName" xml:space="preserve"><value>Jump to effects by first letter</value></data>
+  <data name="EffectPicker_Selected" xml:space="preserve"><value>Selected</value></data>
+  <data name="EffectPicker_ChildSelected" xml:space="preserve"><value>Child category selected</value></data>
+  <data name="EffectPicker_Expanded" xml:space="preserve"><value>Expanded</value></data>
+  <data name="EffectPicker_Collapsed" xml:space="preserve"><value>Collapsed</value></data>
+  <data name="EffectPicker_SearchAllCategories" xml:space="preserve"><value>Searching all categories</value></data>
+  <data name="EffectPicker_NoMatches" xml:space="preserve"><value>No matching effects</value></data>
+  <data name="EffectPicker_NoMatchesDescription" xml:space="preserve"><value>Try a shorter keyword, search for an algorithm family, or choose “All” to browse installed effects.</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_multiPass_Label" xml:space="preserve"><value>Multi Pass</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_Group_DLSSNR____Pass_1" xml:space="preserve"><value>DLSSNR · Pass 1</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_Group_DLSSNR____Pass_2" xml:space="preserve"><value>DLSSNR · Pass 2</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_Group_DLSSNR____Pass_3" xml:space="preserve"><value>DLSSNR · Pass 3</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_antiFlicker_Label" xml:space="preserve"><value>Anti-flicker</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_antiFlicker_Option_0" xml:space="preserve"><value>None</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_antiFlicker_Option_1" xml:space="preserve"><value>Static Accumulation</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_antiFlicker_Option_2" xml:space="preserve"><value>Optical Flow Accumulation</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_antiFlicker_Option_3" xml:space="preserve"><value>Optical Flow Accumulation+</value></data>
+  <data name="EffectParam_DLSSNR_DLSSNR_AI_Filter_antiFlicker_Option_4" xml:space="preserve"><value>Low-frequency Temporal Reconstruction</value></data>
+  <data name="EffectParam_DLSSFG_DLSS_FrameGeneration_duplicateFrameFiltering_Label" xml:space="preserve"><value>Duplicate Frame Filtering</value></data>
+  <data name="EffectParam_XeSSFG_XeSS_FrameGeneration_duplicateFrameFiltering_Label" xml:space="preserve"><value>Duplicate Frame Filtering</value></data>
+</root>

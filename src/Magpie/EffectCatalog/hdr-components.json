@@ -1,0 +1,58 @@
+{
+  "category": {
+    "id": "hdr-components",
+    "name": "HDR 组件",
+    "description": "连接 HDR 与 SDR 处理流程，用于搭建颜色转换、SDR 效果兼容和 HDR 扩展效果组。",
+    "subcategories": []
+  },
+  "effects": [
+    {
+      "id": "Color\\HDR_to_SDR",
+      "name": "HDR → SDR",
+      "category": "hdr-components",
+      "subcategory": "",
+      "purposes": [
+        "hdr-components"
+      ],
+      "summary": "将 HDR 映射到 SDR，接入 SDR 效果或 SDR 显示。",
+      "details": "HDR 组件\n\n放在需要 SDR 输入的效果之前。兼容配对模式会为高光预留范围，后续 SDR → HDR 自动沿用两端参数；SDR 显示模式用于直接观看，不作为配对恢复依据。\n\n使用条件：源应用所在屏幕开启 Windows HDR，并选择 Graphics Capture。保持输入尺寸。\n\nHDR 注意：兼容配对的亮度分布与普通 SDR 不同，AI 效果需对比观感。量化、裁切和中间处理可能损失原始高光或颜色。\n\n进阶／实验：用于自定义颜色流程，先比较白点、渐变和高光。\n\n性能成本：每次处理增加一次全帧 GPU 转换，开销随分辨率变化。参数修改在重新缩放后生效。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "Color\\HDR_to_SDR HDR → SDR 将 HDR 映射到 SDR，接入 SDR 效果或 SDR 显示。 HDR SDR 色调映射 色彩转换 兼容 白点 scRGB ",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "Color\\SDR_to_HDR",
+      "name": "SDR → HDR",
+      "category": "hdr-components",
+      "subcategory": "",
+      "purposes": [
+        "hdr-components"
+      ],
+      "summary": "恢复上游兼容映射，或将原生 SDR 白点映射到 HDR。",
+      "details": "HDR 组件\n\n放在 SDR 效果段之后。自动模式优先恢复前面的 HDR → SDR 兼容映射；没有配对时，将 SDR 白色映射到设定亮度。可明确选择原生 SDR 映射或配对恢复。\n\n配对恢复自动使用上游参数；本项白点和曝光仅作用于原生 SDR 映射。保持输入尺寸。\n\n使用条件：输出屏幕开启 Windows HDR。普通白点映射不生成原始素材中不存在的高光细节。经过 SDR 处理后的恢复不保证无损。\n\n进阶／实验：用于自定义颜色流程，先比较白点、渐变和高光。\n\n性能成本：每次处理增加一次全帧 GPU 转换，开销随分辨率变化。参数修改在重新缩放后生效。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "Color\\SDR_to_HDR SDR → HDR 恢复上游兼容映射，或将原生 SDR 白点映射到 HDR。 HDR SDR 色调映射 色彩转换 兼容 白点 scRGB ",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "RTXVideo\\RTXVideo_HDR",
+      "name": "RTX Video HDR",
+      "category": "hdr-components",
+      "subcategory": "",
+      "purposes": [
+        "hdr-components"
+      ],
+      "summary": "将 SDR 画面通过 NVIDIA AI 扩展为 HDR。",
+      "details": "HDR 组件\n\n放在 SDR 效果之后，作为 SDR → HDR 的另一种选择。HDR 输入先通过 HDR → SDR；AI 扩展会重新塑造亮度与颜色，不代表恢复原始 HDR。\n\n使用条件：NVIDIA RTX 20 系及更新显卡、可用的 RTX Video HDR 运行库与驱动，输出屏幕开启 Windows HDR。保持输入尺寸。\n\n参数：对比度、饱和度、中间灰和峰值亮度。峰值按目标显示器设置。图像效果完成后才进入补帧阶段。\n\n进阶／实验：用于自定义颜色流程，先比较白点、渐变和高光。\n\n性能成本：NVIDIA AI 推理，实际开销由分辨率和显卡决定。四项参数可在工具栏中实时调整，应用到后续处理帧。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "RTXVideo\\RTXVideo_HDR RTX Video HDR 将 SDR 画面通过 NVIDIA AI 扩展为 HDR。 HDR SDR 色调映射 色彩转换 兼容 白点 scRGB RTX Video TrueHDR NVIDIA AI",
+      "family": null,
+      "subfamily": null
+    }
+  ]
+}

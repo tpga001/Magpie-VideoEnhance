@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Magpie Browser 4K60 Lab [PREPARING]</title>
+  <style>
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #05070a; color: #eef2f6; font: 16px/1.4 "Segoe UI", sans-serif; }
+    video { width: 100%; height: 100%; display: block; object-fit: contain; background: #05070a; }
+    #status { position: fixed; top: 20px; left: 20px; z-index: 2; padding: 10px 14px; border: 1px solid #5eead4; border-radius: 8px; background: rgba(5, 7, 10, .78); backdrop-filter: blur(8px); font-variant-numeric: tabular-nums; }
+    #status strong { color: #5eead4; }
+  </style>
+</head>
+<body>
+  <video id="video" muted autoplay loop playsinline></video>
+  <div id="status" role="status"><strong>PREPARING</strong> · generating 1920×1080 @ 30fps video</div>
+  <script>
+    (() => {
+      const W = 1920, H = 1080, FPS = 30, SECONDS = 6;
+      const runToken = new URLSearchParams(location.search).get('run') || '';
+      const titleBase = `Magpie Browser 4K60 Lab${runToken ? ` ${runToken}` : ''}`;
+      document.title = `${titleBase} [PREPARING]`;
+      const canvas = document.createElement('canvas');
+      canvas.width = W;
+      canvas.height = H;
+      const ctx = canvas.getContext('2d', { alpha: false });
+      const video = document.querySelector('#video');
+      const status = document.querySelector('#status');
+      const chunks = [];
+      let frame = 0;
+
+      function drawFrame(i) {
+        const t = i / FPS;
+        const g = ctx.createLinearGradient(0, 0, W, H);
+        g.addColorStop(0, '#07111f');
+        g.addColorStop(.5, '#102a43');
+        g.addColorStop(1, '#081017');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, W, H);
+
+        ctx.strokeStyle = 'rgba(255,255,255,.12)';
+        ctx.lineWidth = 1;
+        for (let x = 0; x <= W; x += 60) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+        for (let y = 0; y <= H; y += 60) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+        const x = 180 + (W - 360) * ((Math.sin(t * 1.7) + 1) / 2);
+        const y = H / 2 + Math.sin(t * 2.3) * 260;
+        ctx.beginPath();
+        ctx.arc(x, y, 82, 0, Math.PI * 2);
+        ctx.fillStyle = '#5eead4';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(W - x, H - y, 54, 0, Math.PI * 2);
+        ctx.fillStyle = '#fbbf24';
+        ctx.fill();
+
+        ctx.fillStyle = '#eef2f6';
+        ctx.font = '700 86px Segoe UI';
+        ctx.fillText('MAGPIE · BROWSER VIDEO', 92, 150);
+        ctx.fillStyle = '#9fb3c8';
+        ctx.font = '44px Segoe UI';
+        ctx.fillText('1920 × 1080  /  30 FPS SOURCE', 96, 220);
+        ctx.fillStyle = '#eef2f6';
+        ctx.font = '700 160px Consolas';
+        ctx.fillText(String(i).padStart(4, '0'), 96, H - 110);
+        ctx.font = '34px Consolas';
+        ctx.fillText(`${t.toFixed(3)} s`, 600, H - 130);
+      }
+
+      const mimeCandidates = [
+        'video/webm;codecs=vp9',
+        'video/webm;codecs=vp8',
+        'video/webm'
+      ];
+      const mimeType = mimeCandidates.find(MediaRecorder.isTypeSupported) || '';
+      const stream = canvas.captureStream(FPS);
+      const recorder = new MediaRecorder(stream, mimeType ? { mimeType, videoBitsPerSecond: 12_000_000 } : undefined);
+      recorder.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+      recorder.onerror = e => {
+        status.innerHTML = `<strong>ERROR</strong> · ${e.error?.message || 'MediaRecorder failed'}`;
+        document.title = `${titleBase} [ERROR]`;
+      };
+      recorder.onstop = () => {
+        stream.getTracks().forEach(track => track.stop());
+        video.src = URL.createObjectURL(new Blob(chunks, { type: recorder.mimeType || 'video/webm' }));
+      };
+      video.addEventListener('loadedmetadata', async () => {
+        await video.play();
+        document.title = `${titleBase} [READY]`;
+        status.innerHTML = `<strong>READY</strong> · VIDEO ${video.videoWidth}×${video.videoHeight} · SOURCE ${FPS}fps`;
+      });
+
+      recorder.start(250);
+      drawFrame(frame++);
+      const timer = setInterval(() => {
+        drawFrame(frame++);
+        if (frame >= FPS * SECONDS) {
+          clearInterval(timer);
+          recorder.stop();
+        }
+      }, 1000 / FPS);
+    })();
+  </script>
+</body>
+</html>

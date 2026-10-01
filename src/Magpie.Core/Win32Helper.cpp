@@ -1,0 +1,1190 @@
+#include "pch.h"
+#include "FrameTrace.h"
+#include "Win32Helper.h"
+#include "StrHelper.h"
+#include <dcomp.h>
+#include <dwmapi.h>
+#include <io.h>
+#pragma push_macro("ShellExecute")
+#undef ShellExecute
+#include <shellapi.h>
+#pragma pop_macro("ShellExecute")
+#include <ShlObj.h>
+#include <wil/token_helpers.h>
+#include <span>
+
+namespace Magpie {
+
+namespace {
+
+struct DisplayTargetInfo {
+	std::wstring gdiDeviceName;
+	std::wstring deviceId;
+	std::wstring friendlyName;
+};
+
+std::vector<DisplayTargetInfo> GetActiveDisplayTargets() noexcept {
+	std::vector<DisplayTargetInfo> result;
+
+	for (int attempt = 0; attempt < 3; ++attempt) {
+		UINT32 pathCount = 0;
+		UINT32 modeCount = 0;
+		LONG status = GetDisplayConfigBufferSizes(
+			QDC_ONLY_ACTIVE_PATHS, &pathCount, &modeCount);
+		if (status != ERROR_SUCCESS) {
+			Logger::Get().Warn(fmt::format(
+				"GetDisplayConfigBufferSizes 失败\n\t错误码: {}", status));
+			return result;
+		}
+
+		std::vector<DISPLAYCONFIG_PATH_INFO> paths(pathCount);
+		std::vector<DISPLAYCONFIG_MODE_INFO> modes(modeCount);
+		status = QueryDisplayConfig(
+			QDC_ONLY_ACTIVE_PATHS,
+			&pathCount,
+			paths.data(),
+			&modeCount,
+			modes.data(),
+			nullptr);
+		if (status == ERROR_INSUFFICIENT_BUFFER) {
+			continue;
+		}
+		if (status != ERROR_SUCCESS) {
+			Logger::Get().Warn(fmt::format(
+				"QueryDisplayConfig 失败\n\t错误码: {}", status));
+			return result;
+		}
+
+		paths.resize(pathCount);
+		result.reserve(pathCount);
+		for (const DISPLAYCONFIG_PATH_INFO& path : paths) {
+			DISPLAYCONFIG_SOURCE_DEVICE_NAME sourceName{};
+			sourceName.header.type = DISPLAYCONFIG_DEVICE_INFO_GET_SOURCE_NAME;
+			sourceName.header.size = sizeof(sourceName);
+			sourceName.header.adapterId = path.sourceInfo.adapterId;
+			sourceName.header.id = path.sourceInfo.id;
+			if (DisplayConfigGetDeviceInfo(&sourceName.header) != ERROR_SUCCESS) {
+				continue;
+			}
+
+			DISPLAYCONFIG_TARGET_DEVICE_NAME targetName{};
+			targetName.header.type = DISPLAYCONFIG_DEVICE_INFO_GET_TARGET_NAME;
+			targetName.header.size = sizeof(targetName);
+			targetName.header.adapterId = path.targetInfo.adapterId;
+			targetName.header.id = path.targetInfo.id;
+			if (DisplayConfigGetDeviceInfo(&targetName.header) != ERROR_SUCCESS) {
+				continue;
+			}
+
+			DisplayTargetInfo& target = result.emplace_back();
+			target.gdiDeviceName = sourceName.viewGdiDeviceName;
+			target.deviceId = targetName.monitorDevicePath;
+			target.friendlyName = targetName.monitorFriendlyDeviceName;
+		}
+
+		return result;
+	}
+
+	Logger::Get().Warn("显示配置在枚举期间持续变化");
+	return result;
+}
+
+float QuerySdrWhiteNits(std::wstring_view gdiDeviceName) noexcept {
+	UINT32 pathCount = 0;
+	UINT32 modeCount = 0;
+	if (GetDisplayConfigBufferSizes(QDC_ONLY_ACTIVE_PATHS, &pathCount, &modeCount) != ERROR_SUCCESS) {
+		return 0.0f;
+	}
+	std::vector<DISPLAYCONFIG_PATH_INFO> paths(pathCount);
+	std::vector<DISPLAYCONFIG_MODE_INFO> modes(modeCount);
+	if (QueryDisplayConfig(QDC_ONLY_ACTIVE_PATHS, &pathCount, paths.data(), &modeCount,
+		modes.data(), nullptr) != ERROR_SUCCESS) {
+		return 0.0f;
+	}
+	for (const auto& path : std::span(paths.data(), pathCount)) {
+		DISPLAYCONFIG_SOURCE_DEVICE_NAME sourceName{};
+		sourceName.header.type = DISPLAYCONFIG_DEVICE_INFO_GET_SOURCE_NAME;
+		sourceName.header.size = sizeof(sourceName);
+		sourceName.header.adapterId = path.sourceInfo.adapterId;
+		sourceName.header.id = path.sourceInfo.id;
+		if (DisplayConfigGetDeviceInfo(&sourceName.header) != ERROR_SUCCESS ||
+			CompareStringOrdinal(sourceName.viewGdiDeviceName, -1,
+				gdiDeviceName.data(), static_cast<int>(gdiDeviceName.size()), TRUE) != CSTR_EQUAL) {
+			continue;
+		}
+		DISPLAYCONFIG_SDR_WHITE_LEVEL white{};
+		white.header.type = DISPLAYCONFIG_DEVICE_INFO_GET_SDR_WHITE_LEVEL;
+		white.header.size = sizeof(white);
+		white.header.adapterId = path.targetInfo.adapterId;
+		white.header.id = path.targetInfo.id;
+		if (DisplayConfigGetDeviceInfo(&white.header) == ERROR_SUCCESS && white.SDRWhiteLevel > 0) {
+			const float nits = 80.0f * static_cast<float>(white.SDRWhiteLevel) / 1000.0f;
+			return std::clamp(nits, 40.0f, 1000.0f);
+		}
+	}
+	return 0.0f;
+}
+
+bool EqualDeviceName(std::wstring_view left, std::wstring_view right) noexcept {
+	return CompareStringOrdinal(
+		left.data(), (int)left.size(),
+		right.data(), (int)right.size(), TRUE) == CSTR_EQUAL;
+}
+
+}
+
+float Win32Helper::GetMonitorSdrWhiteNits(HMONITOR monitor) noexcept {
+	if (!monitor) return 0.0f;
+	MONITORINFOEXW info{};
+	info.cbSize = sizeof(info);
+	if (!GetMonitorInfoW(monitor, &info)) return 0.0f;
+	return QuerySdrWhiteNits(info.szDevice);
+}
+
+std::vector<Win32Helper::DisplayMonitorInfo> Win32Helper::GetDisplayMonitors() noexcept {
+	std::vector<DisplayMonitorInfo> result;
+	const std::vector<DisplayTargetInfo> activeTargets = GetActiveDisplayTargets();
+
+	struct EnumContext {
+		std::vector<DisplayMonitorInfo>& monitors;
+		const std::vector<DisplayTargetInfo>& targets;
+	} context{ result, activeTargets };
+
+	const MONITORENUMPROC enumProc = [](HMONITOR hMonitor, HDC, LPRECT, LPARAM data) -> BOOL {
+		auto& context = *reinterpret_cast<EnumContext*>(data);
+
+		MONITORINFOEXW monitorInfo{};
+		monitorInfo.cbSize = sizeof(monitorInfo);
+		if (!GetMonitorInfoW(hMonitor, &monitorInfo)) {
+			Logger::Get().Win32Warn("GetMonitorInfoW 失败");
+			return TRUE;
+		}
+
+		DisplayMonitorInfo info;
+		info.handle = hMonitor;
+		info.rect = monitorInfo.rcMonitor;
+		info.gdiDeviceName = monitorInfo.szDevice;
+		info.isPrimary = (monitorInfo.dwFlags & MONITORINFOF_PRIMARY) != 0;
+
+		// EnumDisplayDevices 返回的 DeviceString 经常只是“通用即插即用显示器”。
+		// 使用活动显示路径将 GDI 显示源映射到来自 EDID 的物理型号和稳定设备路径。
+		for (const DisplayTargetInfo& target : context.targets) {
+			if (EqualDeviceName(target.gdiDeviceName, info.gdiDeviceName)) {
+				info.deviceId = target.deviceId;
+				info.friendlyName = target.friendlyName;
+				break;
+			}
+		}
+
+		// 旧系统或显示驱动未提供 DisplayConfig 信息时保留原有回退逻辑。
+		std::wstring fallbackId;
+		std::wstring fallbackName;
+		for (DWORD index = 0;; ++index) {
+			DISPLAY_DEVICEW device{};
+			device.cb = sizeof(device);
+			if (!EnumDisplayDevicesW(
+				monitorInfo.szDevice,
+				index,
+				&device,
+				EDD_GET_DEVICE_INTERFACE_NAME)) {
+				break;
+			}
+
+			if (fallbackId.empty()) {
+				fallbackId = device.DeviceID;
+				fallbackName = device.DeviceString;
+			}
+			if ((device.StateFlags & DISPLAY_DEVICE_ACTIVE) != 0) {
+				fallbackId = device.DeviceID;
+				fallbackName = device.DeviceString;
+				break;
+			}
+		}
+
+		if (info.deviceId.empty()) {
+			info.deviceId = std::move(fallbackId);
+		}
+		if (info.friendlyName.empty()) {
+			info.friendlyName = std::move(fallbackName);
+		}
+		if (info.deviceId.empty()) {
+			info.deviceId = info.gdiDeviceName;
+		}
+		if (info.friendlyName.empty()) {
+			info.friendlyName = info.gdiDeviceName;
+		}
+
+		context.monitors.emplace_back(std::move(info));
+		return TRUE;
+	};
+
+	if (!EnumDisplayMonitors(nullptr, nullptr, enumProc, reinterpret_cast<LPARAM>(&context))) {
+		Logger::Get().Win32Error("EnumDisplayMonitors 失败");
+		result.clear();
+		return result;
+	}
+
+	std::sort(result.begin(), result.end(), [](const DisplayMonitorInfo& left,
+		const DisplayMonitorInfo& right) {
+		if (left.isPrimary != right.isPrimary) {
+			return left.isPrimary;
+		}
+		if (left.rect.top != right.rect.top) {
+			return left.rect.top < right.rect.top;
+		}
+		return left.rect.left < right.rect.left;
+	});
+
+	return result;
+}
+
+std::wstring Win32Helper::GetWindowClassName(HWND hWnd) noexcept {
+	// 窗口类名最多 256 个字符
+	std::wstring className(256, 0);
+	int num = GetClassName(hWnd, &className[0], (int)className.size() + 1);
+	if (num == 0) {
+		Logger::Get().Win32Error("GetClassName 失败");
+		return {};
+	}
+
+	className.resize(num);
+	return className;
+}
+
+std::wstring Win32Helper::GetWindowTitle(HWND hWnd) noexcept {
+	int len = GetWindowTextLength(hWnd);
+	if (len == 0) {
+		return {};
+	}
+
+	std::wstring title(len, 0);
+	len = GetWindowText(hWnd, title.data(), len + 1);
+	title.resize(len);
+	return title;
+}
+
+wil::unique_process_handle Win32Helper::GetWindowProcessHandle(HWND hWnd) noexcept {
+	wil::unique_process_handle result;
+
+	if (DWORD dwProcId = 0; GetWindowThreadProcessId(hWnd, &dwProcId)) {
+		result.reset(OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, dwProcId));
+		if (result) {
+			return result;
+		} else {
+			Logger::Get().Win32Error("OpenProcess 失败");
+		}
+	} else {
+		Logger::Get().Win32Error("GetWindowThreadProcessId 失败");
+	}
+
+	// 在某些窗口上 OpenProcess 会失败（如暗黑 2），尝试使用 GetProcessHandleFromHwnd
+	static const auto getProcessHandleFromHwnd =
+		Win32Helper::LoadSystemFunction<HANDLE WINAPI(HWND)>(L"Oleacc.dll", "GetProcessHandleFromHwnd");
+	if (!getProcessHandleFromHwnd) {
+		return result;
+	}
+
+	result.reset(getProcessHandleFromHwnd(hWnd));
+	if (!result) {
+		Logger::Get().Win32Error("GetProcessHandleFromHwnd 失败");
+		return result;
+	}
+
+	return result;
+}
+
+std::wstring Win32Helper::GetWindowPath(HWND hWnd) noexcept {
+	wil::unique_process_handle hProc = GetWindowProcessHandle(hWnd);
+	if (!hProc) {
+		Logger::Get().Error("GetWindowProcessHandle 失败");
+		return {};
+	}
+
+	std::wstring fileName;
+	HRESULT hr = wil::QueryFullProcessImageNameW(hProc.get(), 0, fileName);
+	if (FAILED(hr)) {
+		Logger::Get().ComError("QueryFullProcessImageNameW 失败", hr);
+		return {};
+	}
+
+	return fileName;
+}
+
+std::wstring Win32Helper::GetWindowExeName(HWND hWnd) noexcept {
+	std::wstring path = GetWindowPath(hWnd);
+
+	const size_t delimPos = path.find_last_of(L'\\');
+	if (delimPos != std::wstring::npos) {
+		path.erase(path.begin(), path.begin() + delimPos + 1);
+	}
+
+	return path;
+}
+
+UINT Win32Helper::GetWindowShowCmd(HWND hWnd) noexcept {
+	assert(hWnd != NULL);
+
+	WINDOWPLACEMENT wp{ .length = sizeof(wp) };
+	if (!GetWindowPlacement(hWnd, &wp)) {
+		Logger::Get().Win32Error("GetWindowPlacement 出错");
+	}
+
+	return wp.showCmd;
+}
+
+bool Win32Helper::GetClientScreenRect(HWND hWnd, RECT& rect) noexcept {
+	if (!GetClientRect(hWnd, &rect)) {
+		Logger::Get().Win32Error("GetClientRect 出错");
+		return false;
+	}
+
+	POINT p{};
+	if (!ClientToScreen(hWnd, &p)) {
+		Logger::Get().Win32Error("ClientToScreen 出错");
+		return false;
+	}
+
+	rect.bottom += p.y;
+	rect.left += p.x;
+	rect.right += p.x;
+	rect.top += p.y;
+
+	return true;
+}
+
+bool Win32Helper::GetWindowFrameRect(HWND hWnd, RECT& rect) noexcept {
+	HRESULT hr = DwmGetWindowAttribute(hWnd,
+		DWMWA_EXTENDED_FRAME_BOUNDS, &rect, sizeof(rect));
+	if (FAILED(hr)) {
+		Logger::Get().ComError("DwmGetWindowAttribute 失败", hr);
+		return false;
+	}
+
+	// Win11 中最大化的窗口的 extended frame bounds 有一部分在屏幕外面，
+	// 不清楚 Win10 是否有这种情况
+	if (GetWindowShowCmd(hWnd) == SW_SHOWMAXIMIZED) {
+		HMONITOR hMon = MonitorFromWindow(hWnd, MONITOR_DEFAULTTONEAREST);
+		MONITORINFO mi{ .cbSize = sizeof(mi) };
+		if (!GetMonitorInfo(hMon, &mi)) {
+			Logger::Get().Win32Error("GetMonitorInfo 失败");
+			return false;
+		}
+
+		// 不能裁剪到工作区，因为窗口可以使用 SetWindowPos 以任意尺寸显示“最大化”
+		// 的窗口，缩放窗口就使用了这个技术以和 Wallpaper Engine 兼容。OS 虽然不
+		// 会阻止跨越多个屏幕，但只在一个屏幕上有画面，因此可以认为最大化的窗口只在
+		// 一个屏幕上。
+		// 注意 Win11 中最大化窗口的 extended frame bounds 包含了下边框，但对我们
+		// 没有影响，因为缩放时下边框始终会被裁剪掉。
+		Win32Helper::IntersectRect(rect, rect, mi.rcMonitor);
+	}
+
+	// 对于使用 SetWindowRgn 自定义形状的窗口，裁剪到最小矩形边框
+	RECT rgnRect;
+	int regionType = GetWindowRgnBox(hWnd, &rgnRect);
+	if (regionType == SIMPLEREGION || regionType == COMPLEXREGION) {
+		RECT windowRect;
+		if (!GetWindowRect(hWnd, &windowRect)) {
+			Logger::Get().Win32Error("GetWindowRect 失败");
+			return false;
+		}
+
+		// 转换为屏幕坐标
+		OffsetRect(rgnRect, windowRect.left, windowRect.top);
+
+		Win32Helper::IntersectRect(rect, rect, rgnRect);
+	}
+
+	return true;
+}
+
+uint32_t Win32Helper::GetNativeWindowBorderThickness(uint32_t dpi) noexcept {
+	if (GetOSVersion().IsWin11()) {
+		// 这里的计算方式是通过实验总结出来的。DwmGetWindowAttribute 有两个问题:
+		// 1. 它要求窗口存在，而有些时候我们需要在创建窗口前计算窗口尺寸。
+		// 2. 如果窗口被 DPI 虚拟化，它返回的结果是错误的。
+		return (dpi + USER_DEFAULT_SCREEN_DPI / 2) / USER_DEFAULT_SCREEN_DPI;
+	} else {
+		return 1;
+	}
+}
+
+int16_t Win32Helper::AdvancedWindowHitTest(HWND hWnd, POINT ptScreen, UINT timeout, HWND* hwndInvolve) noexcept {
+	HWND hwndCur = hWnd;
+	int16_t hittest = HTNOWHERE;
+	while (true) {
+		// ChildWindowFromPointEx 不检查命中测试，稍后手动检查
+		POINT ptClient = ptScreen;
+		ScreenToClient(hwndCur, &ptClient);
+		const HWND hwndChild = ChildWindowFromPointEx(hwndCur, ptClient,
+			CWP_SKIPINVISIBLE | CWP_SKIPDISABLED | CWP_SKIPTRANSPARENT);
+		if (!hwndChild || hwndChild == hwndCur) {
+			break;
+		}
+
+		DWORD_PTR area = HTNOWHERE;
+		SendMessageTimeout(hwndChild, WM_NCHITTEST, 0, MAKELPARAM(ptScreen.x, ptScreen.y),
+			SMTO_NORMAL, timeout, &area);
+		if ((int)area != HTTRANSPARENT) {
+			hwndCur = hwndChild;
+			hittest = (int16_t)area;
+			continue;
+		}
+
+		// 必须遍历子窗口手动执行命中测试。这个路径较慢，但基本没机会执行。已知
+		// Office 2021 会触发此路径。
+		struct EnumData {
+			HWND hwndParent;
+			HWND hwndChild;
+			POINT ptScreen;
+			UINT timeout;
+			int16_t& hittest;
+		} data{ hwndCur, NULL, ptScreen, timeout, hittest };
+
+		EnumChildWindows(hwndCur, [](HWND hWnd, LPARAM lParam) {
+			// 跳过不可见和被禁用的窗口
+			if (!IsWindowVisible(hWnd) || !IsWindowEnabled(hWnd)) {
+				return TRUE;
+			}
+
+			EnumData* data = (EnumData*)lParam;
+
+			// 只检查直接子窗口
+			if (GetParent(hWnd) != data->hwndParent) {
+				return TRUE;
+			}
+
+			// 检查是否在窗口内
+			RECT windowRect;
+			if (!GetWindowRect(hWnd, &windowRect) || !PtInRect(&windowRect, data->ptScreen)) {
+				return TRUE;
+			}
+
+			// 检查窗口是否对鼠标透明
+			if (GetWindowExStyle(hWnd) & WS_EX_TRANSPARENT) {
+				return TRUE;
+			}
+
+			// 使用 ChildWindowFromPointEx 检查分层窗口和自定义形状，见 PtInWindow
+			SetLastError(0);
+			POINT ptClient = data->ptScreen;
+			ScreenToClient(hWnd, &ptClient);
+			if (!ChildWindowFromPointEx(hWnd, ptClient,
+				CWP_SKIPINVISIBLE | CWP_SKIPDISABLED | CWP_SKIPTRANSPARENT
+			)) {
+				// 如果因权限不足等原因失败则视为不透明
+				if (GetLastError() == 0) {
+					// 命中了透明像素
+					return TRUE;
+				}
+			}
+
+			// 检查命中测试是否透明。这是我们不得不遍历子窗口的原因：ChildWindowFromPoint 的所有
+			// 变体都不支持检查命中测试。（RealChildWindowFromPoint 只检查标准控件，因此也无用。）
+			DWORD_PTR area = HTNOWHERE;
+			SendMessageTimeout(hWnd, WM_NCHITTEST, 0,
+				MAKELPARAM(data->ptScreen.x, data->ptScreen.y), SMTO_NORMAL, data->timeout, &area);
+			if ((int)area == HTTRANSPARENT) {
+				return TRUE;
+			}
+
+			data->hwndChild = hWnd;
+			data->hittest = (int16_t)area;
+			return FALSE;
+		}, (LPARAM)&data);
+
+		if (!data.hwndChild) {
+			break;
+		}
+
+		hwndCur = data.hwndChild;
+	}
+
+	if (hwndInvolve) {
+		*hwndInvolve = hwndCur;
+	}
+
+	if (hwndCur == hWnd) {
+		// 没落到子窗口上
+		DWORD_PTR area = HTNOWHERE;
+		SendMessageTimeout(hWnd, WM_NCHITTEST, 0, MAKELPARAM(ptScreen.x, ptScreen.y),
+			SMTO_NORMAL, timeout, &area);
+		return (int16_t)area;
+	} else {
+		return hittest;
+	}
+}
+
+bool Win32Helper::IsWindowHung(HWND hWnd) noexcept {
+	FrameTrace::Scope traceProbe(FrameTrace::Event::FocusProbe);
+	// 保险起见不使用 SMTO_ABORTIFHUNG。我不知道 OS 怎么判断线程是否处于无响应
+	// 状态，考虑到 IsHungAppWindow 有误报的情况 (GH#1244)，最好不要依赖。
+	return 0 == SendMessageTimeout(hWnd, WM_NULL, 0, 0, SMTO_ERRORONEXIT, 500, nullptr);
+}
+
+bool Win32Helper::ReadFile(const wchar_t* fileName, std::vector<uint8_t>& result) noexcept {
+	Logger::Get().Info(StrHelper::Concat("读取文件: ", StrHelper::UTF16ToUTF8(fileName)));
+
+	CREATEFILE2_EXTENDED_PARAMETERS extendedParams{
+		.dwSize = sizeof(CREATEFILE2_EXTENDED_PARAMETERS),
+		.dwFileAttributes = FILE_ATTRIBUTE_NORMAL,
+		.dwFileFlags = FILE_FLAG_SEQUENTIAL_SCAN
+	};
+
+	wil::unique_hfile hFile(CreateFile2(fileName, GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING, &extendedParams));
+	if (!hFile) {
+		Logger::Get().Error("打开文件失败");
+		return false;
+	}
+
+	DWORD size = GetFileSize(hFile.get(), nullptr);
+	result.resize(size);
+
+	DWORD readed;
+	if (!::ReadFile(hFile.get(), result.data(), size, &readed, nullptr)) {
+		Logger::Get().Error("读取文件失败");
+		return false;
+	}
+
+	return true;
+}
+
+bool Win32Helper::WriteFile(const wchar_t* fileName, std::span<uint8_t> buffer) noexcept {
+	Logger::Get().Info(StrHelper::Concat("写入文件: ", StrHelper::UTF16ToUTF8(fileName)));
+
+	CREATEFILE2_EXTENDED_PARAMETERS extendedParams{
+		.dwSize = sizeof(CREATEFILE2_EXTENDED_PARAMETERS),
+		.dwFileAttributes = FILE_ATTRIBUTE_NORMAL
+	};
+
+	wil::unique_hfile hFile(CreateFile2(fileName, GENERIC_WRITE, 0, CREATE_ALWAYS, &extendedParams));
+	if (!hFile) {
+		Logger::Get().Error("打开文件失败");
+		return false;
+	}
+
+	DWORD written;
+	if (!::WriteFile(hFile.get(), buffer.data(), (DWORD)buffer.size(), &written, nullptr)
+		|| buffer.size() != written) {
+		Logger::Get().Error("写入文件失败");
+		return false;
+	}
+
+	return true;
+}
+
+static void CaptureCrtFileError(uint32_t* systemError, DWORD fallback) noexcept {
+	if (!systemError) return;
+	unsigned long error = 0;
+	_get_doserrno(&error);
+	*systemError = error ? static_cast<uint32_t>(error) : fallback;
+}
+
+bool Win32Helper::ReadTextFile(const wchar_t* fileName, std::string& result, uint32_t* systemError) noexcept {
+	if (systemError) *systemError = 0;
+	Logger::Get().Info(StrHelper::Concat("读取文本文件: ", StrHelper::UTF16ToUTF8(fileName)));
+
+	wil::unique_file hFile;
+	_set_doserrno(0);
+	if (_wfopen_s(hFile.put(), fileName, L"rt") || !hFile) {
+		CaptureCrtFileError(systemError, ERROR_READ_FAULT);
+		Logger::Get().Error(StrHelper::Concat("打开文件 ", StrHelper::UTF16ToUTF8(fileName), " 失败"));
+		return false;
+	}
+
+	// 获取文件长度
+	int fd = _fileno(hFile.get());
+	_set_doserrno(0);
+	long size = _filelength(fd);
+	if (size < 0) { CaptureCrtFileError(systemError, ERROR_READ_FAULT); return false; }
+
+	result.clear();
+	result.resize(static_cast<size_t>(size) + 1, 0);
+
+	_set_doserrno(0);
+	size_t readed = fread(result.data(), 1, size, hFile.get());
+	result.resize(readed);
+
+	const bool succeeded = ferror(hFile.get()) == 0;
+	if (!succeeded) CaptureCrtFileError(systemError, ERROR_READ_FAULT);
+	return succeeded;
+}
+
+bool Win32Helper::WriteTextFile(const wchar_t* fileName, std::string_view text, uint32_t* systemError) noexcept {
+	if (systemError) *systemError = 0;
+	Logger::Get().Info(StrHelper::Concat("写入文本文件: ", StrHelper::UTF16ToUTF8(fileName)));
+
+	wil::unique_file hFile;
+	_set_doserrno(0);
+	if (_wfopen_s(hFile.put(), fileName, L"wt") || !hFile) {
+		CaptureCrtFileError(systemError, ERROR_WRITE_FAULT);
+		Logger::Get().Error(StrHelper::Concat("打开文件 ", StrHelper::UTF16ToUTF8(fileName), " 失败"));
+		return false;
+	}
+
+	_set_doserrno(0);
+	if (fwrite(text.data(), 1, text.size(), hFile.get()) != text.size() ||
+		fflush(hFile.get()) != 0) {
+		CaptureCrtFileError(systemError, ERROR_WRITE_FAULT);
+		Logger::Get().Error("Writing text file or flushing buffered data failed");
+		return false;
+	}
+	// Buffered writes may fail only when closing the file.
+	_set_doserrno(0);
+	const bool succeeded = fclose(hFile.release()) == 0;
+	if (!succeeded) CaptureCrtFileError(systemError, ERROR_WRITE_FAULT);
+	return succeeded;
+}
+
+bool Win32Helper::FileExists(const wchar_t* fileName) noexcept {
+	DWORD attrs = GetFileAttributes(fileName);
+	// 排除文件夹
+	return (attrs != INVALID_FILE_ATTRIBUTES) && !(attrs & FILE_ATTRIBUTE_DIRECTORY);
+}
+
+bool Win32Helper::DirExists(const wchar_t* fileName) noexcept {
+	DWORD attrs = GetFileAttributes(fileName);
+	return (attrs != INVALID_FILE_ATTRIBUTES) && (attrs & FILE_ATTRIBUTE_DIRECTORY);
+}
+
+bool Win32Helper::CreateDir(const std::wstring& path, bool recursive) noexcept {
+	assert(!path.empty());
+
+	if (DirExists(path.c_str())) {
+		return true;
+	}
+
+	if (!recursive) {
+		return CreateDirectory(path.c_str(), nullptr);
+	}
+
+	size_t searchOffset = 0;
+	do {
+		auto segPos = path.find_first_of(L'\\', searchOffset);
+		if (segPos == std::wstring::npos) {
+			// 没有分隔符则将整个路径视为文件夹
+			segPos = path.size();
+		}
+
+		std::wstring subdir = path.substr(0, segPos);
+		if (!subdir.empty() && !DirExists(subdir.c_str()) && !CreateDirectory(subdir.c_str(), nullptr)) {
+			return false;
+		}
+
+		searchOffset = segPos + 1;
+	} while (searchOffset < path.size());
+
+	return true;
+}
+
+const Win32Helper::OSVersion& Win32Helper::GetOSVersion() noexcept {
+	static OSVersion version = [] {
+		const auto rtlGetVersion =
+			LoadSystemFunction<LONG WINAPI(PRTL_OSVERSIONINFOW)>(L"ntdll.dll", "RtlGetVersion");
+		if (!rtlGetVersion) {
+			return OSVersion();
+		}
+
+		RTL_OSVERSIONINFOW versionInfo{ .dwOSVersionInfoSize = sizeof(versionInfo) };
+		rtlGetVersion(&versionInfo);
+
+		return OSVersion(versionInfo.dwMajorVersion, versionInfo.dwMinorVersion, versionInfo.dwBuildNumber);
+	}();
+
+	return version;
+}
+
+struct TPContext {
+	std::function<void(uint32_t)> func;
+	std::atomic<uint32_t> id;
+};
+
+[[maybe_unused]]
+static void CALLBACK TPCallback(PTP_CALLBACK_INSTANCE, PVOID context, PTP_WORK) {
+	TPContext* ctxt = (TPContext*)context;
+	const uint32_t id = ctxt->id.fetch_add(1, std::memory_order_relaxed) + 1;
+	ctxt->func(id);
+}
+
+void Win32Helper::RunParallel(std::function<void(uint32_t)> func, uint32_t times) noexcept {
+#ifdef _DEBUG
+	// 为了便于调试，DEBUG 模式下不使用线程池
+	for (UINT i = 0; i < times; ++i) {
+		func(i);
+	}
+#else
+	if (times == 0) {
+		return;
+	}
+
+	if (times == 1) {
+		return func(0);
+	}
+
+	TPContext ctxt = { func, 0 };
+	PTP_WORK work = CreateThreadpoolWork(TPCallback, &ctxt, nullptr);
+	if (work) {
+		// 在线程池中执行 times - 1 次
+		for (uint32_t i = 1; i < times; ++i) {
+			SubmitThreadpoolWork(work);
+		}
+
+		func(0);
+
+		WaitForThreadpoolWorkCallbacks(work, FALSE);
+		CloseThreadpoolWork(work);
+	} else {
+		Logger::Get().Win32Error("CreateThreadpoolWork 失败，回退到单线程");
+
+		// 回退到单线程
+		for (uint32_t i = 0; i < times; ++i) {
+			func(i);
+		}
+	}
+#endif // _DEBUG
+}
+
+static bool MapKeycodeToUnicode(
+	const int vCode,
+	HKL layout,
+	const BYTE* keyState,
+	std::array<wchar_t, 3>& outBuffer
+) noexcept {
+	// Get the scan code from the virtual key code
+	const UINT scanCode = MapVirtualKeyEx(vCode, MAPVK_VK_TO_VSC, layout);
+	// Get the unicode representation from the virtual key code and scan code pair
+	const int result = ToUnicodeEx(vCode, scanCode, keyState, outBuffer.data(), (int)outBuffer.size(), 0, layout);
+	return result != 0;
+}
+
+static const std::array<std::wstring, 256>& GetKeyNames() noexcept {
+	// 取自 https://github.com/microsoft/PowerToys/blob/fa3a5f80a113568155d9c2dbbcea8af16e15afa1/src/common/interop/keyboard_layout.cpp#L63
+	static HKL previousLayout = 0;
+	static std::array<std::wstring, 256> keyboardLayoutMap;
+
+	// Get keyboard layout for current thread
+	const HKL layout = GetKeyboardLayout(0);
+	if (layout == previousLayout && !keyboardLayoutMap[0].empty()) {
+		return keyboardLayoutMap;
+	}
+	previousLayout = layout;
+
+	// 0 为非法
+	keyboardLayoutMap[0] = L"Undefined";
+
+	std::array<BYTE, 256> btKeys = { 0 };
+	// Only set the Caps Lock key to on for the key names in uppercase
+	btKeys[VK_CAPITAL] = 1;
+
+	// Iterate over all the virtual key codes. virtual key 0 is not used
+	for (int i = 1; i < 256; i++) {
+		std::array<wchar_t, 3> szBuffer = { 0 };
+		if (MapKeycodeToUnicode(i, layout, btKeys.data(), szBuffer)) {
+			keyboardLayoutMap[i] = szBuffer.data();
+			continue;
+		}
+
+		// Store the virtual key code as string
+		std::wstring vk = L"VK ";
+		vk += std::to_wstring(i);
+		keyboardLayoutMap[i] = vk;
+	}
+
+	// Override special key names like Shift, Ctrl etc because they don't have unicode mappings and key names like Enter, Space as they appear as "\r", " "
+	// To do: localization
+	keyboardLayoutMap[VK_CANCEL] = L"Break";
+	keyboardLayoutMap[VK_BACK] = L"Backspace";
+	keyboardLayoutMap[VK_TAB] = L"Tab";
+	keyboardLayoutMap[VK_CLEAR] = L"Clear";
+	keyboardLayoutMap[VK_RETURN] = L"Enter";
+	keyboardLayoutMap[VK_SHIFT] = L"Shift";
+	keyboardLayoutMap[VK_CONTROL] = L"Ctrl";
+	keyboardLayoutMap[VK_MENU] = L"Alt";
+	keyboardLayoutMap[VK_PAUSE] = L"Pause";
+	keyboardLayoutMap[VK_CAPITAL] = L"Caps Lock";
+	keyboardLayoutMap[VK_ESCAPE] = L"Esc";
+	keyboardLayoutMap[VK_SPACE] = L"Space";
+	keyboardLayoutMap[VK_PRIOR] = L"PgUp";
+	keyboardLayoutMap[VK_NEXT] = L"PgDn";
+	keyboardLayoutMap[VK_END] = L"End";
+	keyboardLayoutMap[VK_HOME] = L"Home";
+	keyboardLayoutMap[VK_LEFT] = L"Left";
+	keyboardLayoutMap[VK_UP] = L"Up";
+	keyboardLayoutMap[VK_RIGHT] = L"Right";
+	keyboardLayoutMap[VK_DOWN] = L"Down";
+	keyboardLayoutMap[VK_SELECT] = L"Select";
+	keyboardLayoutMap[VK_PRINT] = L"Print";
+	keyboardLayoutMap[VK_EXECUTE] = L"Execute";
+	keyboardLayoutMap[VK_SNAPSHOT] = L"Print Screen";
+	keyboardLayoutMap[VK_INSERT] = L"Insert";
+	keyboardLayoutMap[VK_DELETE] = L"Delete";
+	keyboardLayoutMap[VK_HELP] = L"Help";
+	keyboardLayoutMap[VK_LWIN] = L"Win (Left)";
+	keyboardLayoutMap[VK_RWIN] = L"Win (Right)";
+	keyboardLayoutMap[VK_APPS] = L"Apps/Menu";
+	keyboardLayoutMap[VK_SLEEP] = L"Sleep";
+	keyboardLayoutMap[VK_NUMPAD0] = L"NumPad 0";
+	keyboardLayoutMap[VK_NUMPAD1] = L"NumPad 1";
+	keyboardLayoutMap[VK_NUMPAD2] = L"NumPad 2";
+	keyboardLayoutMap[VK_NUMPAD3] = L"NumPad 3";
+	keyboardLayoutMap[VK_NUMPAD4] = L"NumPad 4";
+	keyboardLayoutMap[VK_NUMPAD5] = L"NumPad 5";
+	keyboardLayoutMap[VK_NUMPAD6] = L"NumPad 6";
+	keyboardLayoutMap[VK_NUMPAD7] = L"NumPad 7";
+	keyboardLayoutMap[VK_NUMPAD8] = L"NumPad 8";
+	keyboardLayoutMap[VK_NUMPAD9] = L"NumPad 9";
+	keyboardLayoutMap[VK_SEPARATOR] = L"Separator";
+	keyboardLayoutMap[VK_F1] = L"F1";
+	keyboardLayoutMap[VK_F2] = L"F2";
+	keyboardLayoutMap[VK_F3] = L"F3";
+	keyboardLayoutMap[VK_F4] = L"F4";
+	keyboardLayoutMap[VK_F5] = L"F5";
+	keyboardLayoutMap[VK_F6] = L"F6";
+	keyboardLayoutMap[VK_F7] = L"F7";
+	keyboardLayoutMap[VK_F8] = L"F8";
+	keyboardLayoutMap[VK_F9] = L"F9";
+	keyboardLayoutMap[VK_F10] = L"F10";
+	keyboardLayoutMap[VK_F11] = L"F11";
+	keyboardLayoutMap[VK_F12] = L"F12";
+	keyboardLayoutMap[VK_F13] = L"F13";
+	keyboardLayoutMap[VK_F14] = L"F14";
+	keyboardLayoutMap[VK_F15] = L"F15";
+	keyboardLayoutMap[VK_F16] = L"F16";
+	keyboardLayoutMap[VK_F17] = L"F17";
+	keyboardLayoutMap[VK_F18] = L"F18";
+	keyboardLayoutMap[VK_F19] = L"F19";
+	keyboardLayoutMap[VK_F20] = L"F20";
+	keyboardLayoutMap[VK_F21] = L"F21";
+	keyboardLayoutMap[VK_F22] = L"F22";
+	keyboardLayoutMap[VK_F23] = L"F23";
+	keyboardLayoutMap[VK_F24] = L"F24";
+	keyboardLayoutMap[VK_NUMLOCK] = L"Num Lock";
+	keyboardLayoutMap[VK_SCROLL] = L"Scroll Lock";
+	keyboardLayoutMap[VK_LSHIFT] = L"Shift (Left)";
+	keyboardLayoutMap[VK_RSHIFT] = L"Shift (Right)";
+	keyboardLayoutMap[VK_LCONTROL] = L"Ctrl (Left)";
+	keyboardLayoutMap[VK_RCONTROL] = L"Ctrl (Right)";
+	keyboardLayoutMap[VK_LMENU] = L"Alt (Left)";
+	keyboardLayoutMap[VK_RMENU] = L"Alt (Right)";
+	keyboardLayoutMap[VK_BROWSER_BACK] = L"Browser Back";
+	keyboardLayoutMap[VK_BROWSER_FORWARD] = L"Browser Forward";
+	keyboardLayoutMap[VK_BROWSER_REFRESH] = L"Browser Refresh";
+	keyboardLayoutMap[VK_BROWSER_STOP] = L"Browser Stop";
+	keyboardLayoutMap[VK_BROWSER_SEARCH] = L"Browser Search";
+	keyboardLayoutMap[VK_BROWSER_FAVORITES] = L"Browser Favorites";
+	keyboardLayoutMap[VK_BROWSER_HOME] = L"Browser Home";
+	keyboardLayoutMap[VK_VOLUME_MUTE] = L"Volume Mute";
+	keyboardLayoutMap[VK_VOLUME_DOWN] = L"Volume Down";
+	keyboardLayoutMap[VK_VOLUME_UP] = L"Volume Up";
+	keyboardLayoutMap[VK_MEDIA_NEXT_TRACK] = L"Next Track";
+	keyboardLayoutMap[VK_MEDIA_PREV_TRACK] = L"Previous Track";
+	keyboardLayoutMap[VK_MEDIA_STOP] = L"Stop Media";
+	keyboardLayoutMap[VK_MEDIA_PLAY_PAUSE] = L"Play/Pause Media";
+	keyboardLayoutMap[VK_LAUNCH_MAIL] = L"Start Mail";
+	keyboardLayoutMap[VK_LAUNCH_MEDIA_SELECT] = L"Select Media";
+	keyboardLayoutMap[VK_LAUNCH_APP1] = L"Start App 1";
+	keyboardLayoutMap[VK_LAUNCH_APP2] = L"Start App 2";
+	keyboardLayoutMap[VK_PACKET] = L"Packet";
+	keyboardLayoutMap[VK_ATTN] = L"Attn";
+	keyboardLayoutMap[VK_CRSEL] = L"CrSel";
+	keyboardLayoutMap[VK_EXSEL] = L"ExSel";
+	keyboardLayoutMap[VK_EREOF] = L"Erase EOF";
+	keyboardLayoutMap[VK_PLAY] = L"Play";
+	keyboardLayoutMap[VK_ZOOM] = L"Zoom";
+	keyboardLayoutMap[VK_PA1] = L"PA1";
+	keyboardLayoutMap[VK_OEM_CLEAR] = L"Clear";
+	keyboardLayoutMap[0xFF] = L"Undefined";
+	// keyboardLayoutMap[CommonSharedConstants::VK_WIN_BOTH] = L"Win";
+	keyboardLayoutMap[VK_KANA] = L"IME Kana";
+	keyboardLayoutMap[VK_HANGEUL] = L"IME Hangeul";
+	keyboardLayoutMap[VK_HANGUL] = L"IME Hangul";
+	keyboardLayoutMap[VK_JUNJA] = L"IME Junja";
+	keyboardLayoutMap[VK_FINAL] = L"IME Final";
+	keyboardLayoutMap[VK_HANJA] = L"IME Hanja";
+	keyboardLayoutMap[VK_KANJI] = L"IME Kanji";
+	keyboardLayoutMap[VK_CONVERT] = L"IME Convert";
+	keyboardLayoutMap[VK_NONCONVERT] = L"IME Non-Convert";
+	keyboardLayoutMap[VK_ACCEPT] = L"IME Kana";
+	keyboardLayoutMap[VK_MODECHANGE] = L"IME Mode Change";
+	// keyboardLayoutMap[CommonSharedConstants::VK_DISABLED] = L"Disable";
+
+	return keyboardLayoutMap;
+}
+
+const std::wstring& Win32Helper::GetKeyName(uint8_t key) noexcept {
+	return GetKeyNames()[key];
+}
+
+bool Win32Helper::IsProcessElevated() noexcept {
+	static bool result = []() {
+		// https://web.archive.org/web/20100418044859/http://msdn.microsoft.com/en-us/windows/ff420334.aspx
+		BYTE adminSID[SECURITY_MAX_SID_SIZE]{};
+		DWORD dwLength = sizeof(adminSID);
+		if (!CreateWellKnownSid(WinBuiltinAdministratorsSid, NULL, &adminSID, &dwLength)) {
+			Logger::Get().Win32Error("CreateWellKnownSid 失败");
+			return false;
+		}
+
+		BOOL isAdmin;
+		if (!CheckTokenMembership(NULL, adminSID, &isAdmin)) {
+			Logger::Get().Win32Error("CheckTokenMembership 失败");
+			return false;
+		}
+
+		return (bool)isAdmin;
+	}();
+
+	return result;
+}
+
+// 获取进程的完整性级别
+// https://devblogs.microsoft.com/oldnewthing/20221017-00/?p=107291
+bool Win32Helper::GetProcessIntegrityLevel(HANDLE hQueryToken, DWORD& integrityLevel) noexcept {
+	wil::unique_tokeninfo_ptr<TOKEN_MANDATORY_LABEL> info;
+	HRESULT hr = wil::get_token_information_nothrow(info, hQueryToken);
+	if (FAILED(hr)) {
+		Logger::Get().ComError("get_token_information_nothrow 失败", hr);
+		return false;
+	}
+
+	PSID sid = info->Label.Sid;
+	integrityLevel = *GetSidSubAuthority(sid, *GetSidSubAuthorityCount(sid) - 1);
+	return true;
+}
+
+DWORD Win32Helper::GetCurrentProcessIntegrityLevel() noexcept {
+	static DWORD result = []() -> DWORD {
+		DWORD il;
+		return Win32Helper::GetProcessIntegrityLevel(NULL, il) ? il : 0;
+	}();
+	return result;
+}
+
+bool Win32Helper::GetWindowIntegrityLevel(HWND hWnd, DWORD& integrityLevel) noexcept {
+	wil::unique_process_handle hProc = GetWindowProcessHandle(hWnd);
+	if (!hProc) {
+		Logger::Get().Error("GetWindowProcessHandle 失败");
+		return false;
+	}
+
+	wil::unique_handle hQueryToken;
+	if (!OpenProcessToken(hProc.get(), TOKEN_QUERY, hQueryToken.put())) {
+		Logger::Get().Win32Error("OpenProcessToken 失败");
+		return false;
+	}
+
+	return GetProcessIntegrityLevel(hQueryToken.get(), integrityLevel);
+}
+
+static winrt::com_ptr<IShellView> FindDesktopFolderView() noexcept {
+	winrt::com_ptr<IShellWindows> shellWindows =
+		winrt::try_create_instance<IShellWindows>(CLSID_ShellWindows, CLSCTX_LOCAL_SERVER);
+	if (!shellWindows) {
+		Logger::Get().Error("创建 ShellWindows 失败");
+		return nullptr;
+	}
+
+	winrt::com_ptr<IDispatch> dispatch;
+	Win32Helper::Variant vtLoc(CSIDL_DESKTOP);
+	Win32Helper::Variant vtEmpty;
+	long hWnd;
+	HRESULT hr = shellWindows->FindWindowSW(
+		&vtLoc, &vtEmpty, SWC_DESKTOP, &hWnd, SWFO_NEEDDISPATCH, dispatch.put());
+	if (FAILED(hr)) {
+		Logger::Get().ComError("IShellWindows::FindWindowSW 失败", hr);
+		return nullptr;
+	}
+
+	winrt::com_ptr<IShellBrowser> shellBrowser;
+	hr = dispatch.try_as<IServiceProvider>()->QueryService(
+		SID_STopLevelBrowser, IID_PPV_ARGS(&shellBrowser));
+	if (FAILED(hr)) {
+		Logger::Get().ComError("IServiceProvider::QueryService 失败", hr);
+		return nullptr;
+	}
+
+	winrt::com_ptr<IShellView> shellView;
+	hr = shellBrowser->QueryActiveShellView(shellView.put());
+	if (FAILED(hr)) {
+		Logger::Get().ComError("IShellBrowser::QueryActiveShellView 失败", hr);
+		return nullptr;
+	}
+
+	return shellView;
+}
+
+static winrt::com_ptr<IShellFolderViewDual> GetDesktopAutomationObject() noexcept {
+	winrt::com_ptr<IShellView> shellView = FindDesktopFolderView();
+	if (!shellView) {
+		Logger::Get().Error("FindDesktopFolderView 失败");
+		return nullptr;
+	}
+
+	winrt::com_ptr<IDispatch> dispatch;
+	HRESULT hr = shellView->GetItemObject(SVGIO_BACKGROUND, IID_PPV_ARGS(&dispatch));
+	if (FAILED(hr)) {
+		Logger::Get().ComError("IShellView::GetItemObject 失败", hr);
+		return nullptr;
+	}
+
+	return dispatch.try_as<IShellFolderViewDual>();
+}
+
+static std::wstring_view ExtractDirectory(std::wstring_view path) noexcept {
+	size_t delimPos = path.find_last_of(L'\\');
+	return delimPos == std::wstring_view::npos ? path : path.substr(0, delimPos + 1);
+}
+
+// 在提升的进程中启动未提升的进程
+// 原理见 https://devblogs.microsoft.com/oldnewthing/20131118-00/?p=2643
+static bool OpenNonElevated(const wchar_t* path, const wchar_t* parameters) noexcept {
+	static winrt::com_ptr<IShellDispatch2> shellDispatch = ([]() -> winrt::com_ptr<IShellDispatch2> {
+		winrt::com_ptr<IShellFolderViewDual> folderView = GetDesktopAutomationObject();
+		if (!folderView) {
+			Logger::Get().Error("GetDesktopAutomationObject 失败");
+			return nullptr;
+		}
+
+		winrt::com_ptr<IDispatch> dispatch;
+		HRESULT hr = folderView->get_Application(dispatch.put());
+		if (FAILED(hr)) {
+			Logger::Get().ComError("IShellFolderViewDual::get_Application 失败", hr);
+			return nullptr;
+		}
+
+		return dispatch.try_as<IShellDispatch2>();
+	})();
+
+	if (!shellDispatch) {
+		return false;
+	}
+
+#pragma push_macro("ShellExecute")
+#undef ShellExecute
+	HRESULT hr = shellDispatch->ShellExecute(
+#pragma pop_macro("ShellExecute")
+		wil::make_bstr_nothrow(path).get(),
+		Win32Helper::Variant(parameters ? parameters : L""),
+		Win32Helper::Variant(ExtractDirectory(path)),
+		Win32Helper::Variant(L"open"),
+		Win32Helper::Variant(SW_SHOWNORMAL)
+	);
+	if (FAILED(hr)) {
+		Logger::Get().ComError("IShellDispatch2::ShellExecute 失败", hr);
+		return false;
+	}
+
+	return true;
+}
+
+bool Win32Helper::ShellOpen(const wchar_t* path, const wchar_t* parameters, bool nonElevated) noexcept {
+	if (nonElevated && IsProcessElevated()) {
+		if (OpenNonElevated(path, parameters)) {
+			return true;
+		}
+		// OpenNonElevated 失败则回落到 ShellExecuteEx
+	}
+
+	// 指定工作目录为程序所在目录，否则某些程序不能正常运行
+	std::wstring workingDir(ExtractDirectory(path));
+
+	SHELLEXECUTEINFO execInfo{
+		.cbSize = sizeof(execInfo),
+		.fMask = SEE_MASK_ASYNCOK,
+		.lpVerb = L"open",
+		.lpFile = path,
+		.lpParameters = parameters,
+		.lpDirectory = workingDir.c_str(),
+		.nShow = SW_SHOWNORMAL
+	};
+
+	if (!ShellExecuteEx(&execInfo)) {
+		Logger::Get().Win32Error("ShellExecuteEx 失败");
+		return false;
+	}
+
+	return true;
+}
+
+bool Win32Helper::OpenFolderAndSelectFile(const wchar_t* fileName) noexcept {
+	// 根据 https://docs.microsoft.com/en-us/windows/win32/api/shlobj_core/nf-shlobj_core-shparsedisplayname，
+	// SHParseDisplayName 不能在主线程调用
+	wil::unique_any<PIDLIST_ABSOLUTE, decltype(&CoTaskMemFree), CoTaskMemFree> pidl;
+	HRESULT hr = SHParseDisplayName(fileName, nullptr, pidl.put(), 0, nullptr);
+	if (FAILED(hr)) {
+		Logger::Get().ComError("SHParseDisplayName 失败", hr);
+		return false;
+	}
+
+	hr = SHOpenFolderAndSelectItems(pidl.get(), 0, nullptr, 0);
+	if (FAILED(hr)) {
+		Logger::Get().ComError("SHOpenFolderAndSelectItems 失败", hr);
+		return false;
+	}
+
+	return true;
+}
+
+const std::filesystem::path& Win32Helper::GetExePath() noexcept {
+	// 会在日志初始化前调用
+	static std::filesystem::path result = [] {
+		std::wstring exePath;
+		FAIL_FAST_IF_FAILED(wil::GetModuleFileNameW(NULL, exePath));
+		return std::filesystem::path(std::move(exePath));
+	}();
+	return result;
+}
+
+void Win32Helper::WaitForDwmComposition() noexcept {
+	// Win11 可以使用准确的 DCompositionWaitForCompositorClock
+	if (Win32Helper::GetOSVersion().IsWin11()) {
+		static const auto dCompositionWaitForCompositorClock =
+			Win32Helper::LoadSystemFunction<decltype(DCompositionWaitForCompositorClock)>(
+				L"dcomp.dll", "DCompositionWaitForCompositorClock");
+		if (dCompositionWaitForCompositorClock) {
+			dCompositionWaitForCompositorClock(0, nullptr, INFINITE);
+			return;
+		}
+	}
+
+	LARGE_INTEGER qpf;
+	QueryPerformanceFrequency(&qpf);
+	qpf.QuadPart /= 10000000;
+
+	DWM_TIMING_INFO info{};
+	info.cbSize = sizeof(info);
+	DwmGetCompositionTimingInfo(NULL, &info);
+
+	LARGE_INTEGER time;
+	QueryPerformanceCounter(&time);
+
+	if (time.QuadPart >= (LONGLONG)info.qpcCompose) {
+		return;
+	}
+
+	// 提前 1ms 结束然后忙等待
+	time.QuadPart += 10000;
+	if (time.QuadPart < (LONGLONG)info.qpcCompose) {
+		LARGE_INTEGER liDueTime{
+			.QuadPart = -((LONGLONG)info.qpcCompose - time.QuadPart) / qpf.QuadPart
+		};
+		static HANDLE timer = CreateWaitableTimerEx(nullptr, nullptr,
+			CREATE_WAITABLE_TIMER_HIGH_RESOLUTION, TIMER_ALL_ACCESS);
+		SetWaitableTimerEx(timer, &liDueTime, 0, NULL, NULL, 0, 0);
+		WaitForSingleObject(timer, INFINITE);
+	} else {
+		Sleep(0);
+	}
+
+	while (true) {
+		QueryPerformanceCounter(&time);
+
+		if (time.QuadPart >= (LONGLONG)info.qpcCompose) {
+			return;
+		}
+
+		Sleep(0);
+	}
+}
+
+}

@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Capture">
+      <UniqueIdentifier>{a3c5f48a-b77b-4e7d-ab18-74308a1c0889}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{7ed1757c-3140-42a7-93b3-5bf0171cfa7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers">
+      <UniqueIdentifier>{34fd6af4-f461-43ae-81e0-c663a89c2d2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{1956ae10-07ad-4b77-a37f-25f7fe10654b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render">
+      <UniqueIdentifier>{6cc4a9bb-b213-4722-b658-3b720317d9de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Presenter">
+      <UniqueIdentifier>{bf1f1896-560d-4f37-9c3a-891b7c9cd2af}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="EffectCacheManager.h" />
+    <ClInclude Include="EffectHelper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="OverlayHelper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="YasHelper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="ScalingWindow.h" />
+    <ClInclude Include="CursorManager.h" />
+    <ClInclude Include="GraphicsCaptureFrameSource.h">
+      <Filter>Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="GDIFrameSource.h">
+      <Filter>Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameTrace.h"><Filter>Render</Filter></ClInclude>
+    <ClInclude Include="FrameSourceBase.h">
+      <Filter>Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="HdrCaptureProcessor.h">
+      <Filter>Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="HdrFrame.h"><Filter>Include</Filter></ClInclude>
+    <ClInclude Include="HdrColorTransform.h"><Filter>Helpers</Filter></ClInclude>
+    <ClInclude Include="HdrSurfaceAdapter.h"><Filter>Helpers</Filter></ClInclude>
+    <ClInclude Include="HdrProtocol.h"><Filter>Include</Filter></ClInclude>
+    <ClInclude Include="HdrAdapterDispatcher.h"><Filter>Helpers</Filter></ClInclude>
+    <ClInclude Include="EffectProtocolCatalogC.h"><Filter>Helpers</Filter></ClInclude>
+    <ClInclude Include="HdrEffectBoundary.h"><Filter>Helpers</Filter></ClInclude>
+    <ClInclude Include="GroupAHdrRoutes.h"><Filter>Helpers</Filter></ClInclude>
+    <ClInclude Include="GroupBHdrRoutes.h"><Filter>Helpers</Filter></ClInclude>
+    <ClInclude Include="HdrDiagnostics.h"><Filter>Helpers</Filter></ClInclude>
+    <ClInclude Include="DwmSharedSurfaceFrameSource.h">
+      <Filter>Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="DesktopDuplicationFrameSource.h">
+      <Filter>Capture</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EffectCompiler.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EffectDesc.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EffectParameterRestart.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EffectParameterValue.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ScalingOptions.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BrowserVideoGeometryPolicy.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ScalingRuntime.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\WindowHelper.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Win32Helper.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Event.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\WindowBase.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DirectXHelper.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="BackendDescriptorStore.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="CursorDrawer.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceResources.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectDrawer.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="ExclModeHelper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameGuidanceProvider.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameGuidanceService.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="MotionVectorRequest.h" />
+    <ClInclude Include="PresentationFrameRate.h" />
+    <ClInclude Include="FramePresentationTiming.h" />
+    <ClInclude Include="FramePacingWait.h" />
+    <ClInclude Include="include\FramePacingOptions.h" />
+    <ClInclude Include="include\VideoOutputPolicy.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SourceWindowGeometry.h" />
+    <ClInclude Include="FrameGuidanceTypes.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameGuidancePerformance.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="ReflexController.h" />
+    <ClInclude Include="NativeBackendTiming.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="ZeroFrameGuidanceProvider.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="NvidiaOpticalFlowProvider.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameGuidanceDiagnostics.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="PassThroughFrames.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="include\EffectParameterResetGesture.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameGuidanceD3D12Interop.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="NgxD3D12Core.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="DLSSNRFilter.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="GroupBEffectProtocol.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="StepTimer.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectsProfiler.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="OverlayDrawer.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiBackend.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiFontsCacheManager.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiImpl.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="AdaptivePresenter.h">
+      <Filter>Presenter</Filter>
+    </ClInclude>
+    <ClInclude Include="CompSwapchainPresenter.h">
+      <Filter>Presenter</Filter>
+    </ClInclude>
+    <ClInclude Include="PresenterBase.h">
+      <Filter>Presenter</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenshotHelper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureHelper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="DDS.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="DDSHelper.h">
+      <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="SrcTracker.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ScalingRuntime.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="EffectCacheManager.cpp" />
+    <ClCompile Include="EffectCompiler.cpp" />
+    <ClCompile Include="DirectXHelper.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowHelper.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="OverlayHelper.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="ScalingWindow.cpp" />
+    <ClCompile Include="CursorManager.cpp" />
+    <ClCompile Include="GraphicsCaptureFrameSource.cpp">
+      <Filter>Capture</Filter>
+    </ClCompile>
+    <ClCompile Include="GDIFrameSource.cpp">
+      <Filter>Capture</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameTrace.cpp"><Filter>Render</Filter></ClCompile>
+    <ClCompile Include="FrameSourceBase.cpp">
+      <Filter>Capture</Filter>
+    </ClCompile>
+    <ClCompile Include="HdrCaptureProcessor.cpp"><Filter>Capture</Filter></ClCompile>
+    <ClCompile Include="HdrFrame.cpp"><Filter>Include</Filter></ClCompile>
+    <ClCompile Include="HdrColorTransform.cpp"><Filter>Helpers</Filter></ClCompile>
+    <ClCompile Include="HdrSurfaceAdapter.cpp"><Filter>Helpers</Filter></ClCompile>
+    <ClCompile Include="HdrProtocol.cpp"><Filter>Include</Filter></ClCompile>
+    <ClCompile Include="HdrAdapterDispatcher.cpp"><Filter>Helpers</Filter></ClCompile>
+    <ClCompile Include="HdrEffectBoundary.cpp"><Filter>Helpers</Filter></ClCompile>
+    <ClCompile Include="GroupAHdrRoutes.cpp"><Filter>Helpers</Filter></ClCompile>
+    <ClCompile Include="GroupBHdrRoutes.cpp"><Filter>Helpers</Filter></ClCompile>
+    <ClCompile Include="HdrDiagnostics.cpp"><Filter>Helpers</Filter></ClCompile>
+    <ClCompile Include="DwmSharedSurfaceFrameSource.cpp">
+      <Filter>Capture</Filter>
+    </ClCompile>
+    <ClCompile Include="DesktopDuplicationFrameSource.cpp">
+      <Filter>Capture</Filter>
+    </ClCompile>
+    <ClCompile Include="ScalingOptions.cpp" />
+    <ClCompile Include="Win32Helper.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="BackendDescriptorStore.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="CursorDrawer.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceResources.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectDrawer.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="ReflexController.cpp" />
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameGuidanceService.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="ZeroFrameGuidanceProvider.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="NvidiaOpticalFlowProvider.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameGuidanceDiagnostics.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="PassThroughFrames.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameGuidanceD3D12Interop.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="NgxD3D12Core.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="DLSSNRFilter.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="ExclModeHelper.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="StepTimer.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectsProfiler.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="OverlayDrawer.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiBackend.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiFontsCacheManager.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGuiImpl.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="AdaptivePresenter.cpp">
+      <Filter>Presenter</Filter>
+    </ClCompile>
+    <ClCompile Include="CompSwapchainPresenter.cpp">
+      <Filter>Presenter</Filter>
+    </ClCompile>
+    <ClCompile Include="PresenterBase.cpp">
+      <Filter>Presenter</Filter>
+    </ClCompile>
+    <ClCompile Include="ScreenshotHelper.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureHelper.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="DDSHelper.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="SrcTracker.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="shaders\SimpleVS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="shaders\SimplePS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="shaders\MaskedCursorPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="shaders\MonochromeCursorPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="shaders\DuplicateFrameCS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="shaders\ImGuiImplVS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="shaders\ImGuiImplPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="$(MSBuildThisFileDirectory)..\..\natvis\wil.natvis" />
+    <Natvis Include="$(MSBuildThisFileDirectory)..\..\natvis\wil.natstepfilter" />
+  </ItemGroup>
+</Project>

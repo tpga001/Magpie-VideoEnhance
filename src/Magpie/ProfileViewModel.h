@@ -1,0 +1,198 @@
+#pragma once
+#include "Event.h"
+#include "ProfileViewModel.g.h"
+
+namespace Magpie {
+struct Profile;
+}
+
+namespace winrt::Magpie::implementation {
+
+struct ProfileViewModel : ProfileViewModelT<ProfileViewModel>,
+                          wil::notify_property_changed_base<ProfileViewModel> {
+	ProfileViewModel(int profileIdx, bool initializePageData = true);
+	~ProfileViewModel();
+
+	void Rebind(uint32_t index) noexcept;
+
+	IconElement Icon() const noexcept {
+		return _icon;
+	}
+
+	bool IsNotDefaultProfile() const noexcept;
+
+	bool IsProgramExist() const noexcept {
+		return _isProgramExist;
+	}
+
+	bool IsNotPackaged() const noexcept;
+
+	fire_and_forget OpenProgramLocation() const noexcept;
+
+	fire_and_forget ChangeExeForLaunching() noexcept;
+
+	hstring Name() const noexcept;
+
+	void Launch() const noexcept;
+
+	hstring RenameText() const noexcept {
+		return _renameText;
+	}
+
+	void RenameText(const hstring& value);
+
+	bool IsRenameConfirmButtonEnabled() const noexcept {
+		return _isRenameConfirmButtonEnabled;
+	}
+
+	void Rename();
+
+	void RenameFlyout_Opening();
+
+	void RenameTextBox_KeyDown(IInspectable const&, Input::KeyRoutedEventArgs const& args);
+
+	int RenameTextBoxSelectionStart() const noexcept {
+		return static_cast<int>(_renameText.size());
+	}
+
+	void RenameButton_Click();
+
+	bool CanDrag() const noexcept;
+
+	void Delete();
+
+	IVector<IInspectable> ScalingModes() const noexcept;
+
+	int ScalingMode() const noexcept;
+	void ScalingMode(int value);
+
+	IVector<IInspectable> CaptureMethods() const noexcept;
+
+	int CaptureMethod() const noexcept;
+	void CaptureMethod(int value);
+
+	bool IsCaptureMethodDesktopDuplication() const noexcept;
+
+	int AutoScale() const noexcept;
+	void AutoScale(int value);
+
+	bool IsParameterFocusSwitchingEnabled() const noexcept;
+	void IsParameterFocusSwitchingEnabled(bool value);
+
+	bool Is3DGameMode() const noexcept;
+	void Is3DGameMode(bool value);
+
+	bool IsHdrCompatibilityEnabled() const noexcept;
+	void IsHdrCompatibilityEnabled(bool value);
+
+	bool HasMultipleMonitors() const noexcept;
+
+	IVector<IInspectable> MonitorOptions() const noexcept {
+		return _monitorOptions;
+	}
+
+	int MonitorSelection() const noexcept;
+	void MonitorSelection(int value);
+
+	int InitialWindowedScaleFactor() const noexcept;
+	void InitialWindowedScaleFactor(int value);
+
+	double CustomInitialWindowedScaleFactor() const noexcept;
+	void CustomInitialWindowedScaleFactor(double value);
+
+	IVector<IInspectable> GraphicsCards() const noexcept;
+
+	int GraphicsCard() const noexcept;
+	void GraphicsCard(int value);
+
+	bool IsShowGraphicsCardSettingsCard() const noexcept;
+
+	bool IsNoGraphicsCard() const noexcept;
+
+	bool IsFrameRateLimiterEnabled() const noexcept;
+	void IsFrameRateLimiterEnabled(bool value);
+
+	double MaxFrameRate() const noexcept;
+	void MaxFrameRate(double value);
+
+	bool IsCaptureTitleBar() const noexcept;
+	void IsCaptureTitleBar(bool value);
+
+	bool CanCaptureTitleBar() const noexcept;
+
+	bool IsCroppingEnabled() const noexcept;
+	void IsCroppingEnabled(bool value);
+
+	double CroppingLeft() const noexcept;
+	void CroppingLeft(double value);
+
+	double CroppingTop() const noexcept;
+	void CroppingTop(double value);
+
+	double CroppingRight() const noexcept;
+	void CroppingRight(double value);
+
+	double CroppingBottom() const noexcept;
+	void CroppingBottom(double value);
+
+	bool IsAdjustCursorSpeed() const noexcept;
+	void IsAdjustCursorSpeed(bool value);
+
+	int CursorScaling() const noexcept;
+	void CursorScaling(int value);
+
+	double CustomCursorScaling() const noexcept;
+	void CustomCursorScaling(double value);
+
+	int CursorInterpolationMode() const noexcept;
+	void CursorInterpolationMode(int value);
+
+	bool IsAutoHideCursorEnabled() const noexcept;
+	void IsAutoHideCursorEnabled(bool value);
+
+	double AutoHideCursorDelay() const noexcept;
+	void AutoHideCursorDelay(double value);
+
+	hstring AutoHideCursorDelayText() const noexcept;
+
+	hstring LaunchParameters() const noexcept;
+	void LaunchParameters(const hstring& value);
+
+	int DestAlignment() const noexcept;
+	void DestAlignment(int value);
+
+	bool IsDirectFlipDisabled() const noexcept;
+	void IsDirectFlipDisabled(bool value);
+
+private:
+	fire_and_forget _LoadIcon();
+
+	void _AdaptersService_AdaptersChanged();
+
+	void _BuildMonitorOptions();
+
+	bool _isProgramExist = true;
+
+	hstring _renameText;
+	std::wstring_view _trimedRenameText;
+
+	uint32_t _index = 0;
+	// 可以保存此指针的原因是: 用户停留在此页面时不会有缩放配置被创建或删除
+	::Magpie::Profile* _data = nullptr;
+
+	::Magpie::MultithreadEvent<bool>::EventRevoker _appThemeChangedRevoker;
+	::Magpie::Event<uint32_t>::EventRevoker _dpiChangedRevoker;
+	::Magpie::Event<>::EventRevoker _adaptersChangedRevoker;
+
+	IconElement _icon{ nullptr };
+	IVector<IInspectable> _monitorOptions{ nullptr };
+	std::vector<std::wstring> _monitorIds;
+	std::vector<std::wstring> _monitorNames;
+
+	const bool _isDefaultProfile = true;
+	bool _isRenameConfirmButtonEnabled = false;
+	// 用于防止 ComboBox 可见性变化时错误修改 GraphicsCard 配置
+	bool _isHandlingAdapterChanged = false;
+};
+
+}

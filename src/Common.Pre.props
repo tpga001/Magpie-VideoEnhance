@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Microsoft.Cpp.Default.props 之后导入 -->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+    <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+
+  <!-- 编译选项 -->
+  <Import Project="$(MSBuildThisFileDirectory)\BuildOptions.props" />
+
+  <PropertyGroup Label="Globals">
+    <VS17 Condition="$([System.String]::new('$(MSBuildVersion)').StartsWith('17'))">true</VS17>
+    <VS17 Condition="'$(VS17)' != 'true'">false</VS17>
+    <VCProjectVersion Condition="$(VS17)">17.0</VCProjectVersion>
+    <VCProjectVersion Condition="!$(VS17)">18.0</VCProjectVersion>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <MajorVersion Condition="'$(MajorVersion)' == ''">0</MajorVersion>
+    <MinorVersion Condition="'$(MinorVersion)' == ''">0</MinorVersion>
+    <PatchVersion Condition="'$(PatchVersion)' == ''">0</PatchVersion>
+    <!-- 可通过 VersionString 区分开发版本和发布版本 -->
+    <VersionString Condition="'$(VersionString)' == '' And ('$(MajorVersion)' != '0' Or '$(MinorVersion)' != '0' Or '$(PatchVersion)' != '0')">$(MajorVersion).$(MinorVersion).$(PatchVersion)</VersionString>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Configuration">
+    <PlatformToolset Condition="$(UseClangCL)">ClangCL</PlatformToolset>
+    <PlatformToolset Condition="!$(UseClangCL) And $(VS17)">v143</PlatformToolset>
+    <PlatformToolset Condition="!$(UseClangCL) And !$(VS17)">v145</PlatformToolset>
+    <UseDebugLibraries Condition="'$(Configuration)' == 'Debug'">true</UseDebugLibraries>
+  </PropertyGroup>
+</Project>

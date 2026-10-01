@@ -1,0 +1,17 @@
+{
+    "version": "0.5",
+    "requires": [
+        "yas/7.1.0#bdc6ef546095c7eaed771f9ae8253a27%1689595929.068",
+        "spdlog/1.17.0#bcbaaf7147bda6ad24ffbd1ac3d7142c%1767636069.964",
+        "rapidjson/cci.20230929#8dc0392af2b3aaea7312095f0ba53467%1705070242.903",
+        "rapidhash/1.0#7b5258eb18e285f671aa71528ff53715%1748430006.313",
+        "parallel-hashmap/2.0.0#82acae64ffe2693fff5fb3f9df8e1746%1737476425.041",
+        "muparser/2.3.5#30370d89409121515eaf0e9183546e03%1740904822.135",
+        "kuba-zip/0.3.2#ba1b74a465ed339e1a309840b21d7f36%1743413283.944",
+        "imgui/1.91.8#73ea234cb7e1d28994af68644c1509ad%1780384962.411",
+        "fmt/12.1.0#6baf0fb8351783472b94ee6e36232391%1785754553.994"
+    ],
+    "build_requires": [],
+    "python_requires": [],
+    "config_requires": []
+}

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="KirikiriWindow.cpp" />
+    <ClCompile Include="HungWindow.cpp" />
+    <ClCompile Include="TopmostWindow.cpp" />
+    <ClCompile Include="PopupHostWindow.cpp" />
+    <ClCompile Include="HideCursorWindow.cpp" />
+    <ClCompile Include="Utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="app.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="WindowBase.h" />
+    <ClInclude Include="KirikiriWindow.h" />
+    <ClInclude Include="HungWindow.h" />
+    <ClInclude Include="TopmostWindow.h" />
+    <ClInclude Include="PopupHostWindow.h" />
+    <ClInclude Include="HideCursorWindow.h" />
+    <ClInclude Include="Utils.h" />
+  </ItemGroup>
+</Project>

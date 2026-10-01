@@ -1,0 +1,65 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Magpie Decoded 1080p30 [PREPARING]</title>
+<style>
+html,body { margin:0; width:100%; height:100%; background:#102030; overflow:hidden; }
+video { display:block; width:100%; height:100%; object-fit:contain; }
+.bpx-player-subtitle-panel { position:fixed; bottom:12%; left:30%; color:white; font:24px sans-serif; background:#102030; }
+</style>
+<video muted autoplay loop playsinline></video>
+<script>
+// Encode one deterministic six-second GOP sequence, then repeat its encoded
+// packets on a continuous timeline.  This keeps long stability captures from
+// crossing a media-loop timestamp reset every six seconds while avoiding the
+// startup cost of encoding thousands of 1080p frames.
+(async () => {
+  const W=1920,H=1080,FPS=30,BASE_COUNT=180;
+  const requestedSeconds=Number(new URLSearchParams(location.search).get('duration'))||60;
+  const COUNT=Math.ceil(Math.max(6,Math.min(390,requestedSeconds))*FPS);
+  const concat = arrays => { const out=new Uint8Array(arrays.reduce((n,a)=>n+a.length,0)); let p=0; for(const a of arrays){out.set(a,p);p+=a.length;} return out; };
+  const uint = n => { const bytes=[]; do { bytes.unshift(n&255); n=Math.floor(n/256); } while(n); return Uint8Array.from(bytes); };
+  const size = n => { let length=1; while(n>=2**(7*length)-1) ++length; const out=new Uint8Array(length); for(let i=length-1;i>=0;--i){out[i]=n&255;n=Math.floor(n/256);} out[0]|=1<<(8-length); return out; };
+  const str = s => new TextEncoder().encode(s);
+  const element=(id,payload)=>concat([uint(id),size(payload.length),payload]);
+  const number=(id,n)=>element(id,uint(n));
+  const float=n=>{const out=new Uint8Array(8);new DataView(out.buffer).setFloat64(0,n,false);return out;};
+  const canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;
+  const ctx=canvas.getContext('2d',{alpha:false});
+  const packets=[];
+  const encoder=new VideoEncoder({output(chunk){
+    const bytes=new Uint8Array(chunk.byteLength);chunk.copyTo(bytes);
+    packets.push({bytes,key:chunk.type==='key'});
+  },error(error){throw error;}});
+  encoder.configure({codec:'vp8',width:W,height:H,bitrate:5000000,framerate:FPS,latencyMode:'realtime'});
+  for(let i=0;i<BASE_COUNT;i++){
+    ctx.fillStyle='#102030';ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle='#456080';ctx.lineWidth=1;
+    for(let x=0;x<W;x+=32){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    ctx.fillStyle='#80e0b0';ctx.fillRect(50+(i*11)%(W-200),420,140,140);
+    ctx.fillStyle='white';ctx.font='64px sans-serif';ctx.fillText('1920 × 1080  /  30 FPS',100,130);
+    ctx.font='100px monospace';ctx.fillText(String(i).padStart(3,'0'),100,300);
+    const frame=new VideoFrame(canvas,{timestamp:Math.round(i*1000000/FPS),duration:Math.round(1000000/FPS)});
+    encoder.encode(frame,{keyFrame:i%30===0});frame.close();
+    if(encoder.encodeQueueSize>5) await encoder.flush();
+  }
+  await encoder.flush();encoder.close();
+  if(packets.length!==BASE_COUNT) throw new Error('Encoder dropped test frames');
+  const clusters=[];
+  for(let i=0;i<COUNT;i++){
+    const packet=packets[i%BASE_COUNT];
+    clusters.push(element(0x1f43b675,concat([
+      number(0xe7,Math.round(i*1000/FPS)),
+      element(0xa3,concat([Uint8Array.of(0x81,0,0,packet.key?0x80:0),packet.bytes]))
+    ])));
+  }
+  const header=element(0x1a45dfa3,concat([number(0x4286,1),number(0x42f7,1),number(0x42f2,4),number(0x42f3,8),element(0x4282,str('webm')),number(0x4287,4),number(0x4285,2)]));
+  const info=element(0x1549a966,concat([number(0x2ad7b1,1000000),element(0x4d80,str('Magpie test')),element(0x5741,str('Magpie test')),element(0x4489,float(COUNT/FPS*1000))]));
+  const tracks=element(0x1654ae6b,element(0xae,concat([number(0xd7,1),number(0x73c5,1),number(0x83,1),element(0x86,str('V_VP8')),number(0x23e383,Math.round(1e9/FPS)),element(0xe0,concat([number(0xb0,W),number(0xba,H)]))])));
+  const movie=concat([header,element(0x18538067,concat([info,tracks,...clusters]))]);
+  const video=document.querySelector('video');
+  video.src=URL.createObjectURL(new Blob([movie],{type:'video/webm'}));
+  await video.play();
+  document.title='Magpie Decoded 1080p30 [READY]';
+  window.fixture={width:W,height:H,frames:COUNT,fps:FPS,bytes:movie.length};
+})().catch(error=>{document.title='Magpie test ERROR '+error.message;console.error(error);});
+</script>

@@ -1,0 +1,3237 @@
+{
+  "schemaVersion": 1,
+  "language": "zh-Hans",
+  "categories": [
+    {
+      "id": "upscale",
+      "name": "放大与超分",
+      "description": "改变输出尺寸或重建放大细节。",
+      "subcategories": [
+        {
+          "name": "通用",
+          "description": "用于照片、视频或游戏等常见画面，按性能余量选择。"
+        },
+        {
+          "name": "动画线条",
+          "description": "重建动画、视觉小说中的轮廓和色块，留意纹理与线条变化。"
+        },
+        {
+          "name": "像素画",
+          "description": "保留像素网格，或按偏好平滑像素游戏的轮廓。"
+        },
+        {
+          "name": "时序重建",
+          "description": "利用连续捕获帧尝试恢复细节，运动与遮挡画面需要对比。"
+        },
+        {
+          "name": "缩小与尺寸整理",
+          "description": "整理输出尺寸，适合缩小或多阶段尺寸转换。"
+        }
+      ]
+    },
+    {
+      "id": "cleanup",
+      "name": "清理修复",
+      "description": "先处理噪声、色带或线条缺陷，给后续放大提供更干净的输入。",
+      "subcategories": [
+        {
+          "name": "降噪",
+          "description": "减轻颗粒、压缩噪声；逐步增加强度并观察细小纹理。"
+        },
+        {
+          "name": "去色带",
+          "description": "平滑天空、阴影等渐变中的色阶分层。"
+        },
+        {
+          "name": "线条修复",
+          "description": "整理动画轮廓、线条粗细或振铃。"
+        }
+      ]
+    },
+    {
+      "id": "antialiasing",
+      "name": "抗锯齿",
+      "description": "缓和几何边缘锯齿；时序近似项依赖捕获帧历史。",
+      "subcategories": [
+        {
+          "name": "空间",
+          "description": "根据当前画面平滑边缘锯齿，留意细节变软。"
+        },
+        {
+          "name": "时序",
+          "description": "尝试利用连续帧平滑边缘，需比较运动中的重影与稳定性。"
+        }
+      ]
+    },
+    {
+      "id": "sharpen",
+      "name": "锐化细节",
+      "description": "在缩放或修复后增强局部对比与边缘清晰度。",
+      "subcategories": [
+        {
+          "name": "通用锐化",
+          "description": "增强局部对比与边缘清晰度，适合缩放后的收尾处理。"
+        }
+      ]
+    },
+    {
+      "id": "frame",
+      "name": "补帧与帧率",
+      "description": "影响帧发布或捕获处理节奏，执行语义不等同普通着色器行。",
+      "subcategories": [
+        {
+          "name": "补帧",
+          "description": "生成中间帧，提高运动流畅度；一个效果组选择一种补帧方案。"
+        },
+        {
+          "name": "帧率调度",
+          "description": "调节处理帧率；实际执行由运行时调度，与列表位置分开。"
+        }
+      ]
+    },
+    {
+      "id": "style",
+      "name": "风格显示",
+      "description": "主动改变显示风格、色彩或纹理观感。",
+      "subcategories": [
+        {
+          "name": "CRT",
+          "description": "模拟扫描线、遮罩、辉光等复古显示特征。"
+        },
+        {
+          "name": "图像调整",
+          "description": "调整亮度、颜色或 Gamma，使画面更符合观看偏好。"
+        },
+        {
+          "name": "AI 画面重塑",
+          "description": "通过 AI 改变纹理与画面风格，按实际观感选择。"
+        }
+      ]
+    },
+    {
+      "id": "diagnostic",
+      "name": "调试自定义",
+      "description": "用于检查运动引导、置信度或构造自定义效果链。",
+      "subcategories": [
+        {
+          "name": "诊断",
+          "description": "观察运动或中间处理结果，用于定位画面问题。"
+        }
+      ]
+    },
+    {
+      "id": "hdr-components",
+      "name": "HDR 组件",
+      "description": "连接 HDR 与 SDR 处理流程，用于搭建颜色转换、SDR 效果兼容和 HDR 扩展效果组。",
+      "subcategories": []
+    }
+  ],
+  "effects": [
+    {
+      "id": "ACNet",
+      "name": "ACNet",
+      "category": "upscale",
+      "subcategory": "动画线条",
+      "purposes": [
+        "upscale",
+        "cleanup"
+      ],
+      "summary": "卷积神经网络 2× 放大，主要面向动漫素材并带较强降噪取向。",
+      "details": "放大与超分 › 动画线条\n\n适合带压缩噪声的动画与线稿；相对干净或真人素材应同时比较保纹理更强的模型。\n\n变体差异：固定 2×；9 个计算通道，强降噪可能损失细纹理，未做本机画面对比。\n\n进阶／实验：多通道或较大网络模型，适合在有性能余量时比较。\n\n尝试建议：按目标分辨率检查性能；不要仅按名称推断画质\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "ACNet ACNet ACNet 放大与超分 动画线条 ACNet 卷积神经网络 2× 放大，主要面向动漫素材并带较强降噪取向。 适合带压缩噪声的动画与线稿；相对干净或真人素材应同时比较保纹理更强的模型。 放大与超分 动画线条",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_3D_AA_Upscale_US",
+      "name": "Anime4K 3D AA Upscale US",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale",
+        "antialiasing"
+      ],
+      "summary": "面向 3D 游戏捕获画面的固定 2× 空间放大。",
+      "details": "放大与超分 › 通用\n\nAA 组合版在放大时加入边缘平滑，适合锯齿较明显的 3D 游戏。\n\n变体差异：US 预设，固定 2×、3 通道，包含 AA 组合。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Anime4K\\Anime4K_3D_AA_Upscale_US Anime4K 3D AA Upscale US Anime4K 放大与超分 通用 Anime4K 3D AA Upscale US Anime4K Anime4K_3D_AA_Upscale_US 面向 3D 游戏捕获画面的固定 2× 空间放大。 AA 组合版在放大时加入边缘平滑，适合锯齿较明显的 3D 游戏。 放大与超分 通用 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_3D_Upscale_US",
+      "name": "Anime4K 3D Upscale US",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "面向 3D 游戏捕获画面的固定 2× 空间放大。",
+      "details": "放大与超分 › 通用\n\n基础版用于 3D 游戏画面放大，避免将 Anime4K 品牌名误解为只适合动画。\n\n变体差异：US 预设，固定 2×、3 通道。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Anime4K\\Anime4K_3D_Upscale_US Anime4K 3D Upscale US Anime4K 放大与超分 通用 Anime4K 3D Upscale US Anime4K Anime4K_3D_Upscale_US 面向 3D 游戏捕获画面的固定 2× 空间放大。 基础版用于 3D 游戏画面放大，避免将 Anime4K 品牌名误解为只适合动画。 放大与超分 通用 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Denoise_Bilateral_Mean",
+      "name": "Anime4K Denoise Bilateral Mean",
+      "category": "cleanup",
+      "subcategory": "降噪",
+      "purposes": [
+        "cleanup"
+      ],
+      "summary": "用 Anime4K 双边滤波减轻动画或压缩素材噪声，保留主要边缘。",
+      "details": "清理修复 › 降噪\n\n适合在线条放大前清理轻度噪点；均值统计会产生不同的纹理取舍。\n\n变体差异：均值变体；同尺寸、1 通道，需与另外两种统计方式按素材比较。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：放大前；在「放大/超分、锐化」之前。先清理输入可减少后续放大噪声。\n\n输出尺寸：保持输入尺寸\n\n组合注意：强度过高会损失纹理\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Anime4K\\Anime4K_Denoise_Bilateral_Mean Anime4K Denoise Bilateral Mean Anime4K 清理修复 降噪 Anime4K Denoise Bilateral Mean Anime4K Anime4K_Denoise_Bilateral_Mean 用 Anime4K 双边滤波减轻动画或压缩素材噪声，保留主要边缘。 适合在线条放大前清理轻度噪点；均值统计会产生不同的纹理取舍。 清理修复 降噪 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Denoise_Bilateral_Median",
+      "name": "Anime4K Denoise Bilateral Median",
+      "category": "cleanup",
+      "subcategory": "降噪",
+      "purposes": [
+        "cleanup"
+      ],
+      "summary": "用 Anime4K 双边滤波减轻动画或压缩素材噪声，保留主要边缘。",
+      "details": "清理修复 › 降噪\n\n适合在线条放大前清理轻度噪点；中值统计会产生不同的纹理取舍。\n\n变体差异：中值变体；同尺寸、1 通道，需与另外两种统计方式按素材比较。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：放大前；在「放大/超分、锐化」之前。先清理输入可减少后续放大噪声。\n\n输出尺寸：保持输入尺寸\n\n组合注意：强度过高会损失纹理\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Anime4K\\Anime4K_Denoise_Bilateral_Median Anime4K Denoise Bilateral Median Anime4K 清理修复 降噪 Anime4K Denoise Bilateral Median Anime4K Anime4K_Denoise_Bilateral_Median 用 Anime4K 双边滤波减轻动画或压缩素材噪声，保留主要边缘。 适合在线条放大前清理轻度噪点；中值统计会产生不同的纹理取舍。 清理修复 降噪 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Denoise_Bilateral_Mode",
+      "name": "Anime4K Denoise Bilateral Mode",
+      "category": "cleanup",
+      "subcategory": "降噪",
+      "purposes": [
+        "cleanup"
+      ],
+      "summary": "用 Anime4K 双边滤波减轻动画或压缩素材噪声，保留主要边缘。",
+      "details": "清理修复 › 降噪\n\n适合在线条放大前清理轻度噪点；众数统计会产生不同的纹理取舍。\n\n变体差异：众数变体；同尺寸、1 通道，需与另外两种统计方式按素材比较。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：放大前；在「放大/超分、锐化」之前。先清理输入可减少后续放大噪声。\n\n输出尺寸：保持输入尺寸\n\n组合注意：强度过高会损失纹理\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Anime4K\\Anime4K_Denoise_Bilateral_Mode Anime4K Denoise Bilateral Mode Anime4K 清理修复 降噪 Anime4K Denoise Bilateral Mode Anime4K Anime4K_Denoise_Bilateral_Mode 用 Anime4K 双边滤波减轻动画或压缩素材噪声，保留主要边缘。 适合在线条放大前清理轻度噪点；众数统计会产生不同的纹理取舍。 清理修复 降噪 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Restore_L",
+      "name": "Anime4K Restore L",
+      "category": "cleanup",
+      "subcategory": "线条修复",
+      "purposes": [
+        "cleanup"
+      ],
+      "summary": "修复动画线条与局部细节，适合放大前的线稿整理。",
+      "details": "清理修复 › 线条修复\n\n标准 Restore 版强调线条恢复，适合轮廓受压缩影响的动画。\n\n变体差异：L 预设；同尺寸、5 通道。字母表示预设规模，不代表已实测的画质排名。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：放大前；在「放大/超分、锐化」之前。先清理输入可减少后续放大噪声。\n\n输出尺寸：保持输入尺寸\n\n组合注意：强度过高会损失纹理\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Anime4K\\Anime4K_Restore_L Anime4K Restore L Anime4K 清理修复 线条修复 Anime4K Restore Anime4K Anime4K_Restore_L 修复动画线条与局部细节，适合放大前的线稿整理。 标准 Restore 版强调线条恢复，适合轮廓受压缩影响的动画。 清理修复 线条修复 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Restore_M",
+      "name": "Anime4K Restore M",
+      "category": "cleanup",
+      "subcategory": "线条修复",
+      "purposes": [
+        "cleanup"
+      ],
+      "summary": "修复动画线条与局部细节，适合放大前的线稿整理。",
+      "details": "清理修复 › 线条修复\n\n标准 Restore 版强调线条恢复，适合轮廓受压缩影响的动画。\n\n变体差异：M 预设；同尺寸、7 通道。字母表示预设规模，不代表已实测的画质排名。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：放大前；在「放大/超分、锐化」之前。先清理输入可减少后续放大噪声。\n\n输出尺寸：保持输入尺寸\n\n组合注意：强度过高会损失纹理\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Anime4K\\Anime4K_Restore_M Anime4K Restore M Anime4K 清理修复 线条修复 Anime4K Restore Anime4K Anime4K_Restore_M 修复动画线条与局部细节，适合放大前的线稿整理。 标准 Restore 版强调线条恢复，适合轮廓受压缩影响的动画。 清理修复 线条修复 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Restore_S",
+      "name": "Anime4K Restore S",
+      "category": "cleanup",
+      "subcategory": "线条修复",
+      "purposes": [
+        "cleanup"
+      ],
+      "summary": "修复动画线条与局部细节，适合放大前的线稿整理。",
+      "details": "清理修复 › 线条修复\n\n标准 Restore 版强调线条恢复，适合轮廓受压缩影响的动画。\n\n变体差异：S 预设；同尺寸、4 通道。字母表示预设规模，不代表已实测的画质排名。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：放大前；在「放大/超分、锐化」之前。先清理输入可减少后续放大噪声。\n\n输出尺寸：保持输入尺寸\n\n组合注意：强度过高会损失纹理\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Anime4K\\Anime4K_Restore_S Anime4K Restore S Anime4K 清理修复 线条修复 Anime4K Restore Anime4K Anime4K_Restore_S 修复动画线条与局部细节，适合放大前的线稿整理。 标准 Restore 版强调线条恢复，适合轮廓受压缩影响的动画。 清理修复 线条修复 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Restore_Soft_L",
+      "name": "Anime4K Restore Soft L",
+      "category": "cleanup",
+      "subcategory": "线条修复",
+      "purposes": [
+        "cleanup"
+      ],
+      "summary": "修复动画线条与局部细节，适合放大前的线稿整理。",
+      "details": "清理修复 › 线条修复\n\nSoft 版抑制更激进的边缘改变，适合担心过锐或伪影时尝试。\n\n变体差异：Soft L 预设；同尺寸、5 通道。字母表示预设规模，不代表已实测的画质排名。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：放大前；在「放大/超分、锐化」之前。先清理输入可减少后续放大噪声。\n\n输出尺寸：保持输入尺寸\n\n组合注意：强度过高会损失纹理\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Anime4K\\Anime4K_Restore_Soft_L Anime4K Restore Soft L Anime4K 清理修复 线条修复 Anime4K Restore Soft Anime4K Anime4K_Restore_Soft_L 修复动画线条与局部细节，适合放大前的线稿整理。 Soft 版抑制更激进的边缘改变，适合担心过锐或伪影时尝试。 清理修复 线条修复 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Restore_Soft_M",
+      "name": "Anime4K Restore Soft M",
+      "category": "cleanup",
+      "subcategory": "线条修复",
+      "purposes": [
+        "cleanup"
+      ],
+      "summary": "修复动画线条与局部细节，适合放大前的线稿整理。",
+      "details": "清理修复 › 线条修复\n\nSoft 版抑制更激进的边缘改变，适合担心过锐或伪影时尝试。\n\n变体差异：Soft M 预设；同尺寸、7 通道。字母表示预设规模，不代表已实测的画质排名。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：放大前；在「放大/超分、锐化」之前。先清理输入可减少后续放大噪声。\n\n输出尺寸：保持输入尺寸\n\n组合注意：强度过高会损失纹理\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Anime4K\\Anime4K_Restore_Soft_M Anime4K Restore Soft M Anime4K 清理修复 线条修复 Anime4K Restore Soft Anime4K Anime4K_Restore_Soft_M 修复动画线条与局部细节，适合放大前的线稿整理。 Soft 版抑制更激进的边缘改变，适合担心过锐或伪影时尝试。 清理修复 线条修复 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Restore_Soft_S",
+      "name": "Anime4K Restore Soft S",
+      "category": "cleanup",
+      "subcategory": "线条修复",
+      "purposes": [
+        "cleanup"
+      ],
+      "summary": "修复动画线条与局部细节，适合放大前的线稿整理。",
+      "details": "清理修复 › 线条修复\n\nSoft 版抑制更激进的边缘改变，适合担心过锐或伪影时尝试。\n\n变体差异：Soft S 预设；同尺寸、4 通道。字母表示预设规模，不代表已实测的画质排名。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：放大前；在「放大/超分、锐化」之前。先清理输入可减少后续放大噪声。\n\n输出尺寸：保持输入尺寸\n\n组合注意：强度过高会损失纹理\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Anime4K\\Anime4K_Restore_Soft_S Anime4K Restore Soft S Anime4K 清理修复 线条修复 Anime4K Restore Soft Anime4K Anime4K_Restore_Soft_S 修复动画线条与局部细节，适合放大前的线稿整理。 Soft 版抑制更激进的边缘改变，适合担心过锐或伪影时尝试。 清理修复 线条修复 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Restore_Soft_UL",
+      "name": "Anime4K Restore Soft UL",
+      "category": "cleanup",
+      "subcategory": "线条修复",
+      "purposes": [
+        "cleanup"
+      ],
+      "summary": "修复动画线条与局部细节，适合放大前的线稿整理。",
+      "details": "清理修复 › 线条修复\n\nSoft 版抑制更激进的边缘改变，适合担心过锐或伪影时尝试。\n\n变体差异：Soft UL 预设；同尺寸、8 通道。字母表示预设规模，不代表已实测的画质排名。\n\n进阶／实验：多通道或较大网络模型，适合在有性能余量时比较。\n\n尝试建议：按目标分辨率检查性能；不要仅按名称推断画质\n\n组合建议：放大前；在「放大/超分、锐化」之前。先清理输入可减少后续放大噪声。\n\n输出尺寸：保持输入尺寸\n\n组合注意：强度过高会损失纹理\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "Anime4K\\Anime4K_Restore_Soft_UL Anime4K Restore Soft UL Anime4K 清理修复 线条修复 Anime4K Restore Soft UL Anime4K Anime4K_Restore_Soft_UL 修复动画线条与局部细节，适合放大前的线稿整理。 Soft 版抑制更激进的边缘改变，适合担心过锐或伪影时尝试。 清理修复 线条修复 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Restore_Soft_VL",
+      "name": "Anime4K Restore Soft VL",
+      "category": "cleanup",
+      "subcategory": "线条修复",
+      "purposes": [
+        "cleanup"
+      ],
+      "summary": "修复动画线条与局部细节，适合放大前的线稿整理。",
+      "details": "清理修复 › 线条修复\n\nSoft 版抑制更激进的边缘改变，适合担心过锐或伪影时尝试。\n\n变体差异：Soft VL 预设；同尺寸、8 通道。字母表示预设规模，不代表已实测的画质排名。\n\n进阶／实验：多通道或较大网络模型，适合在有性能余量时比较。\n\n尝试建议：按目标分辨率检查性能；不要仅按名称推断画质\n\n组合建议：放大前；在「放大/超分、锐化」之前。先清理输入可减少后续放大噪声。\n\n输出尺寸：保持输入尺寸\n\n组合注意：强度过高会损失纹理\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "Anime4K\\Anime4K_Restore_Soft_VL Anime4K Restore Soft VL Anime4K 清理修复 线条修复 Anime4K Restore Soft VL Anime4K Anime4K_Restore_Soft_VL 修复动画线条与局部细节，适合放大前的线稿整理。 Soft 版抑制更激进的边缘改变，适合担心过锐或伪影时尝试。 清理修复 线条修复 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Restore_UL",
+      "name": "Anime4K Restore UL",
+      "category": "cleanup",
+      "subcategory": "线条修复",
+      "purposes": [
+        "cleanup"
+      ],
+      "summary": "修复动画线条与局部细节，适合放大前的线稿整理。",
+      "details": "清理修复 › 线条修复\n\n标准 Restore 版强调线条恢复，适合轮廓受压缩影响的动画。\n\n变体差异：UL 预设；同尺寸、8 通道。字母表示预设规模，不代表已实测的画质排名。\n\n进阶／实验：多通道或较大网络模型，适合在有性能余量时比较。\n\n尝试建议：按目标分辨率检查性能；不要仅按名称推断画质\n\n组合建议：放大前；在「放大/超分、锐化」之前。先清理输入可减少后续放大噪声。\n\n输出尺寸：保持输入尺寸\n\n组合注意：强度过高会损失纹理\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "Anime4K\\Anime4K_Restore_UL Anime4K Restore UL Anime4K 清理修复 线条修复 Anime4K Restore UL Anime4K Anime4K_Restore_UL 修复动画线条与局部细节，适合放大前的线稿整理。 标准 Restore 版强调线条恢复，适合轮廓受压缩影响的动画。 清理修复 线条修复 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Restore_VL",
+      "name": "Anime4K Restore VL",
+      "category": "cleanup",
+      "subcategory": "线条修复",
+      "purposes": [
+        "cleanup"
+      ],
+      "summary": "修复动画线条与局部细节，适合放大前的线稿整理。",
+      "details": "清理修复 › 线条修复\n\n标准 Restore 版强调线条恢复，适合轮廓受压缩影响的动画。\n\n变体差异：VL 预设；同尺寸、8 通道。字母表示预设规模，不代表已实测的画质排名。\n\n进阶／实验：多通道或较大网络模型，适合在有性能余量时比较。\n\n尝试建议：按目标分辨率检查性能；不要仅按名称推断画质\n\n组合建议：放大前；在「放大/超分、锐化」之前。先清理输入可减少后续放大噪声。\n\n输出尺寸：保持输入尺寸\n\n组合注意：强度过高会损失纹理\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "Anime4K\\Anime4K_Restore_VL Anime4K Restore VL Anime4K 清理修复 线条修复 Anime4K Restore VL Anime4K Anime4K_Restore_VL 修复动画线条与局部细节，适合放大前的线稿整理。 标准 Restore 版强调线条恢复，适合轮廓受压缩影响的动画。 清理修复 线条修复 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Thin_HQ",
+      "name": "Anime4K Thin HQ",
+      "category": "cleanup",
+      "subcategory": "线条修复",
+      "purposes": [
+        "cleanup"
+      ],
+      "summary": "细化过粗的动画线条，减少后续放大时的线条发胖。",
+      "details": "清理修复 › 线条修复\n\n通常作为动画放大前的线条预处理，少量使用并观察细线是否断裂。\n\n变体差异：HQ 线条细化；同尺寸、5 通道。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：动画放大或线条恢复之后；在「动画放大／线条恢复」之后；在「最终锐化」之前。用于修整放大或恢复后显得过粗的轮廓；这是按画面问题给出的搭配建议。\n\n输出尺寸：保持输入尺寸\n\n组合注意：细化过强可能使细线断裂，应从较低强度比较\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Anime4K\\Anime4K_Thin_HQ Anime4K Thin HQ Anime4K 清理修复 线条修复 Anime4K Thin HQ Anime4K Anime4K_Thin_HQ 细化过粗的动画线条，减少后续放大时的线条发胖。 通常作为动画放大前的线条预处理，少量使用并观察细线是否断裂。 清理修复 线条修复 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Upscale_Denoise_L",
+      "name": "Anime4K Upscale Denoise L",
+      "category": "upscale",
+      "subcategory": "动画线条",
+      "purposes": [
+        "upscale",
+        "cleanup"
+      ],
+      "summary": "面向动画和线稿的 2× 放大并同时降噪。",
+      "details": "放大与超分 › 动画线条\n\n把清理与放大合在一项中，适合噪声与低分辨率同时存在的素材。\n\n变体差异：L 预设，固定 2×、4 通道。未做本机变体画质排名。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Anime4K\\Anime4K_Upscale_Denoise_L Anime4K Upscale Denoise L Anime4K 放大与超分 动画线条 Anime4K Upscale Denoise Anime4K Anime4K_Upscale_Denoise_L 面向动画和线稿的 2× 放大并同时降噪。 把清理与放大合在一项中，适合噪声与低分辨率同时存在的素材。 放大与超分 动画线条 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Upscale_Denoise_S",
+      "name": "Anime4K Upscale Denoise S",
+      "category": "upscale",
+      "subcategory": "动画线条",
+      "purposes": [
+        "upscale",
+        "cleanup"
+      ],
+      "summary": "面向动画和线稿的 2× 放大并同时降噪。",
+      "details": "放大与超分 › 动画线条\n\n把清理与放大合在一项中，适合噪声与低分辨率同时存在的素材。\n\n变体差异：S 预设，固定 2×、4 通道。未做本机变体画质排名。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Anime4K\\Anime4K_Upscale_Denoise_S Anime4K Upscale Denoise S Anime4K 放大与超分 动画线条 Anime4K Upscale Denoise Anime4K Anime4K_Upscale_Denoise_S 面向动画和线稿的 2× 放大并同时降噪。 把清理与放大合在一项中，适合噪声与低分辨率同时存在的素材。 放大与超分 动画线条 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Upscale_Denoise_UL",
+      "name": "Anime4K Upscale Denoise UL",
+      "category": "upscale",
+      "subcategory": "动画线条",
+      "purposes": [
+        "upscale",
+        "cleanup"
+      ],
+      "summary": "面向动画和线稿的 2× 放大并同时降噪。",
+      "details": "放大与超分 › 动画线条\n\n把清理与放大合在一项中，适合噪声与低分辨率同时存在的素材。\n\n变体差异：UL 预设，固定 2×、8 通道。未做本机变体画质排名。\n\n进阶／实验：多通道或较大网络模型，适合在有性能余量时比较。\n\n尝试建议：按目标分辨率检查性能；不要仅按名称推断画质\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "Anime4K\\Anime4K_Upscale_Denoise_UL Anime4K Upscale Denoise UL Anime4K 放大与超分 动画线条 Anime4K Upscale Denoise UL Anime4K Anime4K_Upscale_Denoise_UL 面向动画和线稿的 2× 放大并同时降噪。 把清理与放大合在一项中，适合噪声与低分辨率同时存在的素材。 放大与超分 动画线条 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Upscale_Denoise_VL",
+      "name": "Anime4K Upscale Denoise VL",
+      "category": "upscale",
+      "subcategory": "动画线条",
+      "purposes": [
+        "upscale",
+        "cleanup"
+      ],
+      "summary": "面向动画和线稿的 2× 放大并同时降噪。",
+      "details": "放大与超分 › 动画线条\n\n把清理与放大合在一项中，适合噪声与低分辨率同时存在的素材。\n\n变体差异：VL 预设，固定 2×、8 通道。未做本机变体画质排名。\n\n进阶／实验：多通道或较大网络模型，适合在有性能余量时比较。\n\n尝试建议：按目标分辨率检查性能；不要仅按名称推断画质\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "Anime4K\\Anime4K_Upscale_Denoise_VL Anime4K Upscale Denoise VL Anime4K 放大与超分 动画线条 Anime4K Upscale Denoise VL Anime4K Anime4K_Upscale_Denoise_VL 面向动画和线稿的 2× 放大并同时降噪。 把清理与放大合在一项中，适合噪声与低分辨率同时存在的素材。 放大与超分 动画线条 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Upscale_GAN_x2_M",
+      "name": "Anime4K Upscale GAN x2 M",
+      "category": "upscale",
+      "subcategory": "动画线条",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "面向动画和线稿的 2× 放大。",
+      "details": "放大与超分 › 动画线条\n\nGAN 变体更偏向学习式细节重建，适合可接受模型化纹理的动画素材。\n\n变体差异：M 预设，固定 2×、7 通道。未做本机变体画质排名。\n\n特定场景推荐：适合特定素材、风格或实验场景。\n\n尝试建议：先在代表性画面比较副作用\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Anime4K\\Anime4K_Upscale_GAN_x2_M Anime4K Upscale GAN x2 M Anime4K 放大与超分 动画线条 Anime4K Upscale GAN x2 Anime4K Anime4K_Upscale_GAN_x2_M 面向动画和线稿的 2× 放大。 GAN 变体更偏向学习式细节重建，适合可接受模型化纹理的动画素材。 放大与超分 动画线条 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Upscale_GAN_x2_S",
+      "name": "Anime4K Upscale GAN x2 S",
+      "category": "upscale",
+      "subcategory": "动画线条",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "面向动画和线稿的 2× 放大。",
+      "details": "放大与超分 › 动画线条\n\nGAN 变体更偏向学习式细节重建，适合可接受模型化纹理的动画素材。\n\n变体差异：S 预设，固定 2×、7 通道。未做本机变体画质排名。\n\n特定场景推荐：适合特定素材、风格或实验场景。\n\n尝试建议：先在代表性画面比较副作用\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Anime4K\\Anime4K_Upscale_GAN_x2_S Anime4K Upscale GAN x2 S Anime4K 放大与超分 动画线条 Anime4K Upscale GAN x2 Anime4K Anime4K_Upscale_GAN_x2_S 面向动画和线稿的 2× 放大。 GAN 变体更偏向学习式细节重建，适合可接受模型化纹理的动画素材。 放大与超分 动画线条 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Upscale_GAN_x3_L",
+      "name": "Anime4K Upscale GAN x3 L",
+      "category": "upscale",
+      "subcategory": "动画线条",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "面向动画和线稿的 3× 放大。",
+      "details": "放大与超分 › 动画线条\n\nGAN 变体更偏向学习式细节重建，适合可接受模型化纹理的动画素材。\n\n变体差异：L 预设，固定 3×、8 通道。未做本机变体画质排名。\n\n特定场景推荐：适合特定素材、风格或实验场景。\n\n尝试建议：先在代表性画面比较副作用\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×3，高 ×3\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Anime4K\\Anime4K_Upscale_GAN_x3_L Anime4K Upscale GAN x3 L Anime4K 放大与超分 动画线条 Anime4K Upscale GAN x3 Anime4K Anime4K_Upscale_GAN_x3_L 面向动画和线稿的 3× 放大。 GAN 变体更偏向学习式细节重建，适合可接受模型化纹理的动画素材。 放大与超分 动画线条 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Upscale_L",
+      "name": "Anime4K Upscale L",
+      "category": "upscale",
+      "subcategory": "动画线条",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "面向动画和线稿的 2× 放大。",
+      "details": "放大与超分 › 动画线条\n\n强调动画轮廓与平坦色块，真人内容建议与通用放大器比较。\n\n变体差异：L 预设，固定 2×、4 通道。未做本机变体画质排名。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Anime4K\\Anime4K_Upscale_L Anime4K Upscale L Anime4K 放大与超分 动画线条 Anime4K Upscale Anime4K Anime4K_Upscale_L 面向动画和线稿的 2× 放大。 强调动画轮廓与平坦色块，真人内容建议与通用放大器比较。 放大与超分 动画线条 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Upscale_S",
+      "name": "Anime4K Upscale S",
+      "category": "upscale",
+      "subcategory": "动画线条",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "面向动画和线稿的 2× 放大。",
+      "details": "放大与超分 › 动画线条\n\n强调动画轮廓与平坦色块，真人内容建议与通用放大器比较。\n\n变体差异：S 预设，固定 2×、4 通道。未做本机变体画质排名。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Anime4K\\Anime4K_Upscale_S Anime4K Upscale S Anime4K 放大与超分 动画线条 Anime4K Upscale Anime4K Anime4K_Upscale_S 面向动画和线稿的 2× 放大。 强调动画轮廓与平坦色块，真人内容建议与通用放大器比较。 放大与超分 动画线条 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Upscale_UL",
+      "name": "Anime4K Upscale UL",
+      "category": "upscale",
+      "subcategory": "动画线条",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "面向动画和线稿的 2× 放大。",
+      "details": "放大与超分 › 动画线条\n\n强调动画轮廓与平坦色块，真人内容建议与通用放大器比较。\n\n变体差异：UL 预设，固定 2×、8 通道。未做本机变体画质排名。\n\n进阶／实验：多通道或较大网络模型，适合在有性能余量时比较。\n\n尝试建议：按目标分辨率检查性能；不要仅按名称推断画质\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "Anime4K\\Anime4K_Upscale_UL Anime4K Upscale UL Anime4K 放大与超分 动画线条 Anime4K Upscale UL Anime4K Anime4K_Upscale_UL 面向动画和线稿的 2× 放大。 强调动画轮廓与平坦色块，真人内容建议与通用放大器比较。 放大与超分 动画线条 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Anime4K\\Anime4K_Upscale_VL",
+      "name": "Anime4K Upscale VL",
+      "category": "upscale",
+      "subcategory": "动画线条",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "面向动画和线稿的 2× 放大。",
+      "details": "放大与超分 › 动画线条\n\n强调动画轮廓与平坦色块，真人内容建议与通用放大器比较。\n\n变体差异：VL 预设，固定 2×、8 通道。未做本机变体画质排名。\n\n进阶／实验：多通道或较大网络模型，适合在有性能余量时比较。\n\n尝试建议：按目标分辨率检查性能；不要仅按名称推断画质\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "Anime4K\\Anime4K_Upscale_VL Anime4K Upscale VL Anime4K 放大与超分 动画线条 Anime4K Upscale VL Anime4K Anime4K_Upscale_VL 面向动画和线稿的 2× 放大。 强调动画轮廓与平坦色块，真人内容建议与通用放大器比较。 放大与超分 动画线条 Anime4K",
+      "family": {
+        "id": "anime4k",
+        "name": "Anime4K",
+        "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Bicubic",
+      "name": "Bicubic",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "经典三次插值，可作为速度与平滑度之间的基础选择。",
+      "details": "放大与超分 › 通用\n\n计算和观感容易预测，适合先建立缩放基线；锐度可调。\n\n变体差异：输出尺寸由效果组决定；可调锐度，当前 HDR 路径有专门 DirectFP16 分支。\n\n优先尝试：通用且链路职责清楚，便于建立画质/性能基线。\n\n尝试建议：按内容类型比较锐度与振铃\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "first_try",
+      "recommendation": "优先尝试",
+      "search": "Bicubic Bicubic Bicubic 放大与超分 通用 Bicubic 经典三次插值，可作为速度与平滑度之间的基础选择。 计算和观感容易预测，适合先建立缩放基线；锐度可调。 放大与超分 通用",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "Bilinear",
+      "name": "Bilinear",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "快速线性插值，画面偏柔和，适合性能优先或作为链路基线。",
+      "details": "放大与超分 › 通用\n\n开销较低但不会重建新细节，可用于性能排查与柔和放大。\n\n变体差异：输出尺寸由效果组决定；单通道处理。\n\n优先尝试：通用且链路职责清楚，便于建立画质/性能基线。\n\n尝试建议：按内容类型比较锐度与振铃\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "first_try",
+      "recommendation": "优先尝试",
+      "search": "Bilinear Bilinear Bilinear 放大与超分 通用 Bilinear 快速线性插值，画面偏柔和，适合性能优先或作为链路基线。 开销较低但不会重建新细节，可用于性能排查与柔和放大。 放大与超分 通用",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "CAS\\CAS_Scaling",
+      "name": "CAS Scaling",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "在一个通道内完成 CAS 缩放与锐化。",
+      "details": "放大与超分 › 通用\n\n适合需要任意输出尺寸并希望同时锐化时。\n\n变体差异：OUTPUT 未声明固定宽高，因此由效果组目标尺寸决定；不能按旧文档视为同尺寸。\n\n优先尝试：通用且链路职责清楚，便于建立画质/性能基线。\n\n尝试建议：按内容类型比较锐度与振铃\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "first_try",
+      "recommendation": "优先尝试",
+      "search": "CAS\\CAS_Scaling CAS Scaling CAS 放大与超分 通用 CAS Scaling CAS CAS_Scaling 在一个通道内完成 CAS 缩放与锐化。 适合需要任意输出尺寸并希望同时锐化时。 放大与超分 通用 CAS",
+      "family": {
+        "id": "cas",
+        "name": "CAS",
+        "summary": "对比度自适应锐化。CAS 保持输入尺寸；CAS Scaling 同时调整尺寸，按当前管线的缩放需求选择。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "CAS\\CAS",
+      "name": "CAS",
+      "category": "sharpen",
+      "subcategory": "通用锐化",
+      "purposes": [
+        "sharpen"
+      ],
+      "summary": "使用对比度自适应锐化增强同尺寸细节。",
+      "details": "锐化细节 › 通用锐化\n\n适合放在放大后，小幅补偿模糊。\n\n变体差异：明确同尺寸、单通道。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：链尾收尾；在「放大/超分、降噪」之后；在「CRT/显示调整」之前。按最终尺寸补偿柔和感。\n\n输出尺寸：保持输入尺寸\n\n组合注意：过强会放大噪声并产生光晕\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CAS\\CAS CAS CAS 锐化细节 通用锐化 CAS CAS CAS 使用对比度自适应锐化增强同尺寸细节。 适合放在放大后，小幅补偿模糊。 锐化细节 通用锐化 CAS",
+      "family": {
+        "id": "cas",
+        "name": "CAS",
+        "summary": "对比度自适应锐化。CAS 保持输入尺寸；CAS Scaling 同时调整尺寸，按当前管线的缩放需求选择。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "CRT\\CRT_Easymode",
+      "name": "CRT Easymode",
+      "category": "style",
+      "subcategory": "CRT",
+      "purposes": [
+        "style"
+      ],
+      "summary": "轻量入门 CRT 风格，加入扫描线、遮罩与适度辉光。",
+      "details": "风格显示 › CRT\n\n参数较少，适合先确认复古显示方向。 建议接近链尾使用。\n\n变体差异：Easymode 模型，1 通道。\n\n特定场景推荐：适合特定素材、风格或实验场景。\n\n尝试建议：先在代表性画面比较副作用\n\n组合建议：链尾显示；在「主要画质处理」之后。风格与显示调整通常针对最终输出观感。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。\n\nHDR 注意：CRT 数学按 SDR 显示观感设计，HDR 高光和颜色可能明显改变。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CRT\\CRT_Easymode CRT Easymode CRT 风格显示 CRT Easymode CRT CRT_Easymode 轻量入门 CRT 风格，加入扫描线、遮罩与适度辉光。 参数较少，适合先确认复古显示方向。 建议接近链尾使用。 风格显示 CRT",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "CRT\\CRT_Geom",
+      "name": "CRT Geom",
+      "category": "style",
+      "subcategory": "CRT",
+      "purposes": [
+        "style"
+      ],
+      "summary": "带 CRT 屏幕曲面、边角与扫描线的几何模拟。",
+      "details": "风格显示 › CRT\n\n几何弯曲会改变画面边缘，适合愿意保留黑边/曲面的复古显示。 建议接近链尾使用。\n\n变体差异：Geom 模型，1 通道。\n\n特定场景推荐：适合特定素材、风格或实验场景。\n\n尝试建议：先在代表性画面比较副作用\n\n组合建议：链尾显示；在「主要画质处理」之后。风格与显示调整通常针对最终输出观感。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。\n\nHDR 注意：CRT 数学按 SDR 显示观感设计，HDR 高光和颜色可能明显改变。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CRT\\CRT_Geom CRT Geom CRT 风格显示 CRT Geom CRT CRT_Geom 带 CRT 屏幕曲面、边角与扫描线的几何模拟。 几何弯曲会改变画面边缘，适合愿意保留黑边/曲面的复古显示。 建议接近链尾使用。 风格显示 CRT",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "CRT\\CRT_Hyllian",
+      "name": "CRT Hyllian",
+      "category": "style",
+      "subcategory": "CRT",
+      "purposes": [
+        "style"
+      ],
+      "summary": "偏清晰的扫描线与磷光遮罩 CRT 模拟。",
+      "details": "风格显示 › CRT\n\n源码明确要求整数倍缩放，适合像素游戏的整数倍输出。 建议接近链尾使用。\n\n变体差异：Hyllian 模型，1 通道。\n\n特定场景推荐：适合特定素材、风格或实验场景。\n\n尝试建议：先在代表性画面比较副作用\n\n组合建议：链尾显示；在「主要画质处理」之后。风格与显示调整通常针对最终输出观感。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；输出必须采用整数倍缩放\n\n性能成本：低到中；具体帧率需在目标画面实测。\n\nHDR 注意：CRT 数学按 SDR 显示观感设计，HDR 高光和颜色可能明显改变。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CRT\\CRT_Hyllian CRT Hyllian CRT 风格显示 CRT Hyllian CRT CRT_Hyllian 偏清晰的扫描线与磷光遮罩 CRT 模拟。 源码明确要求整数倍缩放，适合像素游戏的整数倍输出。 建议接近链尾使用。 风格显示 CRT",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "CRT\\CRT_Lottes",
+      "name": "CRT Lottes",
+      "category": "style",
+      "subcategory": "CRT",
+      "purposes": [
+        "style"
+      ],
+      "summary": "较强扫描线、阴影遮罩与亮度塑形的 CRT 模拟。",
+      "details": "风格显示 › CRT\n\n可调遮罩与硬度，适合希望外观更强烈时。 建议接近链尾使用。\n\n变体差异：Lottes 模型，1 通道。\n\n特定场景推荐：适合特定素材、风格或实验场景。\n\n尝试建议：先在代表性画面比较副作用\n\n组合建议：链尾显示；在「主要画质处理」之后。风格与显示调整通常针对最终输出观感。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。\n\nHDR 注意：CRT 数学按 SDR 显示观感设计，HDR 高光和颜色可能明显改变。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CRT\\CRT_Lottes CRT Lottes CRT 风格显示 CRT Lottes CRT CRT_Lottes 较强扫描线、阴影遮罩与亮度塑形的 CRT 模拟。 可调遮罩与硬度，适合希望外观更强烈时。 建议接近链尾使用。 风格显示 CRT",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "CRT\\GTU_v050",
+      "name": "GTU v050",
+      "category": "style",
+      "subcategory": "CRT",
+      "purposes": [
+        "style"
+      ],
+      "summary": "模拟带宽受限的模拟视频/CRT 模糊、混色与扫描线。",
+      "details": "风格显示 › CRT\n\n重点是水平信号模糊和色彩串扰，不以曲面或明显遮罩为核心。 建议接近链尾使用。\n\n变体差异：GTU_v050 模型，2 通道（横纵分离）。\n\n特定场景推荐：适合特定素材、风格或实验场景。\n\n尝试建议：先在代表性画面比较副作用\n\n组合建议：链尾显示；在「主要画质处理」之后。风格与显示调整通常针对最终输出观感。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。\n\nHDR 注意：CRT 数学按 SDR 显示观感设计，HDR 高光和颜色可能明显改变。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CRT\\GTU_v050 GTU v050 CRT 风格显示 CRT GTU v050 CRT GTU_v050 模拟带宽受限的模拟视频/CRT 模糊、混色与扫描线。 重点是水平信号模糊和色彩串扰，不以曲面或明显遮罩为核心。 建议接近链尾使用。 风格显示 CRT",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "CuNNy\\CuNNy-16x16C-NVL-DN",
+      "name": "CuNNy 16x16C NVL DN",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "神经网络 2× 放大并抑制噪声，优先面向视觉小说、动画与线条内容。",
+      "details": "放大与超分 › 通用\n\nDN 模型适合输入带压缩噪点时一并清理和放大。\n\n变体差异：16 层 / 16 通道 / DN 降噪训练；固定 2×、18 个效果通道。网络规模更大通常代价更高，但未做本机速度或质量排序。\n\n进阶／实验：多通道或较大网络模型，适合在有性能余量时比较。\n\n尝试建议：按目标分辨率检查性能；不要仅按名称推断画质\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：高；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "CuNNy\\CuNNy-16x16C-NVL-DN CuNNy 16x16C NVL DN CuNNy 放大与超分 通用 CuNNy 16x16C NVL DN CuNNy CuNNy-16x16C-NVL-DN 神经网络 2× 放大并抑制噪声，优先面向视觉小说、动画与线条内容。 DN 模型适合输入带压缩噪点时一并清理和放大。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "original",
+        "name": "CuNNy 原版",
+        "summary": "固定 2× 放大。按层数与通道数比较网络规模；NVL 面向视觉小说，DN 版本同时抑制噪声。"
+      }
+    },
+    {
+      "id": "CuNNy\\CuNNy-16x16C-NVL",
+      "name": "CuNNy 16x16C NVL",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "神经网络 2× 放大，优先面向视觉小说、动画与线条内容。",
+      "details": "放大与超分 › 通用\n\n标准模型保留更多输入纹理，适合相对干净的视觉小说或动画来源。\n\n变体差异：16 层 / 16 通道；固定 2×、18 个效果通道。网络规模更大通常代价更高，但未做本机速度或质量排序。\n\n进阶／实验：多通道或较大网络模型，适合在有性能余量时比较。\n\n尝试建议：按目标分辨率检查性能；不要仅按名称推断画质\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：高；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "CuNNy\\CuNNy-16x16C-NVL CuNNy 16x16C NVL CuNNy 放大与超分 通用 CuNNy 16x16C NVL CuNNy CuNNy-16x16C-NVL 神经网络 2× 放大，优先面向视觉小说、动画与线条内容。 标准模型保留更多输入纹理，适合相对干净的视觉小说或动画来源。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "original",
+        "name": "CuNNy 原版",
+        "summary": "固定 2× 放大。按层数与通道数比较网络规模；NVL 面向视觉小说，DN 版本同时抑制噪声。"
+      }
+    },
+    {
+      "id": "CuNNy\\CuNNy-2x4C-NVL-DN",
+      "name": "CuNNy 2x4C NVL DN",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "神经网络 2× 放大并抑制噪声，优先面向视觉小说、动画与线条内容。",
+      "details": "放大与超分 › 通用\n\nDN 模型适合输入带压缩噪点时一并清理和放大。\n\n变体差异：2 层 / 4 通道 / DN 降噪训练；固定 2×、4 个效果通道。网络规模更大通常代价更高，但未做本机速度或质量排序。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CuNNy\\CuNNy-2x4C-NVL-DN CuNNy 2x4C NVL DN CuNNy 放大与超分 通用 CuNNy 2x4C NVL DN CuNNy CuNNy-2x4C-NVL-DN 神经网络 2× 放大并抑制噪声，优先面向视觉小说、动画与线条内容。 DN 模型适合输入带压缩噪点时一并清理和放大。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "original",
+        "name": "CuNNy 原版",
+        "summary": "固定 2× 放大。按层数与通道数比较网络规模；NVL 面向视觉小说，DN 版本同时抑制噪声。"
+      }
+    },
+    {
+      "id": "CuNNy\\CuNNy-2x4C-NVL",
+      "name": "CuNNy 2x4C NVL",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "神经网络 2× 放大，优先面向视觉小说、动画与线条内容。",
+      "details": "放大与超分 › 通用\n\n标准模型保留更多输入纹理，适合相对干净的视觉小说或动画来源。\n\n变体差异：2 层 / 4 通道；固定 2×、4 个效果通道。网络规模更大通常代价更高，但未做本机速度或质量排序。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CuNNy\\CuNNy-2x4C-NVL CuNNy 2x4C NVL CuNNy 放大与超分 通用 CuNNy 2x4C NVL CuNNy CuNNy-2x4C-NVL 神经网络 2× 放大，优先面向视觉小说、动画与线条内容。 标准模型保留更多输入纹理，适合相对干净的视觉小说或动画来源。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "original",
+        "name": "CuNNy 原版",
+        "summary": "固定 2× 放大。按层数与通道数比较网络规模；NVL 面向视觉小说，DN 版本同时抑制噪声。"
+      }
+    },
+    {
+      "id": "CuNNy\\CuNNy-3x4C-NVL-DN",
+      "name": "CuNNy 3x4C NVL DN",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "神经网络 2× 放大并抑制噪声，优先面向视觉小说、动画与线条内容。",
+      "details": "放大与超分 › 通用\n\nDN 模型适合输入带压缩噪点时一并清理和放大。\n\n变体差异：3 层 / 4 通道 / DN 降噪训练；固定 2×、5 个效果通道。网络规模更大通常代价更高，但未做本机速度或质量排序。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CuNNy\\CuNNy-3x4C-NVL-DN CuNNy 3x4C NVL DN CuNNy 放大与超分 通用 CuNNy 3x4C NVL DN CuNNy CuNNy-3x4C-NVL-DN 神经网络 2× 放大并抑制噪声，优先面向视觉小说、动画与线条内容。 DN 模型适合输入带压缩噪点时一并清理和放大。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "original",
+        "name": "CuNNy 原版",
+        "summary": "固定 2× 放大。按层数与通道数比较网络规模；NVL 面向视觉小说，DN 版本同时抑制噪声。"
+      }
+    },
+    {
+      "id": "CuNNy\\CuNNy-3x4C-NVL",
+      "name": "CuNNy 3x4C NVL",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "神经网络 2× 放大，优先面向视觉小说、动画与线条内容。",
+      "details": "放大与超分 › 通用\n\n标准模型保留更多输入纹理，适合相对干净的视觉小说或动画来源。\n\n变体差异：3 层 / 4 通道；固定 2×、5 个效果通道。网络规模更大通常代价更高，但未做本机速度或质量排序。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CuNNy\\CuNNy-3x4C-NVL CuNNy 3x4C NVL CuNNy 放大与超分 通用 CuNNy 3x4C NVL CuNNy CuNNy-3x4C-NVL 神经网络 2× 放大，优先面向视觉小说、动画与线条内容。 标准模型保留更多输入纹理，适合相对干净的视觉小说或动画来源。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "original",
+        "name": "CuNNy 原版",
+        "summary": "固定 2× 放大。按层数与通道数比较网络规模；NVL 面向视觉小说，DN 版本同时抑制噪声。"
+      }
+    },
+    {
+      "id": "CuNNy\\CuNNy-4x16C-NVL-DN",
+      "name": "CuNNy 4x16C NVL DN",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "神经网络 2× 放大并抑制噪声，优先面向视觉小说、动画与线条内容。",
+      "details": "放大与超分 › 通用\n\nDN 模型适合输入带压缩噪点时一并清理和放大。\n\n变体差异：4 层 / 16 通道 / DN 降噪训练；固定 2×、6 个效果通道。网络规模更大通常代价更高，但未做本机速度或质量排序。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CuNNy\\CuNNy-4x16C-NVL-DN CuNNy 4x16C NVL DN CuNNy 放大与超分 通用 CuNNy 4x16C NVL DN CuNNy CuNNy-4x16C-NVL-DN 神经网络 2× 放大并抑制噪声，优先面向视觉小说、动画与线条内容。 DN 模型适合输入带压缩噪点时一并清理和放大。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "original",
+        "name": "CuNNy 原版",
+        "summary": "固定 2× 放大。按层数与通道数比较网络规模；NVL 面向视觉小说，DN 版本同时抑制噪声。"
+      }
+    },
+    {
+      "id": "CuNNy\\CuNNy-4x16C-NVL",
+      "name": "CuNNy 4x16C NVL",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "神经网络 2× 放大，优先面向视觉小说、动画与线条内容。",
+      "details": "放大与超分 › 通用\n\n标准模型保留更多输入纹理，适合相对干净的视觉小说或动画来源。\n\n变体差异：4 层 / 16 通道；固定 2×、6 个效果通道。网络规模更大通常代价更高，但未做本机速度或质量排序。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CuNNy\\CuNNy-4x16C-NVL CuNNy 4x16C NVL CuNNy 放大与超分 通用 CuNNy 4x16C NVL CuNNy CuNNy-4x16C-NVL 神经网络 2× 放大，优先面向视觉小说、动画与线条内容。 标准模型保留更多输入纹理，适合相对干净的视觉小说或动画来源。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "original",
+        "name": "CuNNy 原版",
+        "summary": "固定 2× 放大。按层数与通道数比较网络规模；NVL 面向视觉小说，DN 版本同时抑制噪声。"
+      }
+    },
+    {
+      "id": "CuNNy\\CuNNy-4x4C-NVL-DN",
+      "name": "CuNNy 4x4C NVL DN",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "神经网络 2× 放大并抑制噪声，优先面向视觉小说、动画与线条内容。",
+      "details": "放大与超分 › 通用\n\nDN 模型适合输入带压缩噪点时一并清理和放大。\n\n变体差异：4 层 / 4 通道 / DN 降噪训练；固定 2×、6 个效果通道。网络规模更大通常代价更高，但未做本机速度或质量排序。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CuNNy\\CuNNy-4x4C-NVL-DN CuNNy 4x4C NVL DN CuNNy 放大与超分 通用 CuNNy 4x4C NVL DN CuNNy CuNNy-4x4C-NVL-DN 神经网络 2× 放大并抑制噪声，优先面向视觉小说、动画与线条内容。 DN 模型适合输入带压缩噪点时一并清理和放大。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "original",
+        "name": "CuNNy 原版",
+        "summary": "固定 2× 放大。按层数与通道数比较网络规模；NVL 面向视觉小说，DN 版本同时抑制噪声。"
+      }
+    },
+    {
+      "id": "CuNNy\\CuNNy-4x4C-NVL",
+      "name": "CuNNy 4x4C NVL",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "神经网络 2× 放大，优先面向视觉小说、动画与线条内容。",
+      "details": "放大与超分 › 通用\n\n标准模型保留更多输入纹理，适合相对干净的视觉小说或动画来源。\n\n变体差异：4 层 / 4 通道；固定 2×、6 个效果通道。网络规模更大通常代价更高，但未做本机速度或质量排序。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CuNNy\\CuNNy-4x4C-NVL CuNNy 4x4C NVL CuNNy 放大与超分 通用 CuNNy 4x4C NVL CuNNy CuNNy-4x4C-NVL 神经网络 2× 放大，优先面向视觉小说、动画与线条内容。 标准模型保留更多输入纹理，适合相对干净的视觉小说或动画来源。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "original",
+        "name": "CuNNy 原版",
+        "summary": "固定 2× 放大。按层数与通道数比较网络规模；NVL 面向视觉小说，DN 版本同时抑制噪声。"
+      }
+    },
+    {
+      "id": "CuNNy\\CuNNy-4x8C-NVL-DN",
+      "name": "CuNNy 4x8C NVL DN",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "神经网络 2× 放大并抑制噪声，优先面向视觉小说、动画与线条内容。",
+      "details": "放大与超分 › 通用\n\nDN 模型适合输入带压缩噪点时一并清理和放大。\n\n变体差异：4 层 / 8 通道 / DN 降噪训练；固定 2×、6 个效果通道。网络规模更大通常代价更高，但未做本机速度或质量排序。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CuNNy\\CuNNy-4x8C-NVL-DN CuNNy 4x8C NVL DN CuNNy 放大与超分 通用 CuNNy 4x8C NVL DN CuNNy CuNNy-4x8C-NVL-DN 神经网络 2× 放大并抑制噪声，优先面向视觉小说、动画与线条内容。 DN 模型适合输入带压缩噪点时一并清理和放大。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "original",
+        "name": "CuNNy 原版",
+        "summary": "固定 2× 放大。按层数与通道数比较网络规模；NVL 面向视觉小说，DN 版本同时抑制噪声。"
+      }
+    },
+    {
+      "id": "CuNNy\\CuNNy-4x8C-NVL",
+      "name": "CuNNy 4x8C NVL",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "神经网络 2× 放大，优先面向视觉小说、动画与线条内容。",
+      "details": "放大与超分 › 通用\n\n标准模型保留更多输入纹理，适合相对干净的视觉小说或动画来源。\n\n变体差异：4 层 / 8 通道；固定 2×、6 个效果通道。网络规模更大通常代价更高，但未做本机速度或质量排序。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CuNNy\\CuNNy-4x8C-NVL CuNNy 4x8C NVL CuNNy 放大与超分 通用 CuNNy 4x8C NVL CuNNy CuNNy-4x8C-NVL 神经网络 2× 放大，优先面向视觉小说、动画与线条内容。 标准模型保留更多输入纹理，适合相对干净的视觉小说或动画来源。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "original",
+        "name": "CuNNy 原版",
+        "summary": "固定 2× 放大。按层数与通道数比较网络规模；NVL 面向视觉小说，DN 版本同时抑制噪声。"
+      }
+    },
+    {
+      "id": "CuNNy\\CuNNy-6x8C-NVL-DN",
+      "name": "CuNNy 6x8C NVL DN",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "神经网络 2× 放大并抑制噪声，优先面向视觉小说、动画与线条内容。",
+      "details": "放大与超分 › 通用\n\nDN 模型适合输入带压缩噪点时一并清理和放大。\n\n变体差异：6 层 / 8 通道 / DN 降噪训练；固定 2×、8 个效果通道。网络规模更大通常代价更高，但未做本机速度或质量排序。\n\n进阶／实验：多通道或较大网络模型，适合在有性能余量时比较。\n\n尝试建议：按目标分辨率检查性能；不要仅按名称推断画质\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "CuNNy\\CuNNy-6x8C-NVL-DN CuNNy 6x8C NVL DN CuNNy 放大与超分 通用 CuNNy 6x8C NVL DN CuNNy CuNNy-6x8C-NVL-DN 神经网络 2× 放大并抑制噪声，优先面向视觉小说、动画与线条内容。 DN 模型适合输入带压缩噪点时一并清理和放大。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "original",
+        "name": "CuNNy 原版",
+        "summary": "固定 2× 放大。按层数与通道数比较网络规模；NVL 面向视觉小说，DN 版本同时抑制噪声。"
+      }
+    },
+    {
+      "id": "CuNNy\\CuNNy-6x8C-NVL",
+      "name": "CuNNy 6x8C NVL",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "神经网络 2× 放大，优先面向视觉小说、动画与线条内容。",
+      "details": "放大与超分 › 通用\n\n标准模型保留更多输入纹理，适合相对干净的视觉小说或动画来源。\n\n变体差异：6 层 / 8 通道；固定 2×、8 个效果通道。网络规模更大通常代价更高，但未做本机速度或质量排序。\n\n进阶／实验：多通道或较大网络模型，适合在有性能余量时比较。\n\n尝试建议：按目标分辨率检查性能；不要仅按名称推断画质\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "CuNNy\\CuNNy-6x8C-NVL CuNNy 6x8C NVL CuNNy 放大与超分 通用 CuNNy 6x8C NVL CuNNy CuNNy-6x8C-NVL 神经网络 2× 放大，优先面向视觉小说、动画与线条内容。 标准模型保留更多输入纹理，适合相对干净的视觉小说或动画来源。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "original",
+        "name": "CuNNy 原版",
+        "summary": "固定 2× 放大。按层数与通道数比较网络规模；NVL 面向视觉小说，DN 版本同时抑制噪声。"
+      }
+    },
+    {
+      "id": "CuNNy\\CuNNy-8x16C-NVL-DN",
+      "name": "CuNNy 8x16C NVL DN",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "神经网络 2× 放大并抑制噪声，优先面向视觉小说、动画与线条内容。",
+      "details": "放大与超分 › 通用\n\nDN 模型适合输入带压缩噪点时一并清理和放大。\n\n变体差异：8 层 / 16 通道 / DN 降噪训练；固定 2×、10 个效果通道。网络规模更大通常代价更高，但未做本机速度或质量排序。\n\n进阶／实验：多通道或较大网络模型，适合在有性能余量时比较。\n\n尝试建议：按目标分辨率检查性能；不要仅按名称推断画质\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：高；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "CuNNy\\CuNNy-8x16C-NVL-DN CuNNy 8x16C NVL DN CuNNy 放大与超分 通用 CuNNy 8x16C NVL DN CuNNy CuNNy-8x16C-NVL-DN 神经网络 2× 放大并抑制噪声，优先面向视觉小说、动画与线条内容。 DN 模型适合输入带压缩噪点时一并清理和放大。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "original",
+        "name": "CuNNy 原版",
+        "summary": "固定 2× 放大。按层数与通道数比较网络规模；NVL 面向视觉小说，DN 版本同时抑制噪声。"
+      }
+    },
+    {
+      "id": "CuNNy\\CuNNy-8x16C-NVL",
+      "name": "CuNNy 8x16C NVL",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "神经网络 2× 放大，优先面向视觉小说、动画与线条内容。",
+      "details": "放大与超分 › 通用\n\n标准模型保留更多输入纹理，适合相对干净的视觉小说或动画来源。\n\n变体差异：8 层 / 16 通道；固定 2×、10 个效果通道。网络规模更大通常代价更高，但未做本机速度或质量排序。\n\n进阶／实验：多通道或较大网络模型，适合在有性能余量时比较。\n\n尝试建议：按目标分辨率检查性能；不要仅按名称推断画质\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：高；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "CuNNy\\CuNNy-8x16C-NVL CuNNy 8x16C NVL CuNNy 放大与超分 通用 CuNNy 8x16C NVL CuNNy CuNNy-8x16C-NVL 神经网络 2× 放大，优先面向视觉小说、动画与线条内容。 标准模型保留更多输入纹理，适合相对干净的视觉小说或动画来源。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "original",
+        "name": "CuNNy 原版",
+        "summary": "固定 2× 放大。按层数与通道数比较网络规模；NVL 面向视觉小说，DN 版本同时抑制噪声。"
+      }
+    },
+    {
+      "id": "CuNNy\\CuNNy-8x4C-NVL-DN",
+      "name": "CuNNy 8x4C NVL DN",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "神经网络 2× 放大并抑制噪声，优先面向视觉小说、动画与线条内容。",
+      "details": "放大与超分 › 通用\n\nDN 模型适合输入带压缩噪点时一并清理和放大。\n\n变体差异：8 层 / 4 通道 / DN 降噪训练；固定 2×、10 个效果通道。网络规模更大通常代价更高，但未做本机速度或质量排序。\n\n进阶／实验：多通道或较大网络模型，适合在有性能余量时比较。\n\n尝试建议：按目标分辨率检查性能；不要仅按名称推断画质\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：高；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "CuNNy\\CuNNy-8x4C-NVL-DN CuNNy 8x4C NVL DN CuNNy 放大与超分 通用 CuNNy 8x4C NVL DN CuNNy CuNNy-8x4C-NVL-DN 神经网络 2× 放大并抑制噪声，优先面向视觉小说、动画与线条内容。 DN 模型适合输入带压缩噪点时一并清理和放大。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "original",
+        "name": "CuNNy 原版",
+        "summary": "固定 2× 放大。按层数与通道数比较网络规模；NVL 面向视觉小说，DN 版本同时抑制噪声。"
+      }
+    },
+    {
+      "id": "CuNNy\\CuNNy-8x4C-NVL",
+      "name": "CuNNy 8x4C NVL",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "神经网络 2× 放大，优先面向视觉小说、动画与线条内容。",
+      "details": "放大与超分 › 通用\n\n标准模型保留更多输入纹理，适合相对干净的视觉小说或动画来源。\n\n变体差异：8 层 / 4 通道；固定 2×、10 个效果通道。网络规模更大通常代价更高，但未做本机速度或质量排序。\n\n进阶／实验：多通道或较大网络模型，适合在有性能余量时比较。\n\n尝试建议：按目标分辨率检查性能；不要仅按名称推断画质\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：高；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "CuNNy\\CuNNy-8x4C-NVL CuNNy 8x4C NVL CuNNy 放大与超分 通用 CuNNy 8x4C NVL CuNNy CuNNy-8x4C-NVL 神经网络 2× 放大，优先面向视觉小说、动画与线条内容。 标准模型保留更多输入纹理，适合相对干净的视觉小说或动画来源。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "original",
+        "name": "CuNNy 原版",
+        "summary": "固定 2× 放大。按层数与通道数比较网络规模；NVL 面向视觉小说，DN 版本同时抑制噪声。"
+      }
+    },
+    {
+      "id": "CuNNy\\CuNNy-8x8C-NVL-DN",
+      "name": "CuNNy 8x8C NVL DN",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "神经网络 2× 放大并抑制噪声，优先面向视觉小说、动画与线条内容。",
+      "details": "放大与超分 › 通用\n\nDN 模型适合输入带压缩噪点时一并清理和放大。\n\n变体差异：8 层 / 8 通道 / DN 降噪训练；固定 2×、10 个效果通道。网络规模更大通常代价更高，但未做本机速度或质量排序。\n\n进阶／实验：多通道或较大网络模型，适合在有性能余量时比较。\n\n尝试建议：按目标分辨率检查性能；不要仅按名称推断画质\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：高；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "CuNNy\\CuNNy-8x8C-NVL-DN CuNNy 8x8C NVL DN CuNNy 放大与超分 通用 CuNNy 8x8C NVL DN CuNNy CuNNy-8x8C-NVL-DN 神经网络 2× 放大并抑制噪声，优先面向视觉小说、动画与线条内容。 DN 模型适合输入带压缩噪点时一并清理和放大。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "original",
+        "name": "CuNNy 原版",
+        "summary": "固定 2× 放大。按层数与通道数比较网络规模；NVL 面向视觉小说，DN 版本同时抑制噪声。"
+      }
+    },
+    {
+      "id": "CuNNy\\CuNNy-8x8C-NVL",
+      "name": "CuNNy 8x8C NVL",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "神经网络 2× 放大，优先面向视觉小说、动画与线条内容。",
+      "details": "放大与超分 › 通用\n\n标准模型保留更多输入纹理，适合相对干净的视觉小说或动画来源。\n\n变体差异：8 层 / 8 通道；固定 2×、10 个效果通道。网络规模更大通常代价更高，但未做本机速度或质量排序。\n\n进阶／实验：多通道或较大网络模型，适合在有性能余量时比较。\n\n尝试建议：按目标分辨率检查性能；不要仅按名称推断画质\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：高；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "CuNNy\\CuNNy-8x8C-NVL CuNNy 8x8C NVL CuNNy 放大与超分 通用 CuNNy 8x8C NVL CuNNy CuNNy-8x8C-NVL 神经网络 2× 放大，优先面向视觉小说、动画与线条内容。 标准模型保留更多输入纹理，适合相对干净的视觉小说或动画来源。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "original",
+        "name": "CuNNy 原版",
+        "summary": "固定 2× 放大。按层数与通道数比较网络规模；NVL 面向视觉小说，DN 版本同时抑制噪声。"
+      }
+    },
+    {
+      "id": "CuNNy2\\CuNNy-3x12-NVL",
+      "name": "CuNNy 3x12 NVL",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "CuNNy2 神经网络 2× 放大，优先用于视觉小说与动画，并在速度与细节重建间选择模型。",
+      "details": "放大与超分 › 通用\n\n显式深度/通道模型适合需要控制网络规模时比较。\n\n变体差异：3 层 / 12 通道；固定 2×、5 个效果通道。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CuNNy2\\CuNNy-3x12-NVL CuNNy 3x12 NVL CuNNy2 放大与超分 通用 CuNNy2 CuNNy 3x12 NVL CuNNy2 CuNNy-3x12-NVL CuNNy2 神经网络 2× 放大，优先用于视觉小说与动画，并在速度与细节重建间选择模型。 显式深度/通道模型适合需要控制网络规模时比较。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "v2",
+        "name": "CuNNy2",
+        "summary": "第二代 CuNNy，固定 2× 放大。不同网络规模与 NVL 训练版本分别保留，可在目标内容中比较细节与成本。"
+      }
+    },
+    {
+      "id": "CuNNy2\\CuNNy-4x12-NVL",
+      "name": "CuNNy 4x12 NVL",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "CuNNy2 神经网络 2× 放大，优先用于视觉小说与动画，并在速度与细节重建间选择模型。",
+      "details": "放大与超分 › 通用\n\n显式深度/通道模型适合需要控制网络规模时比较。\n\n变体差异：4 层 / 12 通道；固定 2×、6 个效果通道。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CuNNy2\\CuNNy-4x12-NVL CuNNy 4x12 NVL CuNNy2 放大与超分 通用 CuNNy2 CuNNy 4x12 NVL CuNNy2 CuNNy-4x12-NVL CuNNy2 神经网络 2× 放大，优先用于视觉小说与动画，并在速度与细节重建间选择模型。 显式深度/通道模型适合需要控制网络规模时比较。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "v2",
+        "name": "CuNNy2",
+        "summary": "第二代 CuNNy，固定 2× 放大。不同网络规模与 NVL 训练版本分别保留，可在目标内容中比较细节与成本。"
+      }
+    },
+    {
+      "id": "CuNNy2\\CuNNy-4x16-NVL",
+      "name": "CuNNy 4x16 NVL",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "CuNNy2 神经网络 2× 放大，优先用于视觉小说与动画，并在速度与细节重建间选择模型。",
+      "details": "放大与超分 › 通用\n\n显式深度/通道模型适合需要控制网络规模时比较。\n\n变体差异：4 层 / 16 通道；固定 2×、6 个效果通道。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CuNNy2\\CuNNy-4x16-NVL CuNNy 4x16 NVL CuNNy2 放大与超分 通用 CuNNy2 CuNNy 4x16 NVL CuNNy2 CuNNy-4x16-NVL CuNNy2 神经网络 2× 放大，优先用于视觉小说与动画，并在速度与细节重建间选择模型。 显式深度/通道模型适合需要控制网络规模时比较。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "v2",
+        "name": "CuNNy2",
+        "summary": "第二代 CuNNy，固定 2× 放大。不同网络规模与 NVL 训练版本分别保留，可在目标内容中比较细节与成本。"
+      }
+    },
+    {
+      "id": "CuNNy2\\CuNNy-4x24-NVL",
+      "name": "CuNNy 4x24 NVL",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "CuNNy2 神经网络 2× 放大，优先用于视觉小说与动画，并在速度与细节重建间选择模型。",
+      "details": "放大与超分 › 通用\n\n显式深度/通道模型适合需要控制网络规模时比较。\n\n变体差异：4 层 / 24 通道；固定 2×、6 个效果通道。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CuNNy2\\CuNNy-4x24-NVL CuNNy 4x24 NVL CuNNy2 放大与超分 通用 CuNNy2 CuNNy 4x24 NVL CuNNy2 CuNNy-4x24-NVL CuNNy2 神经网络 2× 放大，优先用于视觉小说与动画，并在速度与细节重建间选择模型。 显式深度/通道模型适合需要控制网络规模时比较。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "v2",
+        "name": "CuNNy2",
+        "summary": "第二代 CuNNy，固定 2× 放大。不同网络规模与 NVL 训练版本分别保留，可在目标内容中比较细节与成本。"
+      }
+    },
+    {
+      "id": "CuNNy2\\CuNNy-4x32-NVL",
+      "name": "CuNNy 4x32 NVL",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "CuNNy2 神经网络 2× 放大，优先用于视觉小说与动画，并在速度与细节重建间选择模型。",
+      "details": "放大与超分 › 通用\n\n显式深度/通道模型适合需要控制网络规模时比较。\n\n变体差异：4 层 / 32 通道；固定 2×、6 个效果通道。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CuNNy2\\CuNNy-4x32-NVL CuNNy 4x32 NVL CuNNy2 放大与超分 通用 CuNNy2 CuNNy 4x32 NVL CuNNy2 CuNNy-4x32-NVL CuNNy2 神经网络 2× 放大，优先用于视觉小说与动画，并在速度与细节重建间选择模型。 显式深度/通道模型适合需要控制网络规模时比较。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "v2",
+        "name": "CuNNy2",
+        "summary": "第二代 CuNNy，固定 2× 放大。不同网络规模与 NVL 训练版本分别保留，可在目标内容中比较细节与成本。"
+      }
+    },
+    {
+      "id": "CuNNy2\\CuNNy-8x32-NVL",
+      "name": "CuNNy 8x32 NVL",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "CuNNy2 神经网络 2× 放大，优先用于视觉小说与动画，并在速度与细节重建间选择模型。",
+      "details": "放大与超分 › 通用\n\n显式深度/通道模型适合需要控制网络规模时比较。\n\n变体差异：8 层 / 32 通道；固定 2×、10 个效果通道。\n\n进阶／实验：多通道或较大网络模型，适合在有性能余量时比较。\n\n尝试建议：按目标分辨率检查性能；不要仅按名称推断画质\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：高；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "CuNNy2\\CuNNy-8x32-NVL CuNNy 8x32 NVL CuNNy2 放大与超分 通用 CuNNy2 CuNNy 8x32 NVL CuNNy2 CuNNy-8x32-NVL CuNNy2 神经网络 2× 放大，优先用于视觉小说与动画，并在速度与细节重建间选择模型。 显式深度/通道模型适合需要控制网络规模时比较。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "v2",
+        "name": "CuNNy2",
+        "summary": "第二代 CuNNy，固定 2× 放大。不同网络规模与 NVL 训练版本分别保留，可在目标内容中比较细节与成本。"
+      }
+    },
+    {
+      "id": "CuNNy2\\CuNNy-fast-NVL",
+      "name": "CuNNy fast NVL",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "CuNNy2 神经网络 2× 放大，优先用于视觉小说与动画，并在速度与细节重建间选择模型。",
+      "details": "放大与超分 › 通用\n\nfast 速度预设适合先确认实时余量，再与显式网络规模变体比较。\n\n变体差异：fast 命名预设；固定 2×、4 通道，名称来自模型但本机代价未测。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CuNNy2\\CuNNy-fast-NVL CuNNy fast NVL CuNNy2 放大与超分 通用 CuNNy2 CuNNy fast NVL CuNNy2 CuNNy-fast-NVL CuNNy2 神经网络 2× 放大，优先用于视觉小说与动画，并在速度与细节重建间选择模型。 fast 速度预设适合先确认实时余量，再与显式网络规模变体比较。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "v2",
+        "name": "CuNNy2",
+        "summary": "第二代 CuNNy，固定 2× 放大。不同网络规模与 NVL 训练版本分别保留，可在目标内容中比较细节与成本。"
+      }
+    },
+    {
+      "id": "CuNNy2\\CuNNy-faster-NVL",
+      "name": "CuNNy faster NVL",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "CuNNy2 神经网络 2× 放大，优先用于视觉小说与动画，并在速度与细节重建间选择模型。",
+      "details": "放大与超分 › 通用\n\nfaster 速度预设适合先确认实时余量，再与显式网络规模变体比较。\n\n变体差异：faster 命名预设；固定 2×、4 通道，名称来自模型但本机代价未测。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CuNNy2\\CuNNy-faster-NVL CuNNy faster NVL CuNNy2 放大与超分 通用 CuNNy2 CuNNy faster NVL CuNNy2 CuNNy-faster-NVL CuNNy2 神经网络 2× 放大，优先用于视觉小说与动画，并在速度与细节重建间选择模型。 faster 速度预设适合先确认实时余量，再与显式网络规模变体比较。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "v2",
+        "name": "CuNNy2",
+        "summary": "第二代 CuNNy，固定 2× 放大。不同网络规模与 NVL 训练版本分别保留，可在目标内容中比较细节与成本。"
+      }
+    },
+    {
+      "id": "CuNNy2\\CuNNy-veryfast-NVL",
+      "name": "CuNNy veryfast NVL",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "CuNNy2 神经网络 2× 放大，优先用于视觉小说与动画，并在速度与细节重建间选择模型。",
+      "details": "放大与超分 › 通用\n\nveryfast 速度预设适合先确认实时余量，再与显式网络规模变体比较。\n\n变体差异：veryfast 命名预设；固定 2×、4 通道，名称来自模型但本机代价未测。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "CuNNy2\\CuNNy-veryfast-NVL CuNNy veryfast NVL CuNNy2 放大与超分 通用 CuNNy2 CuNNy veryfast NVL CuNNy2 CuNNy-veryfast-NVL CuNNy2 神经网络 2× 放大，优先用于视觉小说与动画，并在速度与细节重建间选择模型。 veryfast 速度预设适合先确认实时余量，再与显式网络规模变体比较。 放大与超分 通用 CuNNy",
+      "family": {
+        "id": "cunny",
+        "name": "CuNNy",
+        "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。"
+      },
+      "subfamily": {
+        "id": "v2",
+        "name": "CuNNy2",
+        "summary": "第二代 CuNNy，固定 2× 放大。不同网络规模与 NVL 训练版本分别保留，可在目标内容中比较细节与成本。"
+      }
+    },
+    {
+      "id": "Deband",
+      "name": "Deband",
+      "category": "cleanup",
+      "subcategory": "去色带",
+      "purposes": [
+        "cleanup"
+      ],
+      "summary": "减轻渐变天空、暗部或低码率内容中的色带。",
+      "details": "清理修复 › 去色带\n\n建议放在放大与锐化前，从较低强度开始观察渐变和纹理。\n\n变体差异：同尺寸处理；强度过高可能抹去细微纹理。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：放大前；在「放大/超分、锐化」之前。先清理输入可减少后续放大噪声。\n\n输出尺寸：保持输入尺寸\n\n组合注意：强度过高会损失纹理\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Deband Deband Deband 清理修复 去色带 Deband 减轻渐变天空、暗部或低码率内容中的色带。 建议放在放大与锐化前，从较低强度开始观察渐变和纹理。 清理修复 去色带",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "Diagnostics\\FrameGuidance_Confidence",
+      "name": "FrameGuidance Confidence",
+      "category": "diagnostic",
+      "subcategory": "诊断",
+      "purposes": [
+        "diagnostic"
+      ],
+      "summary": "显示当前帧引导置信度，帮助诊断时序后端的可靠区域。",
+      "details": "调试自定义 › 诊断\n\n这是诊断输出，不是画质增强；应临时放在链尾观察。\n\n变体差异：置信度视图，同尺寸、单通道；输出不应继续当作正常图像处理。\n\n调试用途：仅在排查帧引导时使用。\n\n尝试建议：观察完毕后从正常效果组移除\n\n组合建议：临时链尾诊断；在「被诊断的处理」之后。便于观察最终帧引导状态。\n\n输出尺寸：保持输入尺寸\n\n组合注意：输出为可视化，不应继续作为正常画面\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。\n\nHDR 注意：这是诊断色图，不代表 HDR 画面输出。",
+      "level": "diagnostic",
+      "recommendation": "调试用途",
+      "search": "Diagnostics\\FrameGuidance_Confidence FrameGuidance Confidence Frame Guidance Diagnostics 调试自定义 诊断 Frame Guidance Diagnostics FrameGuidance Confidence Diagnostics FrameGuidance_Confidence 显示当前帧引导置信度，帮助诊断时序后端的可靠区域。 这是诊断输出，不是画质增强；应临时放在链尾观察。 调试自定义 诊断",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "Diagnostics\\FrameGuidance_Motion",
+      "name": "FrameGuidance Motion",
+      "category": "diagnostic",
+      "subcategory": "诊断",
+      "purposes": [
+        "diagnostic"
+      ],
+      "summary": "把帧引导运动可视化，帮助检查捕获帧间运动估计。",
+      "details": "调试自定义 › 诊断\n\n将 MV 显示为颜色图，可选择 AMDOF 或 NVOF；建议放在效果组末尾观察。\n\n变体差异：方向以色相表示，位移强弱以亮度和饱和度表示；显示增益仅影响色图。\n\n调试用途：仅在排查帧引导时使用。\n\n尝试建议：观察完毕后从正常效果组移除\n\n组合建议：临时链尾诊断；在「被诊断的处理」之后。便于观察最终帧引导状态。\n\n输出尺寸：保持输入尺寸\n\n组合注意：输出为可视化，不应继续作为正常画面\n\n使用条件：满足所选光流提供者的运行条件；同组比较时统一提供者，混用时 NVOF 优先；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：取决于所选光流；具体帧率需在目标画面实测。\n\nHDR 注意：这是诊断色图，不代表 HDR 画面输出。",
+      "level": "diagnostic",
+      "recommendation": "调试用途",
+      "search": "Diagnostics\\FrameGuidance_Motion FrameGuidance Motion Frame Guidance Diagnostics 调试自定义 诊断 Frame Guidance Diagnostics FrameGuidance Motion Diagnostics FrameGuidance_Motion 把帧引导运动可视化，帮助检查捕获帧间运动估计。 将 MV 显示为颜色图，可选择 AMDOF 或 NVOF；建议放在效果组末尾观察。 调试自定义 诊断",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "DLSS\\DLSS_SR",
+      "name": "DLSS SR",
+      "category": "upscale",
+      "subcategory": "时序重建",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "使用 DLSS 时序超分后端，将捕获画面重建到目标尺寸。",
+      "details": "放大与超分 › 时序重建\n\n适合在 NVIDIA RTX 显卡上尝试超分重建，可与 FSR、XeSS 对比细节与运动表现。捕获路径缺少原始相机抖动和真实深度，细节重建与运动稳定性受到限制；运动向量可以选择估算。\n\n变体差异：当前请求 Balanced / Preset J。用户反馈 L／M 模型可能附带轻微抗锯齿效果；当前版本尚未提供 L／M 模型选择参数，这项收益不代表默认模型的已验证表现。\n\n进阶／实验：缺少原始相机抖动和真实深度等原生重建条件，细节收益与运动稳定性需要按素材比较。\n\n尝试建议：先从默认参数比较静止细节和文字边缘；再检查快速运动、遮挡和画面切换时的拖影；按画面需要选择估算运动，并与 FSR、XeSS 比较质量和开销\n\n组合建议：主要缩放步骤；在「必要的降噪／修复」之后；在「按需添加的抗锯齿、最终锐化／显示风格」之前。先完成目标尺寸重建，再按实际画面需要添加边缘平滑、锐化和显示风格。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n组合注意：输出每一轴至少等于输入尺寸，由效果组的尺寸设置决定；深度使用全零资源，jitter=(0,0)；运动向量可选择估算；捕获式重建的细节和运动表现受输入条件限制\n\n使用条件：受支持的 NVIDIA GPU/驱动；包含对应 NGX 功能的构建与运行库\n\n性能成本：硬件/运行时相关；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "DLSS\\DLSS_SR DLSS SR DLSS 放大与超分 时序重建 DLSS DLSS SR DLSS_SR L 模型 M 模型 抗锯齿 实验 可配置输出尺寸 使用 DLSS 时序超分后端，将捕获画面重建到目标尺寸。 适合在 NVIDIA RTX 显卡上尝试超分重建，可与 FSR、XeSS 对比细节与运动表现。捕获路径缺少原始相机抖动和真实深度，细节重建与运动稳定性受到限制；运动向量可以选择估算。 放大与超分 时序重建",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "DLSSFG\\DLSS_FrameGeneration",
+      "name": "DLSS FrameGeneration",
+      "category": "frame",
+      "subcategory": "补帧",
+      "purposes": [
+        "frame"
+      ],
+      "summary": "通过 DLSS 原生呈现后端在捕获的真实帧之间生成帧。",
+      "details": "补帧与帧率 › 补帧\n\n列表项是 identity marker；生成帧由呈现端独立发布，不是着色器在该列表位置输出。外部捕获的运动信息有限，UI、光标与遮挡场景需实测。\n\n变体差异：2–4× 请求（实际接受值由后端能力决定）补帧标记；同组只能有一个补帧效果，宜配合全局 Frame Rate Filter 理解输入/输出帧率。\n\n进阶／实验：原生呈现端补帧会改变延迟与发布节奏，并受捕获运动估计限制。\n\n尝试建议：同组只选一个补帧器；检查 UI、光标、切屏和快速运动\n\n组合建议：呈现终端；在「全部普通画面效果」之后。生成帧由呈现端独立发布。\n\n执行位置：补帧在呈现端处理，限帧由运行时扫描效果组；拖动条目不改变实际调度阶段。\n\n输出尺寸：保持输入尺寸\n\n组合注意：同一效果组只能有一个补帧效果；identity marker 的列表位置不等于原生后端执行位置\n\n使用条件：受支持的 NVIDIA GPU/驱动；包含对应 NGX 功能的构建与运行库\n\n性能成本：硬件/运行时相关；具体帧率需在目标画面实测。\n\nHDR 注意：DLSS 补帧的 HDR backbuffer/UI 色彩协议依赖运行时，尚无本机画面验证。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "DLSSFG\\DLSS_FrameGeneration DLSS FrameGeneration DLSSFG 补帧与帧率 补帧 DLSSFG DLSS FrameGeneration DLSSFG DLSS_FrameGeneration 通过 DLSS 原生呈现后端在捕获的真实帧之间生成帧。 列表项是 identity marker；生成帧由呈现端独立发布，不是着色器在该列表位置输出。外部捕获的运动信息有限，UI、光标与遮挡场景需实测。 补帧与帧率 补帧",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "DLSSNR\\DLSSNR_AI_Filter",
+      "name": "DLSSNR AI Filter",
+      "category": "style",
+      "subcategory": "AI 画面重塑",
+      "purposes": [
+        "style"
+      ],
+      "summary": "调用实验性 DLSSNR 原生适配器做同尺寸 AI 画面与纹理风格重塑。",
+      "details": "风格显示 › AI 画面重塑\n\n用于改变细节组织与整体观感；原生创建失败时工厂允许占位直通，因此会话启动不代表算法已实际启用。 HDR 路径按输入颜色信息自动选择，亮度转换使用输入白点；画质与高光表现仍需在目标内容上比较。\n\n变体差异：同尺寸原生替换；依赖 NGX Feature 18 与受支持环境；底层接口标识只用于定位，不据此扩展用户功能说明。\n\n进阶／实验：这是实验性同尺寸 AI 风格重塑，且占位直通可能掩盖原生初始化失败。\n\n尝试建议：从日志确认原生功能创建成功；用代表性画面检查纹理重塑是否符合偏好\n\n组合建议：同尺寸 AI 画面重塑；在「主要尺寸整理（若希望在最终尺寸重塑纹理）」之后；在「最终锐化/显示风格」之前。前后位置会改变其处理到的纹理范围；先把它当主处理步骤，再做少量收尾。\n\n输出尺寸：保持输入尺寸\n\n组合注意：运行时由原生后端替换占位 pass；初始化失败可能继续使用直通占位\n\n使用条件：NVIDIA 驱动 615 及以上；RTX 50 系列原生支持（按用户提供的本项目兼容口径）；RTX 40／30／20 系列可能需要手动替换兼容 DLL，替换后仍需确认实际功能初始化结果；包含对应 NGX 功能的构建与运行库\n\n性能成本：硬件/运行时相关；具体帧率需在目标画面实测。\n\nHDR 注意：自动使用输入颜色信息与白点适配；FP16 路径仍需对比高光、亮度与颜色变化。输入分辨率调整在此路径下不生效。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "DLSSNR\\DLSSNR_AI_Filter DLSSNR AI Filter DLSSNR 风格显示 AI 画面重塑 DLSSNR AI Filter DLSSNR DLSSNR_AI_Filter 调用实验性 DLSSNR 原生适配器做同尺寸 AI 画面与纹理风格重塑。 用于改变细节组织与整体观感；原生创建失败时工厂允许占位直通，因此会话启动不代表算法已实际启用。 HDR 路径按输入颜色信息自动选择，亮度转换使用输入白点；画质与高光表现仍需在目标内容上比较。 风格显示 AI 画面重塑",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "FrameRate_Filter",
+      "name": "Frame Rate Filter",
+      "category": "frame",
+      "subcategory": "帧率调度",
+      "purposes": [
+        "frame"
+      ],
+      "summary": "限制捕获与处理目标帧率，便于稳帧或给补帧设定基础帧率。",
+      "details": "补帧与帧率 › 帧率调度\n\n它控制运行调度而非画面内容，常用于给补帧设定基础帧率或减少无效处理。\n\n变体差异：HLSL 只是同尺寸直通；Renderer 扫描整条效果链并取最低目标值，列表位置不改变调度范围。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：全局帧率调度。这是调度标记，不是按列表位置执行的画面处理。\n\n执行位置：补帧在呈现端处理，限帧由运行时扫描效果组；拖动条目不改变实际调度阶段。\n\n输出尺寸：保持输入尺寸\n\n组合注意：Renderer 扫描全链，列表顺序不改变限速作用域；多项同时存在时采用最低有效目标帧率\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "FrameRate_Filter Frame Rate Filter FrameRate_Filter 补帧与帧率 帧率调度 FrameRate_Filter Frame Rate Filter 限制捕获与处理目标帧率，便于稳帧或给补帧设定基础帧率。 它控制运行调度而非画面内容，常用于给补帧设定基础帧率或减少无效处理。 补帧与帧率 帧率调度",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "FSR\\FSR_EASU",
+      "name": "FSR EASU",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "使用 FSR EASU 做空间放大。",
+      "details": "放大与超分 › 通用\n\n适合跨 GPU 的通用低成本空间放大。\n\n变体差异：输出尺寸由效果组决定、单通道。\n\n优先尝试：通用且链路职责清楚，便于建立画质/性能基线。\n\n尝试建议：按内容类型比较锐度与振铃\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "first_try",
+      "recommendation": "优先尝试",
+      "search": "FSR\\FSR_EASU FSR EASU FSR 放大与超分 通用 FSR EASU FSR FSR_EASU 使用 FSR EASU 做空间放大。 适合跨 GPU 的通用低成本空间放大。 放大与超分 通用 FSR",
+      "family": {
+        "id": "fsr1",
+        "name": "FSR",
+        "summary": "FSR 1 空间放大与锐化变体。与独立的 FSR2／3／4 时序后端分开，具体输出尺寸和处理阶段见各条目。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "FSR\\FSR_RCAS",
+      "name": "FSR RCAS",
+      "category": "sharpen",
+      "subcategory": "通用锐化",
+      "purposes": [
+        "sharpen"
+      ],
+      "summary": "使用 FSR RCAS 做同尺寸锐化。",
+      "details": "锐化细节 › 通用锐化\n\n适合放大后补偿柔和感。\n\n变体差异：同尺寸单通道。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：链尾收尾；在「放大/超分、降噪」之后；在「CRT/显示调整」之前。按最终尺寸补偿柔和感。\n\n输出尺寸：保持输入尺寸\n\n组合注意：过强会放大噪声并产生光晕\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "FSR\\FSR_RCAS FSR RCAS FSR 锐化细节 通用锐化 FSR RCAS FSR FSR_RCAS 使用 FSR RCAS 做同尺寸锐化。 适合放大后补偿柔和感。 锐化细节 通用锐化 FSR",
+      "family": {
+        "id": "fsr1",
+        "name": "FSR",
+        "summary": "FSR 1 空间放大与锐化变体。与独立的 FSR2／3／4 时序后端分开，具体输出尺寸和处理阶段见各条目。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "FSR2\\FSR2_SR",
+      "name": "FSR2 SR",
+      "category": "upscale",
+      "subcategory": "时序重建",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "调用 FSR2 原生时序超分后端，把较低分辨率捕获画面重建到目标尺寸。",
+      "details": "放大与超分 › 时序重建\n\n外部捕获只能从相邻图像估计运动，并使用合成深度/jitter等辅助量；实际稳定性不同于游戏内 SDK 原生集成。\n\n变体差异：HLSL 为占位通道，运行时由 FSR2 后端替换；只支持放大，具体倍率/硬件/运行库限制由初始化检查决定。\n\n进阶／实验：依赖原生运行库和外部捕获的光流/合成辅助量。\n\n尝试建议：确认后端初始化成功；检查快速运动、遮挡和历史重置\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n组合注意：只用于放大；外部捕获辅助量不等同游戏内集成；仅支持放大，不声明 3× 上限\n\n使用条件：包含 FSR2 后端的构建与运行库；只用于放大；当前代码未声明 3× 上限\n\n性能成本：硬件/运行时相关；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "FSR2\\FSR2_SR FSR2 SR FSR2 放大与超分 时序重建 FSR2 SR FSR2 FSR2_SR 调用 FSR2 原生时序超分后端，把较低分辨率捕获画面重建到目标尺寸。 外部捕获只能从相邻图像估计运动，并使用合成深度/jitter等辅助量；实际稳定性不同于游戏内 SDK 原生集成。 放大与超分 时序重建",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "FSR3\\FSR3_SR",
+      "name": "FSR3 SR",
+      "category": "upscale",
+      "subcategory": "时序重建",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "调用 FSR3 原生时序超分后端，把较低分辨率捕获画面重建到目标尺寸。",
+      "details": "放大与超分 › 时序重建\n\n外部捕获只能从相邻图像估计运动，并使用合成深度/jitter等辅助量；实际稳定性不同于游戏内 SDK 原生集成。\n\n变体差异：HLSL 为占位通道，运行时由 FSR3 后端替换；只支持放大，具体倍率/硬件/运行库限制由初始化检查决定。\n\n进阶／实验：依赖原生运行库和外部捕获的光流/合成辅助量。\n\n尝试建议：确认后端初始化成功；检查快速运动、遮挡和历史重置\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n组合注意：只用于放大；外部捕获辅助量不等同游戏内集成；每轴放大倍率限于 1× 至 3×\n\n使用条件：包含对应 FidelityFX 后端的构建与运行库；满足运行时 GPU 能力检查；每轴放大倍率 1× 至 3×\n\n性能成本：硬件/运行时相关；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "FSR3\\FSR3_SR FSR3 SR FSR3 放大与超分 时序重建 FSR3 SR FSR3 FSR3_SR 调用 FSR3 原生时序超分后端，把较低分辨率捕获画面重建到目标尺寸。 外部捕获只能从相邻图像估计运动，并使用合成深度/jitter等辅助量；实际稳定性不同于游戏内 SDK 原生集成。 放大与超分 时序重建",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "FSR4\\FSR4_SR",
+      "name": "FSR4 SR",
+      "category": "upscale",
+      "subcategory": "时序重建",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "调用 FSR4 原生时序超分后端，把较低分辨率捕获画面重建到目标尺寸。",
+      "details": "放大与超分 › 时序重建\n\n外部捕获只能从相邻图像估计运动，并使用合成深度/jitter等辅助量；实际稳定性不同于游戏内 SDK 原生集成。\n\n变体差异：HLSL 为占位通道，运行时由 FSR4 后端替换；只支持放大，具体倍率/硬件/运行库限制由初始化检查决定。\n\n进阶／实验：依赖原生运行库和外部捕获的光流/合成辅助量。\n\n尝试建议：确认后端初始化成功；检查快速运动、遮挡和历史重置\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n组合注意：只用于放大；外部捕获辅助量不等同游戏内集成；每轴放大倍率限于 1× 至 3×\n\n使用条件：包含对应 FidelityFX 后端的构建与运行库；满足运行时 GPU 能力检查；每轴放大倍率 1× 至 3×\n\n性能成本：硬件/运行时相关；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "FSR4\\FSR4_SR FSR4 SR FSR4 放大与超分 时序重建 FSR4 SR FSR4 FSR4_SR 调用 FSR4 原生时序超分后端，把较低分辨率捕获画面重建到目标尺寸。 外部捕获只能从相邻图像估计运动，并使用合成深度/jitter等辅助量；实际稳定性不同于游戏内 SDK 原生集成。 放大与超分 时序重建",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "FSRCNNX\\FSRCNNX_LineArt",
+      "name": "FSRCNNX LineArt",
+      "category": "upscale",
+      "subcategory": "动画线条",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "FSRCNNX 神经网络固定 2× 放大，针对线稿/动画。",
+      "details": "放大与超分 › 动画线条\n\n优先在线条清晰、平坦色块较多的素材上尝试。\n\n变体差异：LineArt模型，固定 2×、6 通道。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "FSRCNNX\\FSRCNNX_LineArt FSRCNNX LineArt FSRCNNX 放大与超分 动画线条 FSRCNNX LineArt FSRCNNX FSRCNNX_LineArt FSRCNNX 神经网络固定 2× 放大，针对线稿/动画。 优先在线条清晰、平坦色块较多的素材上尝试。 放大与超分 动画线条 FSRCNNX",
+      "family": {
+        "id": "fsrcnnx",
+        "name": "FSRCNNX",
+        "summary": "神经网络 2× 放大。不同网络规模独立提供，请比较目标画面的细节与性能成本。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "FSRCNNX\\FSRCNNX",
+      "name": "FSRCNNX",
+      "category": "upscale",
+      "subcategory": "动画线条",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "FSRCNNX 神经网络固定 2× 放大。",
+      "details": "放大与超分 › 动画线条\n\n通用模型可用于一般视频与图像，动画素材也可与 LineArt 版比较。\n\n变体差异：通用模型，固定 2×、6 通道。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "FSRCNNX\\FSRCNNX FSRCNNX FSRCNNX 放大与超分 动画线条 FSRCNNX FSRCNNX FSRCNNX FSRCNNX 神经网络固定 2× 放大。 通用模型可用于一般视频与图像，动画素材也可与 LineArt 版比较。 放大与超分 动画线条 FSRCNNX",
+      "family": {
+        "id": "fsrcnnx",
+        "name": "FSRCNNX",
+        "summary": "神经网络 2× 放大。不同网络规模独立提供，请比较目标画面的细节与性能成本。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "FXAA\\FXAA_High",
+      "name": "FXAA High",
+      "category": "antialiasing",
+      "subcategory": "空间",
+      "purposes": [
+        "antialiasing"
+      ],
+      "summary": "快速空间抗锯齿，适合低成本缓和边缘锯齿。",
+      "details": "抗锯齿 › 空间\n\n单帧处理，不依赖运动历史；可能轻微软化文字和细纹理。\n\n变体差异：High 预设、单通道；档位差异来自源码参数，未做本机清晰度排名。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：放大后、锐化前；在「主要缩放」之后；在「锐化」之前。在目标分辨率上平滑最终几何边缘。\n\n输出尺寸：保持输入尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "FXAA\\FXAA_High FXAA High FXAA 抗锯齿 空间 FXAA High FXAA FXAA_High 快速空间抗锯齿，适合低成本缓和边缘锯齿。 单帧处理，不依赖运动历史；可能轻微软化文字和细纹理。 抗锯齿 空间 FXAA",
+      "family": {
+        "id": "fxaa",
+        "name": "FXAA",
+        "summary": "根据当前画面快速平滑锯齿。不同实现分别保留；留意文字、细线与纹理变软，按观感比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "FXAA\\FXAA_Medium",
+      "name": "FXAA Medium",
+      "category": "antialiasing",
+      "subcategory": "空间",
+      "purposes": [
+        "antialiasing"
+      ],
+      "summary": "快速空间抗锯齿，适合低成本缓和边缘锯齿。",
+      "details": "抗锯齿 › 空间\n\n单帧处理，不依赖运动历史；可能轻微软化文字和细纹理。\n\n变体差异：Medium 预设、单通道；档位差异来自源码参数，未做本机清晰度排名。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：放大后、锐化前；在「主要缩放」之后；在「锐化」之前。在目标分辨率上平滑最终几何边缘。\n\n输出尺寸：保持输入尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "FXAA\\FXAA_Medium FXAA Medium FXAA 抗锯齿 空间 FXAA Medium FXAA FXAA_Medium 快速空间抗锯齿，适合低成本缓和边缘锯齿。 单帧处理，不依赖运动历史；可能轻微软化文字和细纹理。 抗锯齿 空间 FXAA",
+      "family": {
+        "id": "fxaa",
+        "name": "FXAA",
+        "summary": "根据当前画面快速平滑锯齿。不同实现分别保留；留意文字、细线与纹理变软，按观感比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "FXAA\\FXAA_Ultra",
+      "name": "FXAA Ultra",
+      "category": "antialiasing",
+      "subcategory": "空间",
+      "purposes": [
+        "antialiasing"
+      ],
+      "summary": "快速空间抗锯齿，适合低成本缓和边缘锯齿。",
+      "details": "抗锯齿 › 空间\n\n单帧处理，不依赖运动历史；可能轻微软化文字和细纹理。\n\n变体差异：Ultra 预设、单通道；档位差异来自源码参数，未做本机清晰度排名。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：放大后、锐化前；在「主要缩放」之后；在「锐化」之前。在目标分辨率上平滑最终几何边缘。\n\n输出尺寸：保持输入尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "FXAA\\FXAA_Ultra FXAA Ultra FXAA 抗锯齿 空间 FXAA Ultra FXAA FXAA_Ultra 快速空间抗锯齿，适合低成本缓和边缘锯齿。 单帧处理，不依赖运动历史；可能轻微软化文字和细纹理。 抗锯齿 空间 FXAA",
+      "family": {
+        "id": "fxaa",
+        "name": "FXAA",
+        "summary": "根据当前画面快速平滑锯齿。不同实现分别保留；留意文字、细线与纹理变软，按观感比较。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "ImageAdjustment",
+      "name": "Image Adjustment",
+      "category": "style",
+      "subcategory": "图像调整",
+      "purposes": [
+        "style"
+      ],
+      "summary": "统一调整 Gamma、亮度、对比度、饱和度与 RGB 通道。",
+      "details": "风格显示 › 图像调整\n\n调整 Gamma、亮度、对比度、饱和度与 RGB 通道，适合作为最终观感修正。\n\n变体差异：同尺寸显示变换；建议接近链尾，HDR 下需留意参数的显示域含义。\n\n特定场景推荐：适合特定素材、风格或实验场景。\n\n尝试建议：先在代表性画面比较副作用\n\n组合建议：链尾显示；在「主要画质处理」之后。风格与显示调整通常针对最终输出观感。\n\n输出尺寸：保持输入尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "ImageAdjustment Image Adjustment ImageAdjustment 风格显示 图像调整 ImageAdjustment Image Adjustment 统一调整 Gamma、亮度、对比度、饱和度与 RGB 通道。 调整 Gamma、亮度、对比度、饱和度与 RGB 通道，适合作为最终观感修正。 风格显示 图像调整",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "Jinc",
+      "name": "Jinc",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "高质量重采样，适合摄影、界面与一般视频放大。",
+      "details": "放大与超分 › 通用\n\n边缘较锐利，适合与 Lanczos/Bicubic 比较振铃和纹理保持。\n\n变体差异：输出尺寸由效果组决定；负瓣可能带来轻微振铃。\n\n优先尝试：通用且链路职责清楚，便于建立画质/性能基线。\n\n尝试建议：按内容类型比较锐度与振铃\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "first_try",
+      "recommendation": "优先尝试",
+      "search": "Jinc Jinc Jinc 放大与超分 通用 Jinc 高质量重采样，适合摄影、界面与一般视频放大。 边缘较锐利，适合与 Lanczos/Bicubic 比较振铃和纹理保持。 放大与超分 通用",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "k7_modernAnime_FHD_x2",
+      "name": "k7 modernAnime FHD x2",
+      "category": "upscale",
+      "subcategory": "动画线条",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "面向现代动画全高清素材的神经网络 2× 放大。",
+      "details": "放大与超分 › 动画线条\n\n目标素材较明确；低清、真人或高噪声来源应与其他模型对比。\n\n变体差异：固定 2×、8 通道；模型目标域较窄，真人或低清素材效果需另行比较。\n\n进阶／实验：多通道或较大网络模型，适合在有性能余量时比较。\n\n尝试建议：按目标分辨率检查性能；不要仅按名称推断画质\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "k7_modernAnime_FHD_x2 k7 modernAnime FHD x2 k7_modernAnime_FHD_x2 放大与超分 动画线条 k7_modernAnime_FHD_x2 k7 modernAnime FHD x2 面向现代动画全高清素材的神经网络 2× 放大。 目标素材较明确；低清、真人或高噪声来源应与其他模型对比。 放大与超分 动画线条",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "Lanczos",
+      "name": "Lanczos",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "经典锐利重采样，适合文字、界面和一般图像。",
+      "details": "放大与超分 › 通用\n\n适合希望比双线性更锐利的场景，需观察高对比边缘的光晕。\n\n变体差异：输出尺寸由效果组决定；锐利边缘附近可能出现振铃。\n\n优先尝试：通用且链路职责清楚，便于建立画质/性能基线。\n\n尝试建议：按内容类型比较锐度与振铃\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "first_try",
+      "recommendation": "优先尝试",
+      "search": "Lanczos Lanczos Lanczos 放大与超分 通用 Lanczos 经典锐利重采样，适合文字、界面和一般图像。 适合希望比双线性更锐利的场景，需观察高对比边缘的光晕。 放大与超分 通用",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "MLAA\\MLAA",
+      "name": "MLAA",
+      "category": "antialiasing",
+      "subcategory": "空间",
+      "purposes": [
+        "antialiasing"
+      ],
+      "summary": "形态学空间抗锯齿，分析边缘后做同帧混合。",
+      "details": "抗锯齿 › 空间\n\n适合不具备时序信息时缓和几何锯齿。\n\n变体差异：同尺寸、3 通道；可能影响细小文字。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：放大后、锐化前；在「主要缩放」之后；在「锐化」之前。在目标分辨率上平滑最终几何边缘。\n\n输出尺寸：保持输入尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "MLAA\\MLAA MLAA MLAA 抗锯齿 空间 MLAA MLAA MLAA 形态学空间抗锯齿，分析边缘后做同帧混合。 适合不具备时序信息时缓和几何锯齿。 抗锯齿 空间",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "Nearest",
+      "name": "Nearest",
+      "category": "upscale",
+      "subcategory": "像素画",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "最近邻缩放，完整保留像素块，不做平滑。",
+      "details": "放大与超分 › 像素画\n\n不会混合相邻像素，适合整数倍像素画；普通视频会显得块状。\n\n变体差异：输出尺寸由效果组决定；适合像素画，也可作为采样基线。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：主要像素画缩放步骤；在「按需添加的 CRT 风格／显示调整」之前。先观察像素画缩放本身的结果，保留像素边界，再决定是否添加风格处理。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Nearest Nearest Nearest 放大与超分 像素画 Nearest 最近邻缩放，完整保留像素块，不做平滑。 不会混合相邻像素，适合整数倍像素画；普通视频会显得块状。 放大与超分 像素画",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "NIS\\NIS",
+      "name": "NIS",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "NIS 空间缩放并可锐化。",
+      "details": "放大与超分 › 通用\n\n适合通用实时放大，输出尺寸由效果组决定。\n\n变体差异：任意输出尺寸、单通道；HDR 编译路径仍需当前构建与像素验证。\n\n优先尝试：通用且链路职责清楚，便于建立画质/性能基线。\n\n尝试建议：按内容类型比较锐度与振铃；优先在 SDR 素材中比较；HDR 画面需先核对本报告列出的着色器模式疑点。\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。\n\nHDR 注意：协议选择 FP16 HDR，但当前 NIS 着色器未设置 NIS_HDR_MODE，静态配置可能仍走 NONE 数学路径。",
+      "level": "first_try",
+      "recommendation": "优先尝试",
+      "search": "NIS\\NIS NIS NIS 放大与超分 通用 NIS NIS NIS NIS 空间缩放并可锐化。 适合通用实时放大，输出尺寸由效果组决定。 放大与超分 通用 NIS",
+      "family": {
+        "id": "nis",
+        "name": "NIS",
+        "summary": "NVIDIA Image Scaling 的空间缩放与锐化。按需要选择完整缩放或锐化条目，留意高对比边缘的光晕。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "NIS\\NVSharpen",
+      "name": "NVSharpen",
+      "category": "sharpen",
+      "subcategory": "通用锐化",
+      "purposes": [
+        "sharpen"
+      ],
+      "summary": "NVIDIA 风格同尺寸锐化。",
+      "details": "锐化细节 › 通用锐化\n\n适合在主要放大后补清晰度。\n\n变体差异：同尺寸、单通道。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用；优先在 SDR 素材中比较；HDR 画面需先核对本报告列出的着色器模式疑点。\n\n组合建议：链尾收尾；在「放大/超分、降噪」之后；在「CRT/显示调整」之前。按最终尺寸补偿柔和感。\n\n输出尺寸：保持输入尺寸\n\n组合注意：过强会放大噪声并产生光晕\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。\n\nHDR 注意：协议选择 FP16 HDR，但当前 NIS 着色器未设置 NIS_HDR_MODE，静态配置可能仍走 NONE 数学路径。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "NIS\\NVSharpen NVSharpen NIS 锐化细节 通用锐化 NIS NVSharpen NIS NVSharpen NVIDIA 风格同尺寸锐化。 适合在主要放大后补清晰度。 锐化细节 通用锐化 NIS",
+      "family": {
+        "id": "nis",
+        "name": "NIS",
+        "summary": "NVIDIA Image Scaling 的空间缩放与锐化。按需要选择完整缩放或锐化条目，留意高对比边缘的光晕。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "NNEDI3\\NNEDI3_nns128_win8x4",
+      "name": "NNEDI3 nns128 win8x4",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "NNEDI3 神经插值 2× 放大，适合线条、动画及需要方向性边缘插值的素材。",
+      "details": "放大与超分 › 通用\n\n通过分方向处理完成固定 2× 放大；较大的神经元数和窗口需要更多运算。\n\n变体差异：nns=128，窗口 8×4；固定 2×、2 个主要通道，未做本机质量/速度排名。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "NNEDI3\\NNEDI3_nns128_win8x4 NNEDI3 nns128 win8x4 NNEDI3 放大与超分 通用 NNEDI3 nns128 win8x4 NNEDI3 NNEDI3_nns128_win8x4 NNEDI3 神经插值 2× 放大，适合线条、动画及需要方向性边缘插值的素材。 通过分方向处理完成固定 2× 放大；较大的神经元数和窗口需要更多运算。 放大与超分 通用 NNEDI3",
+      "family": {
+        "id": "nnedi3",
+        "name": "NNEDI3",
+        "summary": "神经网络 2× 放大。nns 表示神经元数量，win 表示采样窗口；更大规格通常需要更多计算，请结合源内容比较边缘与纹理。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "NNEDI3\\NNEDI3_nns128_win8x6",
+      "name": "NNEDI3 nns128 win8x6",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "NNEDI3 神经插值 2× 放大，适合线条、动画及需要方向性边缘插值的素材。",
+      "details": "放大与超分 › 通用\n\n通过分方向处理完成固定 2× 放大；较大的神经元数和窗口需要更多运算。\n\n变体差异：nns=128，窗口 8×6；固定 2×、2 个主要通道，未做本机质量/速度排名。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "NNEDI3\\NNEDI3_nns128_win8x6 NNEDI3 nns128 win8x6 NNEDI3 放大与超分 通用 NNEDI3 nns128 win8x6 NNEDI3 NNEDI3_nns128_win8x6 NNEDI3 神经插值 2× 放大，适合线条、动画及需要方向性边缘插值的素材。 通过分方向处理完成固定 2× 放大；较大的神经元数和窗口需要更多运算。 放大与超分 通用 NNEDI3",
+      "family": {
+        "id": "nnedi3",
+        "name": "NNEDI3",
+        "summary": "神经网络 2× 放大。nns 表示神经元数量，win 表示采样窗口；更大规格通常需要更多计算，请结合源内容比较边缘与纹理。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "NNEDI3\\NNEDI3_nns16_win8x4",
+      "name": "NNEDI3 nns16 win8x4",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "NNEDI3 神经插值 2× 放大，适合线条、动画及需要方向性边缘插值的素材。",
+      "details": "放大与超分 › 通用\n\n通过分方向处理完成固定 2× 放大；较大的神经元数和窗口需要更多运算。\n\n变体差异：nns=16，窗口 8×4；固定 2×、2 个主要通道，未做本机质量/速度排名。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "NNEDI3\\NNEDI3_nns16_win8x4 NNEDI3 nns16 win8x4 NNEDI3 放大与超分 通用 NNEDI3 nns16 win8x4 NNEDI3 NNEDI3_nns16_win8x4 NNEDI3 神经插值 2× 放大，适合线条、动画及需要方向性边缘插值的素材。 通过分方向处理完成固定 2× 放大；较大的神经元数和窗口需要更多运算。 放大与超分 通用 NNEDI3",
+      "family": {
+        "id": "nnedi3",
+        "name": "NNEDI3",
+        "summary": "神经网络 2× 放大。nns 表示神经元数量，win 表示采样窗口；更大规格通常需要更多计算，请结合源内容比较边缘与纹理。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "NNEDI3\\NNEDI3_nns16_win8x6",
+      "name": "NNEDI3 nns16 win8x6",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "NNEDI3 神经插值 2× 放大，适合线条、动画及需要方向性边缘插值的素材。",
+      "details": "放大与超分 › 通用\n\n通过分方向处理完成固定 2× 放大；较大的神经元数和窗口需要更多运算。\n\n变体差异：nns=16，窗口 8×6；固定 2×、2 个主要通道，未做本机质量/速度排名。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "NNEDI3\\NNEDI3_nns16_win8x6 NNEDI3 nns16 win8x6 NNEDI3 放大与超分 通用 NNEDI3 nns16 win8x6 NNEDI3 NNEDI3_nns16_win8x6 NNEDI3 神经插值 2× 放大，适合线条、动画及需要方向性边缘插值的素材。 通过分方向处理完成固定 2× 放大；较大的神经元数和窗口需要更多运算。 放大与超分 通用 NNEDI3",
+      "family": {
+        "id": "nnedi3",
+        "name": "NNEDI3",
+        "summary": "神经网络 2× 放大。nns 表示神经元数量，win 表示采样窗口；更大规格通常需要更多计算，请结合源内容比较边缘与纹理。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "NNEDI3\\NNEDI3_nns256_win8x4",
+      "name": "NNEDI3 nns256 win8x4",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "NNEDI3 神经插值 2× 放大，适合线条、动画及需要方向性边缘插值的素材。",
+      "details": "放大与超分 › 通用\n\n通过分方向处理完成固定 2× 放大；较大的神经元数和窗口需要更多运算。\n\n变体差异：nns=256，窗口 8×4；固定 2×、2 个主要通道，未做本机质量/速度排名。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "NNEDI3\\NNEDI3_nns256_win8x4 NNEDI3 nns256 win8x4 NNEDI3 放大与超分 通用 NNEDI3 nns256 win8x4 NNEDI3 NNEDI3_nns256_win8x4 NNEDI3 神经插值 2× 放大，适合线条、动画及需要方向性边缘插值的素材。 通过分方向处理完成固定 2× 放大；较大的神经元数和窗口需要更多运算。 放大与超分 通用 NNEDI3",
+      "family": {
+        "id": "nnedi3",
+        "name": "NNEDI3",
+        "summary": "神经网络 2× 放大。nns 表示神经元数量，win 表示采样窗口；更大规格通常需要更多计算，请结合源内容比较边缘与纹理。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "NNEDI3\\NNEDI3_nns256_win8x6",
+      "name": "NNEDI3 nns256 win8x6",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "NNEDI3 神经插值 2× 放大，适合线条、动画及需要方向性边缘插值的素材。",
+      "details": "放大与超分 › 通用\n\n通过分方向处理完成固定 2× 放大；较大的神经元数和窗口需要更多运算。\n\n变体差异：nns=256，窗口 8×6；固定 2×、2 个主要通道，未做本机质量/速度排名。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "NNEDI3\\NNEDI3_nns256_win8x6 NNEDI3 nns256 win8x6 NNEDI3 放大与超分 通用 NNEDI3 nns256 win8x6 NNEDI3 NNEDI3_nns256_win8x6 NNEDI3 神经插值 2× 放大，适合线条、动画及需要方向性边缘插值的素材。 通过分方向处理完成固定 2× 放大；较大的神经元数和窗口需要更多运算。 放大与超分 通用 NNEDI3",
+      "family": {
+        "id": "nnedi3",
+        "name": "NNEDI3",
+        "summary": "神经网络 2× 放大。nns 表示神经元数量，win 表示采样窗口；更大规格通常需要更多计算，请结合源内容比较边缘与纹理。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "NNEDI3\\NNEDI3_nns32_win8x4",
+      "name": "NNEDI3 nns32 win8x4",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "NNEDI3 神经插值 2× 放大，适合线条、动画及需要方向性边缘插值的素材。",
+      "details": "放大与超分 › 通用\n\n通过分方向处理完成固定 2× 放大；较大的神经元数和窗口需要更多运算。\n\n变体差异：nns=32，窗口 8×4；固定 2×、2 个主要通道，未做本机质量/速度排名。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "NNEDI3\\NNEDI3_nns32_win8x4 NNEDI3 nns32 win8x4 NNEDI3 放大与超分 通用 NNEDI3 nns32 win8x4 NNEDI3 NNEDI3_nns32_win8x4 NNEDI3 神经插值 2× 放大，适合线条、动画及需要方向性边缘插值的素材。 通过分方向处理完成固定 2× 放大；较大的神经元数和窗口需要更多运算。 放大与超分 通用 NNEDI3",
+      "family": {
+        "id": "nnedi3",
+        "name": "NNEDI3",
+        "summary": "神经网络 2× 放大。nns 表示神经元数量，win 表示采样窗口；更大规格通常需要更多计算，请结合源内容比较边缘与纹理。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "NNEDI3\\NNEDI3_nns32_win8x6",
+      "name": "NNEDI3 nns32 win8x6",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "NNEDI3 神经插值 2× 放大，适合线条、动画及需要方向性边缘插值的素材。",
+      "details": "放大与超分 › 通用\n\n通过分方向处理完成固定 2× 放大；较大的神经元数和窗口需要更多运算。\n\n变体差异：nns=32，窗口 8×6；固定 2×、2 个主要通道，未做本机质量/速度排名。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "NNEDI3\\NNEDI3_nns32_win8x6 NNEDI3 nns32 win8x6 NNEDI3 放大与超分 通用 NNEDI3 nns32 win8x6 NNEDI3 NNEDI3_nns32_win8x6 NNEDI3 神经插值 2× 放大，适合线条、动画及需要方向性边缘插值的素材。 通过分方向处理完成固定 2× 放大；较大的神经元数和窗口需要更多运算。 放大与超分 通用 NNEDI3",
+      "family": {
+        "id": "nnedi3",
+        "name": "NNEDI3",
+        "summary": "神经网络 2× 放大。nns 表示神经元数量，win 表示采样窗口；更大规格通常需要更多计算，请结合源内容比较边缘与纹理。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "NNEDI3\\NNEDI3_nns64_win8x4",
+      "name": "NNEDI3 nns64 win8x4",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "NNEDI3 神经插值 2× 放大，适合线条、动画及需要方向性边缘插值的素材。",
+      "details": "放大与超分 › 通用\n\n通过分方向处理完成固定 2× 放大；较大的神经元数和窗口需要更多运算。\n\n变体差异：nns=64，窗口 8×4；固定 2×、2 个主要通道，未做本机质量/速度排名。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "NNEDI3\\NNEDI3_nns64_win8x4 NNEDI3 nns64 win8x4 NNEDI3 放大与超分 通用 NNEDI3 nns64 win8x4 NNEDI3 NNEDI3_nns64_win8x4 NNEDI3 神经插值 2× 放大，适合线条、动画及需要方向性边缘插值的素材。 通过分方向处理完成固定 2× 放大；较大的神经元数和窗口需要更多运算。 放大与超分 通用 NNEDI3",
+      "family": {
+        "id": "nnedi3",
+        "name": "NNEDI3",
+        "summary": "神经网络 2× 放大。nns 表示神经元数量，win 表示采样窗口；更大规格通常需要更多计算，请结合源内容比较边缘与纹理。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "NNEDI3\\NNEDI3_nns64_win8x6",
+      "name": "NNEDI3 nns64 win8x6",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "NNEDI3 神经插值 2× 放大，适合线条、动画及需要方向性边缘插值的素材。",
+      "details": "放大与超分 › 通用\n\n通过分方向处理完成固定 2× 放大；较大的神经元数和窗口需要更多运算。\n\n变体差异：nns=64，窗口 8×6；固定 2×、2 个主要通道，未做本机质量/速度排名。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "NNEDI3\\NNEDI3_nns64_win8x6 NNEDI3 nns64 win8x6 NNEDI3 放大与超分 通用 NNEDI3 nns64 win8x6 NNEDI3 NNEDI3_nns64_win8x6 NNEDI3 神经插值 2× 放大，适合线条、动画及需要方向性边缘插值的素材。 通过分方向处理完成固定 2× 放大；较大的神经元数和窗口需要更多运算。 放大与超分 通用 NNEDI3",
+      "family": {
+        "id": "nnedi3",
+        "name": "NNEDI3",
+        "summary": "神经网络 2× 放大。nns 表示神经元数量，win 表示采样窗口；更大规格通常需要更多计算，请结合源内容比较边缘与纹理。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "Pixel Art\\MMPX",
+      "name": "MMPX",
+      "category": "upscale",
+      "subcategory": "像素画",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "MMPX 固定 2× 像素画放大，保留像素块并修整局部斜线。",
+      "details": "放大与超分 › 像素画\n\n适合低分辨率精灵和复古游戏；避免用于照片。\n\n变体差异：固定 2×、单通道。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：主要像素画缩放步骤；在「按需添加的 CRT 风格／显示调整」之前。先观察像素画缩放本身的结果，保留像素边界，再决定是否添加风格处理。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Pixel Art\\MMPX MMPX MMPX 放大与超分 像素画 MMPX Pixel Art MMPX MMPX 固定 2× 像素画放大，保留像素块并修整局部斜线。 适合低分辨率精灵和复古游戏；避免用于照片。 放大与超分 像素画",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "Pixel Art\\Pixellate",
+      "name": "Pixellate",
+      "category": "upscale",
+      "subcategory": "像素画",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "像素画面积重采样，根据输出像素覆盖范围混合源像素。",
+      "details": "放大与超分 › 像素画\n\n适合像素画在非整数倍率下减少像素宽窄不均，并保持块面观感。\n\n变体差异：输出尺寸由效果组决定；是像素画缩放器，不是马赛克滤镜。\n\n特定场景推荐：适合特定素材、风格或实验场景。\n\n尝试建议：先在代表性画面比较副作用\n\n组合建议：主要像素画缩放步骤；在「按需添加的 CRT 风格／显示调整」之前。先观察像素画缩放本身的结果，保留像素边界，再决定是否添加风格处理。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Pixel Art\\Pixellate Pixellate Pixellate 放大与超分 像素画 Pixellate Pixel Art Pixellate 像素画面积重采样，根据输出像素覆盖范围混合源像素。 适合像素画在非整数倍率下减少像素宽窄不均，并保持块面观感。 放大与超分 像素画",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "Pixel Art\\SharpBilinear",
+      "name": "SharpBilinear",
+      "category": "upscale",
+      "subcategory": "像素画",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "像素画友好的锐利双线性缩放，减少非整数倍率下的不均匀像素。",
+      "details": "放大与超分 › 像素画\n\n适合像素画无法使用严格整数倍显示时。\n\n变体差异：输出尺寸由效果组决定、单通道。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：主要像素画缩放步骤；在「按需添加的 CRT 风格／显示调整」之前。先观察像素画缩放本身的结果，保留像素边界，再决定是否添加风格处理。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Pixel Art\\SharpBilinear SharpBilinear SharpBilinear 放大与超分 像素画 SharpBilinear Pixel Art SharpBilinear 像素画友好的锐利双线性缩放，减少非整数倍率下的不均匀像素。 适合像素画无法使用严格整数倍显示时。 放大与超分 像素画",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_3x_R2_RGB",
+      "name": "RAVU 3x R2 RGB",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 3× 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\nRGB 版按彩色信息处理； \n\n变体差异：固定 3×，R2 / RGB，1 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×3，高 ×3\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_3x_R2_RGB RAVU 3x R2 RGB RAVU 放大与超分 通用 RAVU 3x R2 RGB RAVU RAVU_3x_R2_RGB RAVU 3× 放大，用于一般视频、插画与边缘结构重建。 RGB 版按彩色信息处理；  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_3x_R2",
+      "name": "RAVU 3x R2",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 3× 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\n非 RGB 版采用该文件的默认颜色路径。 \n\n变体差异：固定 3×，R2，1 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×3，高 ×3\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_3x_R2 RAVU 3x R2 RAVU 放大与超分 通用 RAVU 3x R2 RAVU RAVU_3x_R2 RAVU 3× 放大，用于一般视频、插画与边缘结构重建。 非 RGB 版采用该文件的默认颜色路径。  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_3x_R3_RGB",
+      "name": "RAVU 3x R3 RGB",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 3× 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\nRGB 版按彩色信息处理； \n\n变体差异：固定 3×，R3 / RGB，1 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×3，高 ×3\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_3x_R3_RGB RAVU 3x R3 RGB RAVU 放大与超分 通用 RAVU 3x R3 RGB RAVU RAVU_3x_R3_RGB RAVU 3× 放大，用于一般视频、插画与边缘结构重建。 RGB 版按彩色信息处理；  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_3x_R3",
+      "name": "RAVU 3x R3",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 3× 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\n非 RGB 版采用该文件的默认颜色路径。 \n\n变体差异：固定 3×，R3，1 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×3，高 ×3\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_3x_R3 RAVU 3x R3 RAVU 放大与超分 通用 RAVU 3x R3 RAVU RAVU_3x_R3 RAVU 3× 放大，用于一般视频、插画与边缘结构重建。 非 RGB 版采用该文件的默认颜色路径。  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_3x_R4_RGB",
+      "name": "RAVU 3x R4 RGB",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 3× 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\nRGB 版按彩色信息处理； \n\n变体差异：固定 3×，R4 / RGB，1 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×3，高 ×3\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_3x_R4_RGB RAVU 3x R4 RGB RAVU 放大与超分 通用 RAVU 3x R4 RGB RAVU RAVU_3x_R4_RGB RAVU 3× 放大，用于一般视频、插画与边缘结构重建。 RGB 版按彩色信息处理；  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_3x_R4",
+      "name": "RAVU 3x R4",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 3× 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\n非 RGB 版采用该文件的默认颜色路径。 \n\n变体差异：固定 3×，R4，1 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×3，高 ×3\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_3x_R4 RAVU 3x R4 RAVU 放大与超分 通用 RAVU 3x R4 RAVU RAVU_3x_R4 RAVU 3× 放大，用于一般视频、插画与边缘结构重建。 非 RGB 版采用该文件的默认颜色路径。  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_Lite_AR_R2",
+      "name": "RAVU Lite AR R2",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 2× 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\nLite 版减少处理规模；AR 版加入抗振铃取向；非 RGB 版采用该文件的默认颜色路径。 \n\n变体差异：Lite 固定 2×，R2 / AR，1 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_Lite_AR_R2 RAVU Lite AR R2 RAVU 放大与超分 通用 RAVU Lite AR R2 RAVU RAVU_Lite_AR_R2 RAVU 2× 放大，用于一般视频、插画与边缘结构重建。 Lite 版减少处理规模；AR 版加入抗振铃取向；非 RGB 版采用该文件的默认颜色路径。  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_Lite_AR_R3",
+      "name": "RAVU Lite AR R3",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 2× 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\nLite 版减少处理规模；AR 版加入抗振铃取向；非 RGB 版采用该文件的默认颜色路径。 \n\n变体差异：Lite 固定 2×，R3 / AR，1 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_Lite_AR_R3 RAVU Lite AR R3 RAVU 放大与超分 通用 RAVU Lite AR R3 RAVU RAVU_Lite_AR_R3 RAVU 2× 放大，用于一般视频、插画与边缘结构重建。 Lite 版减少处理规模；AR 版加入抗振铃取向；非 RGB 版采用该文件的默认颜色路径。  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_Lite_AR_R4",
+      "name": "RAVU Lite AR R4",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 2× 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\nLite 版减少处理规模；AR 版加入抗振铃取向；非 RGB 版采用该文件的默认颜色路径。 \n\n变体差异：Lite 固定 2×，R4 / AR，1 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_Lite_AR_R4 RAVU Lite AR R4 RAVU 放大与超分 通用 RAVU Lite AR R4 RAVU RAVU_Lite_AR_R4 RAVU 2× 放大，用于一般视频、插画与边缘结构重建。 Lite 版减少处理规模；AR 版加入抗振铃取向；非 RGB 版采用该文件的默认颜色路径。  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_Lite_R2",
+      "name": "RAVU Lite R2",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 2× 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\nLite 版减少处理规模；非 RGB 版采用该文件的默认颜色路径。 \n\n变体差异：Lite 固定 2×，R2，1 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_Lite_R2 RAVU Lite R2 RAVU 放大与超分 通用 RAVU Lite R2 RAVU RAVU_Lite_R2 RAVU 2× 放大，用于一般视频、插画与边缘结构重建。 Lite 版减少处理规模；非 RGB 版采用该文件的默认颜色路径。  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_Lite_R3",
+      "name": "RAVU Lite R3",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 2× 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\nLite 版减少处理规模；非 RGB 版采用该文件的默认颜色路径。 \n\n变体差异：Lite 固定 2×，R3，1 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_Lite_R3 RAVU Lite R3 RAVU 放大与超分 通用 RAVU Lite R3 RAVU RAVU_Lite_R3 RAVU 2× 放大，用于一般视频、插画与边缘结构重建。 Lite 版减少处理规模；非 RGB 版采用该文件的默认颜色路径。  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_Lite_R4",
+      "name": "RAVU Lite R4",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 2× 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\nLite 版减少处理规模；非 RGB 版采用该文件的默认颜色路径。 \n\n变体差异：Lite 固定 2×，R4，1 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_Lite_R4 RAVU Lite R4 RAVU 放大与超分 通用 RAVU Lite R4 RAVU RAVU_Lite_R4 RAVU 2× 放大，用于一般视频、插画与边缘结构重建。 Lite 版减少处理规模；非 RGB 版采用该文件的默认颜色路径。  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_R2_RGB",
+      "name": "RAVU R2 RGB",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 2× 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\nRGB 版按彩色信息处理； \n\n变体差异：固定 2×，R2 / RGB，2 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_R2_RGB RAVU R2 RGB RAVU 放大与超分 通用 RAVU R2 RGB RAVU RAVU_R2_RGB RAVU 2× 放大，用于一般视频、插画与边缘结构重建。 RGB 版按彩色信息处理；  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_R2",
+      "name": "RAVU R2",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 2× 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\n非 RGB 版采用该文件的默认颜色路径。 \n\n变体差异：固定 2×，R2，2 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_R2 RAVU R2 RAVU 放大与超分 通用 RAVU R2 RAVU RAVU_R2 RAVU 2× 放大，用于一般视频、插画与边缘结构重建。 非 RGB 版采用该文件的默认颜色路径。  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_R3_RGB",
+      "name": "RAVU R3 RGB",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 2× 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\nRGB 版按彩色信息处理； \n\n变体差异：固定 2×，R3 / RGB，2 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_R3_RGB RAVU R3 RGB RAVU 放大与超分 通用 RAVU R3 RGB RAVU RAVU_R3_RGB RAVU 2× 放大，用于一般视频、插画与边缘结构重建。 RGB 版按彩色信息处理；  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_R3",
+      "name": "RAVU R3",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 2× 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\n非 RGB 版采用该文件的默认颜色路径。 \n\n变体差异：固定 2×，R3，2 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_R3 RAVU R3 RAVU 放大与超分 通用 RAVU R3 RAVU RAVU_R3 RAVU 2× 放大，用于一般视频、插画与边缘结构重建。 非 RGB 版采用该文件的默认颜色路径。  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_R4_RGB",
+      "name": "RAVU R4 RGB",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 2× 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\nRGB 版按彩色信息处理； \n\n变体差异：固定 2×，R4 / RGB，2 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_R4_RGB RAVU R4 RGB RAVU 放大与超分 通用 RAVU R4 RGB RAVU RAVU_R4_RGB RAVU 2× 放大，用于一般视频、插画与边缘结构重建。 RGB 版按彩色信息处理；  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_R4",
+      "name": "RAVU R4",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 2× 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\n非 RGB 版采用该文件的默认颜色路径。 \n\n变体差异：固定 2×，R4，2 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_R4 RAVU R4 RAVU 放大与超分 通用 RAVU R4 RAVU RAVU_R4 RAVU 2× 放大，用于一般视频、插画与边缘结构重建。 非 RGB 版采用该文件的默认颜色路径。  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_Zoom_AR_R2_RGB",
+      "name": "RAVU Zoom AR R2 RGB",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 任意输出尺寸 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\nAR 版加入抗振铃取向；RGB 版按彩色信息处理； \n\n变体差异：Zoom 任意倍率，R2 / AR / RGB，1 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n组合注意：Zoom 变体只支持放大\n\n使用条件：Direct3D 11 效果着色器可编译；Zoom 变体只用于放大\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_Zoom_AR_R2_RGB RAVU Zoom AR R2 RGB RAVU 放大与超分 通用 RAVU Zoom AR R2 RGB RAVU RAVU_Zoom_AR_R2_RGB RAVU 任意输出尺寸 放大，用于一般视频、插画与边缘结构重建。 AR 版加入抗振铃取向；RGB 版按彩色信息处理；  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_Zoom_AR_R2",
+      "name": "RAVU Zoom AR R2",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 任意输出尺寸 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\nAR 版加入抗振铃取向；非 RGB 版采用该文件的默认颜色路径。 \n\n变体差异：Zoom 任意倍率，R2 / AR，1 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n组合注意：Zoom 变体只支持放大\n\n使用条件：Direct3D 11 效果着色器可编译；Zoom 变体只用于放大\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_Zoom_AR_R2 RAVU Zoom AR R2 RAVU 放大与超分 通用 RAVU Zoom AR R2 RAVU RAVU_Zoom_AR_R2 RAVU 任意输出尺寸 放大，用于一般视频、插画与边缘结构重建。 AR 版加入抗振铃取向；非 RGB 版采用该文件的默认颜色路径。  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_Zoom_AR_R3_RGB",
+      "name": "RAVU Zoom AR R3 RGB",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 任意输出尺寸 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\nAR 版加入抗振铃取向；RGB 版按彩色信息处理； \n\n变体差异：Zoom 任意倍率，R3 / AR / RGB，1 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n组合注意：Zoom 变体只支持放大\n\n使用条件：Direct3D 11 效果着色器可编译；Zoom 变体只用于放大\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_Zoom_AR_R3_RGB RAVU Zoom AR R3 RGB RAVU 放大与超分 通用 RAVU Zoom AR R3 RGB RAVU RAVU_Zoom_AR_R3_RGB RAVU 任意输出尺寸 放大，用于一般视频、插画与边缘结构重建。 AR 版加入抗振铃取向；RGB 版按彩色信息处理；  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_Zoom_AR_R3",
+      "name": "RAVU Zoom AR R3",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 任意输出尺寸 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\nAR 版加入抗振铃取向；非 RGB 版采用该文件的默认颜色路径。 \n\n变体差异：Zoom 任意倍率，R3 / AR，1 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n组合注意：Zoom 变体只支持放大\n\n使用条件：Direct3D 11 效果着色器可编译；Zoom 变体只用于放大\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_Zoom_AR_R3 RAVU Zoom AR R3 RAVU 放大与超分 通用 RAVU Zoom AR R3 RAVU RAVU_Zoom_AR_R3 RAVU 任意输出尺寸 放大，用于一般视频、插画与边缘结构重建。 AR 版加入抗振铃取向；非 RGB 版采用该文件的默认颜色路径。  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_Zoom_R2_RGB",
+      "name": "RAVU Zoom R2 RGB",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 任意输出尺寸 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\nRGB 版按彩色信息处理； \n\n变体差异：Zoom 任意倍率，R2 / RGB，1 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n组合注意：Zoom 变体只支持放大\n\n使用条件：Direct3D 11 效果着色器可编译；Zoom 变体只用于放大\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_Zoom_R2_RGB RAVU Zoom R2 RGB RAVU 放大与超分 通用 RAVU Zoom R2 RGB RAVU RAVU_Zoom_R2_RGB RAVU 任意输出尺寸 放大，用于一般视频、插画与边缘结构重建。 RGB 版按彩色信息处理；  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_Zoom_R2",
+      "name": "RAVU Zoom R2",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 任意输出尺寸 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\n非 RGB 版采用该文件的默认颜色路径。 \n\n变体差异：Zoom 任意倍率，R2，1 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n组合注意：Zoom 变体只支持放大\n\n使用条件：Direct3D 11 效果着色器可编译；Zoom 变体只用于放大\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_Zoom_R2 RAVU Zoom R2 RAVU 放大与超分 通用 RAVU Zoom R2 RAVU RAVU_Zoom_R2 RAVU 任意输出尺寸 放大，用于一般视频、插画与边缘结构重建。 非 RGB 版采用该文件的默认颜色路径。  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_Zoom_R3_RGB",
+      "name": "RAVU Zoom R3 RGB",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 任意输出尺寸 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\nRGB 版按彩色信息处理； \n\n变体差异：Zoom 任意倍率，R3 / RGB，1 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n组合注意：Zoom 变体只支持放大\n\n使用条件：Direct3D 11 效果着色器可编译；Zoom 变体只用于放大\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_Zoom_R3_RGB RAVU Zoom R3 RGB RAVU 放大与超分 通用 RAVU Zoom R3 RGB RAVU RAVU_Zoom_R3_RGB RAVU 任意输出尺寸 放大，用于一般视频、插画与边缘结构重建。 RGB 版按彩色信息处理；  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RAVU\\RAVU_Zoom_R3",
+      "name": "RAVU Zoom R3",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "RAVU 任意输出尺寸 放大，用于一般视频、插画与边缘结构重建。",
+      "details": "放大与超分 › 通用\n\n非 RGB 版采用该文件的默认颜色路径。 \n\n变体差异：Zoom 任意倍率，R3，1 通道。半径与颜色变体需按素材比较。\n\n特定场景推荐：该变体用途明确且当前 pass 数不高，可按目标素材比较模型取向。\n\n尝试建议：按视觉小说/动画/一般图像的实际类型选择；检查固定倍率约束\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n组合注意：Zoom 变体只支持放大\n\n使用条件：Direct3D 11 效果着色器可编译；Zoom 变体只用于放大\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "RAVU\\RAVU_Zoom_R3 RAVU Zoom R3 RAVU 放大与超分 通用 RAVU Zoom R3 RAVU RAVU_Zoom_R3 RAVU 任意输出尺寸 放大，用于一般视频、插画与边缘结构重建。 非 RGB 版采用该文件的默认颜色路径。  放大与超分 通用 RAVU",
+      "family": {
+        "id": "ravu",
+        "name": "RAVU",
+        "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "SGSR",
+      "name": "SGSR",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "单通道空间放大与细节重建，适合先做低成本通用尝试。",
+      "details": "放大与超分 › 通用\n\n用作轻量空间放大的候选，实际锐度与伪影需按素材比较。\n\n变体差异：输出尺寸由效果组决定；源码为像素着色器，质量与代价未实测。\n\n优先尝试：通用且链路职责清楚，便于建立画质/性能基线。\n\n尝试建议：按内容类型比较锐度与振铃\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "first_try",
+      "recommendation": "优先尝试",
+      "search": "SGSR SGSR SGSR 放大与超分 通用 SGSR 单通道空间放大与细节重建，适合先做低成本通用尝试。 用作轻量空间放大的候选，实际锐度与伪影需按素材比较。 放大与超分 通用",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "Sharpen\\AdaptiveSharpen",
+      "name": "AdaptiveSharpen",
+      "category": "sharpen",
+      "subcategory": "通用锐化",
+      "purposes": [
+        "sharpen"
+      ],
+      "summary": "自适应锐化，根据局部边缘强弱增强细节。",
+      "details": "锐化细节 › 通用锐化\n\n适合一般视频与游戏收尾，强度过高会强调噪声。\n\n变体差异：AdaptiveSharpen 算法，1 通道；参数尺度不能跨算法直接比较。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：链尾收尾；在「放大/超分、降噪」之后；在「CRT/显示调整」之前。按最终尺寸补偿柔和感。\n\n输出尺寸：保持输入尺寸\n\n组合注意：过强会放大噪声并产生光晕\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Sharpen\\AdaptiveSharpen AdaptiveSharpen Sharpen 锐化细节 通用锐化 Sharpen AdaptiveSharpen Sharpen AdaptiveSharpen 自适应锐化，根据局部边缘强弱增强细节。 适合一般视频与游戏收尾，强度过高会强调噪声。 锐化细节 通用锐化",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "Sharpen\\FineSharp",
+      "name": "FineSharp",
+      "category": "sharpen",
+      "subcategory": "通用锐化",
+      "purposes": [
+        "sharpen"
+      ],
+      "summary": "多阶段细节增强与反光晕控制。",
+      "details": "锐化细节 › 通用锐化\n\n参数更细、5 通道，适合愿意调节细节/光晕平衡的用户。\n\n变体差异：FineSharp 算法，5 通道；参数尺度不能跨算法直接比较。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：链尾收尾；在「放大/超分、降噪」之后；在「CRT/显示调整」之前。按最终尺寸补偿柔和感。\n\n输出尺寸：保持输入尺寸\n\n组合注意：过强会放大噪声并产生光晕\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Sharpen\\FineSharp FineSharp Sharpen 锐化细节 通用锐化 Sharpen FineSharp Sharpen FineSharp 多阶段细节增强与反光晕控制。 参数更细、5 通道，适合愿意调节细节/光晕平衡的用户。 锐化细节 通用锐化",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "Sharpen\\LCAS",
+      "name": "LCAS",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "LCAS 缩放与局部对比增强。",
+      "details": "放大与超分 › 通用\n\n输出尺寸由效果组决定，承担主要缩放步骤而非纯同尺寸收尾。\n\n变体差异：LCAS 算法，1 通道；参数尺度不能跨算法直接比较。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Sharpen\\LCAS LCAS Sharpen 放大与超分 通用 Sharpen LCAS Sharpen LCAS LCAS 缩放与局部对比增强。 输出尺寸由效果组决定，承担主要缩放步骤而非纯同尺寸收尾。 放大与超分 通用",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "Sharpen\\LumaSharpen",
+      "name": "LumaSharpen",
+      "category": "sharpen",
+      "subcategory": "通用锐化",
+      "purposes": [
+        "sharpen"
+      ],
+      "summary": "在亮度域增强边缘，减少直接改动色彩。",
+      "details": "锐化细节 › 通用锐化\n\n适合放大后做低成本清晰度补偿。\n\n变体差异：LumaSharpen 算法，1 通道；参数尺度不能跨算法直接比较。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：链尾收尾；在「放大/超分、降噪」之后；在「CRT/显示调整」之前。按最终尺寸补偿柔和感。\n\n输出尺寸：保持输入尺寸\n\n组合注意：过强会放大噪声并产生光晕\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "Sharpen\\LumaSharpen LumaSharpen Sharpen 锐化细节 通用锐化 Sharpen LumaSharpen Sharpen LumaSharpen 在亮度域增强边缘，减少直接改动色彩。 适合放大后做低成本清晰度补偿。 锐化细节 通用锐化",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "SMAA\\SMAA_4x_Experimental",
+      "name": "SMAA 4x Experimental",
+      "category": "antialiasing",
+      "subcategory": "时序",
+      "purposes": [
+        "antialiasing"
+      ],
+      "summary": "SMAA 时序近似抗锯齿，缓和几何边缘台阶。",
+      "details": "抗锯齿 › 时序\n\n利用捕获帧历史近似时序采样；外部捕获没有游戏内真实 jitter、运动矢量与深度，快速运动可能重影或不稳定。\n\n变体差异：4x 实验变体，7 通道；不是游戏内 SMAA 时序集成。\n\n特定场景推荐：适合特定素材、风格或实验场景。\n\n尝试建议：先在代表性画面比较副作用\n\n组合建议：放大后、锐化前；在「主要缩放」之后；在「锐化」之前。在目标分辨率上平滑最终几何边缘。\n\n输出尺寸：保持输入尺寸\n\n组合注意：依赖捕获帧历史，缺少游戏内真实 jitter/MV/depth\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "SMAA\\SMAA_4x_Experimental SMAA 4x Experimental SMAA 抗锯齿 时序 SMAA 4x Experimental SMAA SMAA_4x_Experimental SMAA 时序近似抗锯齿，缓和几何边缘台阶。 利用捕获帧历史近似时序采样；外部捕获没有游戏内真实 jitter、运动矢量与深度，快速运动可能重影或不稳定。 抗锯齿 时序 SMAA",
+      "family": {
+        "id": "smaa",
+        "name": "SMAA",
+        "summary": "平滑边缘锯齿。Low–Ultra 是空间质量预设；T2x、4x 是时序近似实验变体，需比较运动重影，不能等同游戏内集成。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "SMAA\\SMAA_4x_NoJitter_Experimental",
+      "name": "SMAA 4x NoJitter Experimental",
+      "category": "antialiasing",
+      "subcategory": "时序",
+      "purposes": [
+        "antialiasing"
+      ],
+      "summary": "SMAA 时序近似抗锯齿，缓和几何边缘台阶。",
+      "details": "抗锯齿 › 时序\n\n利用捕获帧历史近似时序采样；外部捕获没有游戏内真实 jitter、运动矢量与深度，快速运动可能重影或不稳定。\n\n变体差异：4x 实验变体 / NoJitter，6 通道；不是游戏内 SMAA 时序集成。\n\n特定场景推荐：适合特定素材、风格或实验场景。\n\n尝试建议：先在代表性画面比较副作用\n\n组合建议：放大后、锐化前；在「主要缩放」之后；在「锐化」之前。在目标分辨率上平滑最终几何边缘。\n\n输出尺寸：保持输入尺寸\n\n组合注意：依赖捕获帧历史，缺少游戏内真实 jitter/MV/depth\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "SMAA\\SMAA_4x_NoJitter_Experimental SMAA 4x NoJitter Experimental SMAA 抗锯齿 时序 SMAA 4x NoJitter Experimental SMAA SMAA_4x_NoJitter_Experimental SMAA 时序近似抗锯齿，缓和几何边缘台阶。 利用捕获帧历史近似时序采样；外部捕获没有游戏内真实 jitter、运动矢量与深度，快速运动可能重影或不稳定。 抗锯齿 时序 SMAA",
+      "family": {
+        "id": "smaa",
+        "name": "SMAA",
+        "summary": "平滑边缘锯齿。Low–Ultra 是空间质量预设；T2x、4x 是时序近似实验变体，需比较运动重影，不能等同游戏内集成。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "SMAA\\SMAA_High",
+      "name": "SMAA High",
+      "category": "antialiasing",
+      "subcategory": "空间",
+      "purposes": [
+        "antialiasing"
+      ],
+      "summary": "SMAA 空间抗锯齿，缓和几何边缘台阶。",
+      "details": "抗锯齿 › 空间\n\n只看当前帧，适合不希望引入历史依赖的通用边缘平滑。\n\n变体差异：High 质量预设，3 通道。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：放大后、锐化前；在「主要缩放」之后；在「锐化」之前。在目标分辨率上平滑最终几何边缘。\n\n输出尺寸：保持输入尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "SMAA\\SMAA_High SMAA High SMAA 抗锯齿 空间 SMAA High SMAA SMAA_High SMAA 空间抗锯齿，缓和几何边缘台阶。 只看当前帧，适合不希望引入历史依赖的通用边缘平滑。 抗锯齿 空间 SMAA",
+      "family": {
+        "id": "smaa",
+        "name": "SMAA",
+        "summary": "平滑边缘锯齿。Low–Ultra 是空间质量预设；T2x、4x 是时序近似实验变体，需比较运动重影，不能等同游戏内集成。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "SMAA\\SMAA_Low",
+      "name": "SMAA Low",
+      "category": "antialiasing",
+      "subcategory": "空间",
+      "purposes": [
+        "antialiasing"
+      ],
+      "summary": "SMAA 空间抗锯齿，缓和几何边缘台阶。",
+      "details": "抗锯齿 › 空间\n\n只看当前帧，适合不希望引入历史依赖的通用边缘平滑。\n\n变体差异：Low 质量预设，3 通道。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：放大后、锐化前；在「主要缩放」之后；在「锐化」之前。在目标分辨率上平滑最终几何边缘。\n\n输出尺寸：保持输入尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "SMAA\\SMAA_Low SMAA Low SMAA 抗锯齿 空间 SMAA Low SMAA SMAA_Low SMAA 空间抗锯齿，缓和几何边缘台阶。 只看当前帧，适合不希望引入历史依赖的通用边缘平滑。 抗锯齿 空间 SMAA",
+      "family": {
+        "id": "smaa",
+        "name": "SMAA",
+        "summary": "平滑边缘锯齿。Low–Ultra 是空间质量预设；T2x、4x 是时序近似实验变体，需比较运动重影，不能等同游戏内集成。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "SMAA\\SMAA_Medium",
+      "name": "SMAA Medium",
+      "category": "antialiasing",
+      "subcategory": "空间",
+      "purposes": [
+        "antialiasing"
+      ],
+      "summary": "SMAA 空间抗锯齿，缓和几何边缘台阶。",
+      "details": "抗锯齿 › 空间\n\n只看当前帧，适合不希望引入历史依赖的通用边缘平滑。\n\n变体差异：Medium 质量预设，3 通道。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：放大后、锐化前；在「主要缩放」之后；在「锐化」之前。在目标分辨率上平滑最终几何边缘。\n\n输出尺寸：保持输入尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "SMAA\\SMAA_Medium SMAA Medium SMAA 抗锯齿 空间 SMAA Medium SMAA SMAA_Medium SMAA 空间抗锯齿，缓和几何边缘台阶。 只看当前帧，适合不希望引入历史依赖的通用边缘平滑。 抗锯齿 空间 SMAA",
+      "family": {
+        "id": "smaa",
+        "name": "SMAA",
+        "summary": "平滑边缘锯齿。Low–Ultra 是空间质量预设；T2x、4x 是时序近似实验变体，需比较运动重影，不能等同游戏内集成。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "SMAA\\SMAA_T2x_Experimental",
+      "name": "SMAA T2x Experimental",
+      "category": "antialiasing",
+      "subcategory": "时序",
+      "purposes": [
+        "antialiasing"
+      ],
+      "summary": "SMAA 时序近似抗锯齿，缓和几何边缘台阶。",
+      "details": "抗锯齿 › 时序\n\n利用捕获帧历史近似时序采样；外部捕获没有游戏内真实 jitter、运动矢量与深度，快速运动可能重影或不稳定。\n\n变体差异：T2x 实验变体，7 通道；不是游戏内 SMAA 时序集成。\n\n特定场景推荐：适合特定素材、风格或实验场景。\n\n尝试建议：先在代表性画面比较副作用\n\n组合建议：放大后、锐化前；在「主要缩放」之后；在「锐化」之前。在目标分辨率上平滑最终几何边缘。\n\n输出尺寸：保持输入尺寸\n\n组合注意：依赖捕获帧历史，缺少游戏内真实 jitter/MV/depth\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "SMAA\\SMAA_T2x_Experimental SMAA T2x Experimental SMAA 抗锯齿 时序 SMAA T2x Experimental SMAA SMAA_T2x_Experimental SMAA 时序近似抗锯齿，缓和几何边缘台阶。 利用捕获帧历史近似时序采样；外部捕获没有游戏内真实 jitter、运动矢量与深度，快速运动可能重影或不稳定。 抗锯齿 时序 SMAA",
+      "family": {
+        "id": "smaa",
+        "name": "SMAA",
+        "summary": "平滑边缘锯齿。Low–Ultra 是空间质量预设；T2x、4x 是时序近似实验变体，需比较运动重影，不能等同游戏内集成。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "SMAA\\SMAA_T2x_NoJitter_Experimental",
+      "name": "SMAA T2x NoJitter Experimental",
+      "category": "antialiasing",
+      "subcategory": "时序",
+      "purposes": [
+        "antialiasing"
+      ],
+      "summary": "SMAA 时序近似抗锯齿，缓和几何边缘台阶。",
+      "details": "抗锯齿 › 时序\n\n利用捕获帧历史近似时序采样；外部捕获没有游戏内真实 jitter、运动矢量与深度，快速运动可能重影或不稳定。\n\n变体差异：T2x 实验变体 / NoJitter，6 通道；不是游戏内 SMAA 时序集成。\n\n特定场景推荐：适合特定素材、风格或实验场景。\n\n尝试建议：先在代表性画面比较副作用\n\n组合建议：放大后、锐化前；在「主要缩放」之后；在「锐化」之前。在目标分辨率上平滑最终几何边缘。\n\n输出尺寸：保持输入尺寸\n\n组合注意：依赖捕获帧历史，缺少游戏内真实 jitter/MV/depth\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "SMAA\\SMAA_T2x_NoJitter_Experimental SMAA T2x NoJitter Experimental SMAA 抗锯齿 时序 SMAA T2x NoJitter Experimental SMAA SMAA_T2x_NoJitter_Experimental SMAA 时序近似抗锯齿，缓和几何边缘台阶。 利用捕获帧历史近似时序采样；外部捕获没有游戏内真实 jitter、运动矢量与深度，快速运动可能重影或不稳定。 抗锯齿 时序 SMAA",
+      "family": {
+        "id": "smaa",
+        "name": "SMAA",
+        "summary": "平滑边缘锯齿。Low–Ultra 是空间质量预设；T2x、4x 是时序近似实验变体，需比较运动重影，不能等同游戏内集成。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "SMAA\\SMAA_Ultra",
+      "name": "SMAA Ultra",
+      "category": "antialiasing",
+      "subcategory": "空间",
+      "purposes": [
+        "antialiasing"
+      ],
+      "summary": "SMAA 空间抗锯齿，缓和几何边缘台阶。",
+      "details": "抗锯齿 › 空间\n\n只看当前帧，适合不希望引入历史依赖的通用边缘平滑。\n\n变体差异：Ultra 质量预设，3 通道。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：放大后、锐化前；在「主要缩放」之后；在「锐化」之前。在目标分辨率上平滑最终几何边缘。\n\n输出尺寸：保持输入尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "SMAA\\SMAA_Ultra SMAA Ultra SMAA 抗锯齿 空间 SMAA Ultra SMAA SMAA_Ultra SMAA 空间抗锯齿，缓和几何边缘台阶。 只看当前帧，适合不希望引入历史依赖的通用边缘平滑。 抗锯齿 空间 SMAA",
+      "family": {
+        "id": "smaa",
+        "name": "SMAA",
+        "summary": "平滑边缘锯齿。Low–Ultra 是空间质量预设；T2x、4x 是时序近似实验变体，需比较运动重影，不能等同游戏内集成。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "SSimDownscaler",
+      "name": "SSimDownscaler",
+      "category": "upscale",
+      "subcategory": "缩小与尺寸整理",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "面向缩小的结构相似度重采样，帮助在降分辨率时保留观感。",
+      "details": "放大与超分 › 缩小与尺寸整理\n\n用于缩小而非放大，适合将高分辨率内容压到较小窗口。\n\n变体差异：只建议用于输出小于输入的场景；5 通道分离处理。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：尺寸链主步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中到高；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "SSimDownscaler SSimDownscaler SSimDownscaler 放大与超分 缩小与尺寸整理 SSimDownscaler 面向缩小的结构相似度重采样，帮助在降分辨率时保留观感。 用于缩小而非放大，适合将高分辨率内容压到较小窗口。 放大与超分 缩小与尺寸整理",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "xBRZ\\xBRZ_2x",
+      "name": "xBRZ 2x",
+      "category": "upscale",
+      "subcategory": "像素画",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "像素画边缘感知放大，减少斜线台阶同时维持块面风格。",
+      "details": "放大与超分 › 像素画\n\n固定 2× 版本适合整数倍像素画显示。\n\n变体差异：固定 2×、单通道；倍率越大输出像素数越多。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：主要像素画缩放步骤；在「按需添加的 CRT 风格／显示调整」之前。先观察像素画缩放本身的结果，保留像素边界，再决定是否添加风格处理。\n\n输出尺寸：固定倍率：宽 ×2，高 ×2\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "xBRZ\\xBRZ_2x xBRZ 2x xBRZ 放大与超分 像素画 xBRZ 2x xBRZ xBRZ_2x 像素画边缘感知放大，减少斜线台阶同时维持块面风格。 固定 2× 版本适合整数倍像素画显示。 放大与超分 像素画 xBRZ",
+      "family": {
+        "id": "xbrz",
+        "name": "xBRZ",
+        "summary": "平滑像素画轮廓。2×–6× 是固定整数倍率，Freescale 支持自由倍率；按目标尺寸比较边缘一致性。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "xBRZ\\xBRZ_3x",
+      "name": "xBRZ 3x",
+      "category": "upscale",
+      "subcategory": "像素画",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "像素画边缘感知放大，减少斜线台阶同时维持块面风格。",
+      "details": "放大与超分 › 像素画\n\n固定 3× 版本适合整数倍像素画显示。\n\n变体差异：固定 3×、单通道；倍率越大输出像素数越多。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：主要像素画缩放步骤；在「按需添加的 CRT 风格／显示调整」之前。先观察像素画缩放本身的结果，保留像素边界，再决定是否添加风格处理。\n\n输出尺寸：固定倍率：宽 ×3，高 ×3\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "xBRZ\\xBRZ_3x xBRZ 3x xBRZ 放大与超分 像素画 xBRZ 3x xBRZ xBRZ_3x 像素画边缘感知放大，减少斜线台阶同时维持块面风格。 固定 3× 版本适合整数倍像素画显示。 放大与超分 像素画 xBRZ",
+      "family": {
+        "id": "xbrz",
+        "name": "xBRZ",
+        "summary": "平滑像素画轮廓。2×–6× 是固定整数倍率，Freescale 支持自由倍率；按目标尺寸比较边缘一致性。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "xBRZ\\xBRZ_4x",
+      "name": "xBRZ 4x",
+      "category": "upscale",
+      "subcategory": "像素画",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "像素画边缘感知放大，减少斜线台阶同时维持块面风格。",
+      "details": "放大与超分 › 像素画\n\n固定 4× 版本适合整数倍像素画显示。\n\n变体差异：固定 4×、单通道；倍率越大输出像素数越多。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：主要像素画缩放步骤；在「按需添加的 CRT 风格／显示调整」之前。先观察像素画缩放本身的结果，保留像素边界，再决定是否添加风格处理。\n\n输出尺寸：固定倍率：宽 ×4，高 ×4\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "xBRZ\\xBRZ_4x xBRZ 4x xBRZ 放大与超分 像素画 xBRZ 4x xBRZ xBRZ_4x 像素画边缘感知放大，减少斜线台阶同时维持块面风格。 固定 4× 版本适合整数倍像素画显示。 放大与超分 像素画 xBRZ",
+      "family": {
+        "id": "xbrz",
+        "name": "xBRZ",
+        "summary": "平滑像素画轮廓。2×–6× 是固定整数倍率，Freescale 支持自由倍率；按目标尺寸比较边缘一致性。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "xBRZ\\xBRZ_5x",
+      "name": "xBRZ 5x",
+      "category": "upscale",
+      "subcategory": "像素画",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "像素画边缘感知放大，减少斜线台阶同时维持块面风格。",
+      "details": "放大与超分 › 像素画\n\n固定 5× 版本适合整数倍像素画显示。\n\n变体差异：固定 5×、单通道；倍率越大输出像素数越多。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：主要像素画缩放步骤；在「按需添加的 CRT 风格／显示调整」之前。先观察像素画缩放本身的结果，保留像素边界，再决定是否添加风格处理。\n\n输出尺寸：固定倍率：宽 ×5，高 ×5\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "xBRZ\\xBRZ_5x xBRZ 5x xBRZ 放大与超分 像素画 xBRZ 5x xBRZ xBRZ_5x 像素画边缘感知放大，减少斜线台阶同时维持块面风格。 固定 5× 版本适合整数倍像素画显示。 放大与超分 像素画 xBRZ",
+      "family": {
+        "id": "xbrz",
+        "name": "xBRZ",
+        "summary": "平滑像素画轮廓。2×–6× 是固定整数倍率，Freescale 支持自由倍率；按目标尺寸比较边缘一致性。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "xBRZ\\xBRZ_6x",
+      "name": "xBRZ 6x",
+      "category": "upscale",
+      "subcategory": "像素画",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "像素画边缘感知放大，减少斜线台阶同时维持块面风格。",
+      "details": "放大与超分 › 像素画\n\n固定 6× 版本适合整数倍像素画显示。\n\n变体差异：固定 6×、单通道；倍率越大输出像素数越多。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：主要像素画缩放步骤；在「按需添加的 CRT 风格／显示调整」之前。先观察像素画缩放本身的结果，保留像素边界，再决定是否添加风格处理。\n\n输出尺寸：固定倍率：宽 ×6，高 ×6\n\n组合注意：固定倍率，按源码尺寸表达式使用\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：低到中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "xBRZ\\xBRZ_6x xBRZ 6x xBRZ 放大与超分 像素画 xBRZ 6x xBRZ xBRZ_6x 像素画边缘感知放大，减少斜线台阶同时维持块面风格。 固定 6× 版本适合整数倍像素画显示。 放大与超分 像素画 xBRZ",
+      "family": {
+        "id": "xbrz",
+        "name": "xBRZ",
+        "summary": "平滑像素画轮廓。2×–6× 是固定整数倍率，Freescale 支持自由倍率；按目标尺寸比较边缘一致性。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "xBRZ\\xBRZ_Freescale",
+      "name": "xBRZ Freescale",
+      "category": "upscale",
+      "subcategory": "像素画",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "像素画边缘感知放大，减少斜线台阶同时维持块面风格。",
+      "details": "放大与超分 › 像素画\n\nFreescale 版本用于非整数或由效果组决定的输出尺寸。\n\n变体差异：自由倍率、2 通道；同一素材可与固定整数倍版本比较边缘一致性。\n\n特定场景推荐：有明确用途，但结果依赖素材和参数。\n\n尝试建议：从默认值开始并查看副作用\n\n组合建议：主要像素画缩放步骤；在「按需添加的 CRT 风格／显示调整」之前。先观察像素画缩放本身的结果，保留像素边界，再决定是否添加风格处理。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n使用条件：Direct3D 11 效果着色器可编译；目标输出尺寸满足该文件的尺寸表达式\n\n性能成本：中；具体帧率需在目标画面实测。",
+      "level": "situational",
+      "recommendation": "特定场景推荐",
+      "search": "xBRZ\\xBRZ_Freescale xBRZ Freescale xBRZ 放大与超分 像素画 xBRZ Freescale xBRZ xBRZ_Freescale 像素画边缘感知放大，减少斜线台阶同时维持块面风格。 Freescale 版本用于非整数或由效果组决定的输出尺寸。 放大与超分 像素画 xBRZ",
+      "family": {
+        "id": "xbrz",
+        "name": "xBRZ",
+        "summary": "平滑像素画轮廓。2×–6× 是固定整数倍率，Freescale 支持自由倍率；按目标尺寸比较边缘一致性。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "XeSS\\XeSS_SR",
+      "name": "XeSS SR",
+      "category": "upscale",
+      "subcategory": "时序重建",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "调用 XeSS 原生时序超分后端，把较低分辨率捕获画面重建到目标尺寸。",
+      "details": "放大与超分 › 时序重建\n\n外部捕获只能从相邻图像估计运动，并使用合成深度/jitter等辅助量；实际稳定性不同于游戏内 SDK 原生集成。\n\n变体差异：HLSL 为占位通道，运行时由 XeSS 后端替换；只支持放大，具体倍率/硬件/运行库限制由初始化检查决定。\n\n进阶／实验：依赖原生运行库和外部捕获的光流/合成辅助量。\n\n尝试建议：确认后端初始化成功；检查快速运动、遮挡和历史重置\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n组合注意：只用于放大；外部捕获辅助量不等同游戏内集成；每轴放大倍率限于 1× 至 3×\n\n使用条件：支持对应 XeSS 功能的 GPU/驱动；可加载对应 XeSS 运行库；每轴放大倍率 1× 至 3×\n\n性能成本：硬件/运行时相关；具体帧率需在目标画面实测。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "XeSS\\XeSS_SR XeSS SR XeSS 放大与超分 时序重建 XeSS SR XeSS XeSS_SR 调用 XeSS 原生时序超分后端，把较低分辨率捕获画面重建到目标尺寸。 外部捕获只能从相邻图像估计运动，并使用合成深度/jitter等辅助量；实际稳定性不同于游戏内 SDK 原生集成。 放大与超分 时序重建",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "XeSSFG\\XeSS_FrameGeneration",
+      "name": "XeSS_FrameGeneration",
+      "category": "frame",
+      "subcategory": "补帧",
+      "purposes": [
+        "frame"
+      ],
+      "summary": "在捕获的真实帧之间生成帧，可选 2×～4×。",
+      "details": "默认 2×、AMD 光流、质量。旧 x2/MFG 配置自动合并到 XeSSFG，保留光流选择。\n\n2×使用原生路径；非 Intel 显卡上的 3×/4×自动启用多帧兼容，需要随附的匹配运行库。兼容路径仍处于实验验证阶段。\n\n3×/4×支持无光流或 AMD 光流；NVIDIA 光流目前用于 2×。同一效果组只使用一个补帧器。\n\n补帧由呈现端处理，列表位置不改变执行阶段。实际流畅度、延迟、遮挡边缘和游戏 HUD 需要结合目标画面比较。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "XeSSFG\\XeSS_FrameGeneration XeSSFG XeSS x2 MFG 补帧 多帧 AMD NVIDIA 光流 在捕获的真实帧之间生成帧，可选 2×～4×。",
+      "family": {
+        "id": "xessfg",
+        "name": "XeSS Frame Generation",
+        "summary": "统一 XeSSFG，支持 2×～4×及可选光流；多帧兼容自动启用。"
+      },
+      "subfamily": null
+    },
+    {
+      "id": "RTXVideo\\RTXVideo_Denoise",
+      "name": "RTXVideo_Denoise",
+      "category": "cleanup",
+      "subcategory": "降噪",
+      "purposes": [
+        "cleanup"
+      ],
+      "summary": "调用 RTX Video 原生后端做同尺寸视频降噪。",
+      "details": "清理修复 › 降噪\n\n适合压缩噪声或颗粒明显的视频。可选择四档强度；逐步比较纹理保留与处理成本。\n\n进阶／实验：需要 NVIDIA Video Effects 运行库与受支持硬件，质量档位应在目标机器比较。\n\n尝试建议：确认原生后端初始化成功；按视频噪声或缩放目标选择 Denoise/VSR\n\n组合建议：放大前；在「放大/超分、锐化」之前。先清理输入可减少后续放大噪声。\n\n输出尺寸：保持输入尺寸\n\n组合注意：强度过高会损失纹理\n\n使用条件：受支持的 NVIDIA RTX GPU/驱动；可加载 NVIDIA Video Effects 运行库\n\n性能成本：硬件/运行时相关；具体帧率需在目标画面实测。\n\nHDR 注意：当前 RTX Video 边界是 SDR/U8 兼容路径，HDR 高光会经过映射与量化。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "RTXVideo\\RTXVideo_Denoise RTXVideo\\RTXVideo_Denoise_High RTXVideo_Denoise RTXVideo 清理修复 降噪 RTXVideo Denoise High RTXVideo RTXVideo_Denoise_High RTXVideo_Denoise 强度高 调用 RTX Video 原生后端做同尺寸视频降噪。 适合压缩噪声或颗粒明显的视频。可选择四档强度；逐步比较纹理保留与处理成本。 清理修复 降噪 RTXVideo\\RTXVideo_Denoise_Low RTXVideo_Denoise RTXVideo 清理修复 降噪 RTXVideo Denoise Low RTXVideo RTXVideo_Denoise_Low RTXVideo_Denoise 强度低 调用 RTX Video 原生后端做同尺寸视频降噪。 适合压缩噪声或颗粒明显的视频。可选择四档强度；逐步比较纹理保留与处理成本。 清理修复 降噪 RTXVideo\\RTXVideo_Denoise_Medium RTXVideo_Denoise RTXVideo 清理修复 降噪 RTXVideo Denoise Medium RTXVideo RTXVideo_Denoise_Medium RTXVideo_Denoise 强度中 调用 RTX Video 原生后端做同尺寸视频降噪。 适合压缩噪声或颗粒明显的视频。可选择四档强度；逐步比较纹理保留与处理成本。 清理修复 降噪 RTXVideo\\RTXVideo_Denoise_Ultra RTXVideo_Denoise RTXVideo 清理修复 降噪 RTXVideo Denoise Ultra RTXVideo RTXVideo_Denoise_Ultra RTXVideo_Denoise 强度极高 调用 RTX Video 原生后端做同尺寸视频降噪。 适合压缩噪声或颗粒明显的视频。可选择四档强度；逐步比较纹理保留与处理成本。 清理修复 降噪",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "RTXVideo\\RTXVideo_VSR",
+      "name": "RTXVideo_VSR",
+      "category": "upscale",
+      "subcategory": "通用",
+      "purposes": [
+        "upscale"
+      ],
+      "summary": "调用 RTX Video 原生后端做视频超分。",
+      "details": "放大与超分 › 通用\n\n适合视频与串流内容的放大。可选择四档强度；结合源清晰度和性能余量比较。\n\n进阶／实验：需要 NVIDIA Video Effects 运行库与受支持硬件，质量档位应在目标机器比较。\n\n尝试建议：确认原生后端初始化成功；按视频噪声或缩放目标选择 Denoise/VSR\n\n组合建议：主要缩放步骤；在「必要的降噪/修复」之后；在「抗锯齿、锐化、显示风格」之前。让尺寸重建先完成，再做输出分辨率相关的收尾。\n\n输出尺寸：使用效果组配置的输出尺寸\n\n使用条件：受支持的 NVIDIA RTX GPU/驱动；可加载 NVIDIA Video Effects 运行库\n\n性能成本：硬件/运行时相关；具体帧率需在目标画面实测。\n\nHDR 注意：当前 RTX Video 边界是 SDR/U8 兼容路径，HDR 高光会经过映射与量化。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "RTXVideo\\RTXVideo_VSR RTXVideo\\RTXVideo_VSR_High RTXVideo_VSR RTXVideo 放大与超分 通用 RTXVideo VSR High RTXVideo RTXVideo_VSR_High RTXVideo_VSR 强度高 调用 RTX Video 原生后端做视频超分。 适合视频与串流内容的放大。可选择四档强度；结合源清晰度和性能余量比较。 放大与超分 通用 RTXVideo\\RTXVideo_VSR_Low RTXVideo_VSR RTXVideo 放大与超分 通用 RTXVideo VSR Low RTXVideo RTXVideo_VSR_Low RTXVideo_VSR 强度低 调用 RTX Video 原生后端做视频超分。 适合视频与串流内容的放大。可选择四档强度；结合源清晰度和性能余量比较。 放大与超分 通用 RTXVideo\\RTXVideo_VSR_Medium RTXVideo_VSR RTXVideo 放大与超分 通用 RTXVideo VSR Medium RTXVideo RTXVideo_VSR_Medium RTXVideo_VSR 强度中 调用 RTX Video 原生后端做视频超分。 适合视频与串流内容的放大。可选择四档强度；结合源清晰度和性能余量比较。 放大与超分 通用 RTXVideo\\RTXVideo_VSR_Ultra RTXVideo_VSR RTXVideo 放大与超分 通用 RTXVideo VSR Ultra RTXVideo RTXVideo_VSR_Ultra RTXVideo_VSR 强度极高 调用 RTX Video 原生后端做视频超分。 适合视频与串流内容的放大。可选择四档强度；结合源清晰度和性能余量比较。 放大与超分 通用",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "Color\\HDR_to_SDR",
+      "name": "HDR → SDR",
+      "category": "hdr-components",
+      "subcategory": "",
+      "purposes": [
+        "hdr-components"
+      ],
+      "summary": "将 HDR 映射到 SDR，接入 SDR 效果或 SDR 显示。",
+      "details": "HDR 组件\n\n放在需要 SDR 输入的效果之前。兼容配对模式会为高光预留范围，后续 SDR → HDR 自动沿用两端参数；SDR 显示模式用于直接观看，不作为配对恢复依据。\n\n使用条件：源应用所在屏幕开启 Windows HDR，并选择 Graphics Capture。保持输入尺寸。\n\nHDR 注意：兼容配对的亮度分布与普通 SDR 不同，AI 效果需对比观感。量化、裁切和中间处理可能损失原始高光或颜色。\n\n进阶／实验：用于自定义颜色流程，先比较白点、渐变和高光。\n\n性能成本：每次处理增加一次全帧 GPU 转换，开销随分辨率变化。参数修改在重新缩放后生效。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "Color\\HDR_to_SDR HDR → SDR 将 HDR 映射到 SDR，接入 SDR 效果或 SDR 显示。 HDR SDR 色调映射 色彩转换 兼容 白点 scRGB ",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "Color\\SDR_to_HDR",
+      "name": "SDR → HDR",
+      "category": "hdr-components",
+      "subcategory": "",
+      "purposes": [
+        "hdr-components"
+      ],
+      "summary": "恢复上游兼容映射，或将原生 SDR 白点映射到 HDR。",
+      "details": "HDR 组件\n\n放在 SDR 效果段之后。自动模式优先恢复前面的 HDR → SDR 兼容映射；没有配对时，将 SDR 白色映射到设定亮度。可明确选择原生 SDR 映射或配对恢复。\n\n配对恢复自动使用上游参数；本项白点和曝光仅作用于原生 SDR 映射。保持输入尺寸。\n\n使用条件：输出屏幕开启 Windows HDR。普通白点映射不生成原始素材中不存在的高光细节。经过 SDR 处理后的恢复不保证无损。\n\n进阶／实验：用于自定义颜色流程，先比较白点、渐变和高光。\n\n性能成本：每次处理增加一次全帧 GPU 转换，开销随分辨率变化。参数修改在重新缩放后生效。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "Color\\SDR_to_HDR SDR → HDR 恢复上游兼容映射，或将原生 SDR 白点映射到 HDR。 HDR SDR 色调映射 色彩转换 兼容 白点 scRGB ",
+      "family": null,
+      "subfamily": null
+    },
+    {
+      "id": "RTXVideo\\RTXVideo_HDR",
+      "name": "RTX Video HDR",
+      "category": "hdr-components",
+      "subcategory": "",
+      "purposes": [
+        "hdr-components"
+      ],
+      "summary": "将 SDR 画面通过 NVIDIA AI 扩展为 HDR。",
+      "details": "HDR 组件\n\n放在 SDR 效果之后，作为 SDR → HDR 的另一种选择。HDR 输入先通过 HDR → SDR；AI 扩展会重新塑造亮度与颜色，不代表恢复原始 HDR。\n\n使用条件：NVIDIA RTX 20 系及更新显卡、可用的 RTX Video HDR 运行库与驱动，输出屏幕开启 Windows HDR。保持输入尺寸。\n\n参数：对比度、饱和度、中间灰和峰值亮度。峰值按目标显示器设置。图像效果完成后才进入补帧阶段。\n\n进阶／实验：用于自定义颜色流程，先比较白点、渐变和高光。\n\n性能成本：NVIDIA AI 推理，实际开销由分辨率和显卡决定。四项参数可在工具栏中实时调整，应用到后续处理帧。",
+      "level": "advanced",
+      "recommendation": "进阶／实验",
+      "search": "RTXVideo\\RTXVideo_HDR RTX Video HDR 将 SDR 画面通过 NVIDIA AI 扩展为 HDR。 HDR SDR 色调映射 色彩转换 兼容 白点 scRGB RTX Video TrueHDR NVIDIA AI",
+      "family": null,
+      "subfamily": null
+    }
+  ]
+}

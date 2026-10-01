@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "notes": "fix1 浏览家族审阅。只按下列明确的 review family 映射，不推断自定义文件归属。CRT、Sharpen、Diagnostics、RTXVideo 是用途或产品集合，保留独立条目。家族分组不合并算法或配置 ID。",
+  "families": [
+    { "sourceFamilies": ["Anime4K"], "id": "anime4k", "name": "Anime4K", "summary": "动画线条处理：按放大、降噪、线条修复等用途选择；不同网络规模的成本与纹理表现需比较。" },
+    { "sourceFamilies": ["CuNNy", "CuNNy2"], "id": "cunny", "name": "CuNNy", "summary": "面向动画与视觉小说的 2× 神经网络放大。原版与 CuNNy2 分列；层数、通道数和训练版本影响画面与处理成本。DN 为降噪训练版本。", "subfamilies": [
+      { "sourceFamily": "CuNNy", "id": "original", "name": "CuNNy 原版", "summary": "固定 2× 放大。按层数与通道数比较网络规模；NVL 面向视觉小说，DN 版本同时抑制噪声。" },
+      { "sourceFamily": "CuNNy2", "id": "v2", "name": "CuNNy2", "summary": "第二代 CuNNy，固定 2× 放大。不同网络规模与 NVL 训练版本分别保留，可在目标内容中比较细节与成本。" }
+    ] },
+    { "sourceFamilies": ["NNEDI3"], "id": "nnedi3", "name": "NNEDI3", "summary": "神经网络 2× 放大。nns 表示神经元数量，win 表示采样窗口；更大规格通常需要更多计算，请结合源内容比较边缘与纹理。" },
+    { "sourceFamilies": ["RAVU"], "id": "ravu", "name": "RAVU", "summary": "视频、插画与边缘重建。普通与 Lite 固定 2×，Zoom 支持任意输出尺寸；R2–R4、AR 与 RGB 是不同采样和颜色变体。" },
+    { "sourceFamilies": ["SMAA"], "id": "smaa", "name": "SMAA", "summary": "平滑边缘锯齿。Low–Ultra 是空间质量预设；T2x、4x 是时序近似实验变体，需比较运动重影，不能等同游戏内集成。" },
+    { "sourceFamilies": ["FXAA"], "id": "fxaa", "name": "FXAA", "summary": "根据当前画面快速平滑锯齿。不同实现分别保留；留意文字、细线与纹理变软，按观感比较。" },
+    { "sourceFamilies": ["xBRZ"], "id": "xbrz", "name": "xBRZ", "summary": "平滑像素画轮廓。2×–6× 是固定整数倍率，Freescale 支持自由倍率；按目标尺寸比较边缘一致性。" },
+    { "sourceFamilies": ["FSRCNNX"], "id": "fsrcnnx", "name": "FSRCNNX", "summary": "神经网络 2× 放大。不同网络规模独立提供，请比较目标画面的细节与性能成本。" },
+    { "sourceFamilies": ["CAS"], "id": "cas", "name": "CAS", "summary": "对比度自适应锐化。CAS 保持输入尺寸；CAS Scaling 同时调整尺寸，按当前管线的缩放需求选择。" },
+    { "sourceFamilies": ["FSR"], "id": "fsr1", "name": "FSR", "summary": "FSR 1 空间放大与锐化变体。与独立的 FSR2／3／4 时序后端分开，具体输出尺寸和处理阶段见各条目。" },
+    { "sourceFamilies": ["NIS"], "id": "nis", "name": "NIS", "summary": "NVIDIA Image Scaling 的空间缩放与锐化。按需要选择完整缩放或锐化条目，留意高对比边缘的光晕。" },
+    { "sourceFamilies": ["XeSSFG"], "id": "xessfg", "name": "XeSS Frame Generation", "summary": "XeSS 补帧：x2 为通用路径，多帧生成需要 Intel Arc。运动估算可在参数中选择，具体限制见各条目。" }
+  ]
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64"><Configuration>Debug</Configuration><Platform>x64</Platform></ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E9830EBF-B63D-438F-BDF3-6E80CE48580A}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType><PlatformToolset>v143</PlatformToolset>
+    <UseDebugLibraries>false</UseDebugLibraries><CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup>
+    <RtxVideoSdkDir Condition="'$(RtxVideoSdkDir)' == ''">$(MSBuildThisFileDirectory)..\..\..\dependencies\RTX-Video-SDK-1.1.0</RtxVideoSdkDir>
+    <IntDir Condition="'$(MagpieIntermediateRoot)' != ''">$(MagpieIntermediateRoot)RtxVideoBridge\</IntDir>
+    <TargetName>Magpie.RtxVideo</TargetName>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(RtxVideoSdkDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary><Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader><ExceptionHandling>Sync</ExceptionHandling>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link><AdditionalDependencies>$(RtxVideoSdkDir)\lib\Windows\x64\nvsdk_ngx_s.lib;D3D11.lib;DXGI.lib;Shlwapi.lib;Version.lib;Advapi32.lib;Ole32.lib;Shell32.lib;%(AdditionalDependencies)</AdditionalDependencies><GenerateDebugInformation>true</GenerateDebugInformation><OptimizeReferences>true</OptimizeReferences><EnableCOMDATFolding>true</EnableCOMDATFolding></Link>
+  </ItemDefinitionGroup>
+  <ItemGroup><ClCompile Include="RtxVideoBridge.cpp" /><ClInclude Include="RtxVideoBridge.h" /></ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Target Name="CopyRtxHdrRuntime" AfterTargets="Build">
+    <Copy SourceFiles="$(RtxVideoSdkDir)\bin\Windows\x64\rel\nvngx_truehdr.dll;$(RtxVideoSdkDir)\bin\Windows\x64\rel\nvngx_vsr.dll" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(RtxVideoSdkDir)\NVIDIA_RTX_Video_SDK_License.pdf" DestinationFiles="$(OutDir)NVIDIA-RTX-VIDEO-LICENSE.pdf" SkipUnchangedFiles="true" />
+  </Target>
+</Project>

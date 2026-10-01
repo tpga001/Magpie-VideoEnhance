@@ -1,0 +1,63 @@
+{
+  "scalingModes": [
+    {
+      "name": "DLSSFG",
+      "effects": [
+        {
+          "name": "FrameRate_Filter",
+          "parameters": {
+            "targetFrameRate": 60
+          }
+        },
+        {
+          "name": "DLSSFG\\DLSS_FrameGeneration",
+          "parameters": {
+            "multiplier": 2,
+            "useMotionVectors": 1,
+            "useEstimatedDepth": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "XeSSFG",
+      "effects": [
+        {
+          "name": "FrameRate_Filter",
+          "parameters": {
+            "targetFrameRate": 60
+          }
+        },
+        {
+          "name": "XeSSFG\\XeSS_FrameGeneration_x2_ZeroMV"
+        }
+      ]
+    },
+    {
+      "name": "DLSSNR",
+      "effects": [
+        {
+          "name": "FrameRate_Filter",
+          "parameters": {
+            "targetFrameRate": 60
+          }
+        },
+        {
+          "name": "DLSSNR\\DLSSNR_AI_Filter",
+          "parameters": {
+            "nrPreset": 0,
+            "style": 0,
+            "intensity": 1,
+            "localToneStrength": 1,
+            "localStructureStrength": 1,
+            "skinStructureStrength": -1,
+            "useAutoMask": 0,
+            "uiCorrection": 0,
+            "guidanceMode": 0,
+            "depthInferenceInterval": 4
+          }
+        }
+      ]
+    }
+  ]
+}

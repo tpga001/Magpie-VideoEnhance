@@ -1,0 +1,399 @@
+<Page x:Class="Magpie.ProfilePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:Magpie"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      mc:Ignorable="d">
+	<local:PageFrame Title="{x:Bind ViewModel.Name, Mode=OneWay}"
+	                 Icon="{x:Bind ViewModel.Icon, Mode=OneWay}">
+		<local:SimpleStackPanel Padding="0,4,0,0"
+		                        HorizontalAlignment="Stretch"
+		                        ChildrenTransitions="{StaticResource SettingsCardsAnimations}"
+		                        Spacing="{StaticResource SettingsGroupSpacing}">
+			<local:SettingsGroup x:Uid="Profile_General">
+				<local:SettingsCard x:Uid="Profile_General_ScalingMode"
+				                    IsWrapEnabled="True">
+					<local:SettingsCard.HeaderIcon>
+						<PathIcon Data="{StaticResource SpecialEffectSizeIconData}" />
+					</local:SettingsCard.HeaderIcon>
+					<ComboBox DropDownOpened="ComboBox_DropDownOpened"
+					          ItemsSource="{x:Bind ViewModel.ScalingModes, Mode=OneTime}"
+					          SelectedIndex="{x:Bind ViewModel.ScalingMode, Mode=TwoWay}" />
+				</local:SettingsCard>
+				<local:SettingsCard x:Uid="Profile_General_CaptureMethod"
+				                    IsWrapEnabled="True">
+					<local:SettingsCard.HeaderIcon>
+						<FontIcon Glyph="&#xE9A6;" />
+					</local:SettingsCard.HeaderIcon>
+					<ComboBox DropDownOpened="ComboBox_DropDownOpened"
+					          ItemsSource="{x:Bind ViewModel.CaptureMethods, Mode=OneTime}"
+					          SelectedIndex="{x:Bind ViewModel.CaptureMethod, Mode=TwoWay}" />
+				</local:SettingsCard>
+				<muxc:InfoBar x:Uid="Profile_General_DesktopDuplicationWarning"
+				              IsClosable="False"
+				              IsOpen="{x:Bind ViewModel.IsCaptureMethodDesktopDuplication, Mode=OneWay}"
+				              Severity="Warning" />
+				<local:SettingsCard x:Name="AutoScaleSettingsCard"
+				                    x:Uid="Profile_General_AutoScale"
+				                    x:Load="{x:Bind ViewModel.IsNotDefaultProfile, Mode=OneTime}"
+				                    IsWrapEnabled="True">
+					<local:SettingsCard.HeaderIcon>
+						<FontIcon Glyph="&#xE945;" />
+					</local:SettingsCard.HeaderIcon>
+					<ComboBox DropDownOpened="ComboBox_DropDownOpened"
+					          SelectedIndex="{x:Bind ViewModel.AutoScale, Mode=TwoWay}">
+						<ComboBoxItem x:Uid="Profile_General_AutoScale_Disabled" />
+						<ComboBoxItem x:Uid="Profile_General_AutoScale_Fullscreen" />
+						<ComboBoxItem x:Uid="Profile_General_AutoScale_Windowed" />
+					</ComboBox>
+				</local:SettingsCard>
+				<local:SettingsCard x:Uid="Profile_General_3DGameMode">
+					<local:SettingsCard.HeaderIcon>
+						<FontIcon Glyph="&#xE7FC;" />
+					</local:SettingsCard.HeaderIcon>
+					<ToggleSwitch x:Uid="ToggleSwitch"
+					              IsOn="{x:Bind ViewModel.Is3DGameMode, Mode=TwoWay}" />
+				</local:SettingsCard>
+				<!-- HDR compatibility is temporarily unavailable while explicit conversion effects are designed. -->
+				<local:SettingsCard x:Name="MultimonitorSettingsCard"
+				                    x:Uid="Profile_General_Multimonitor"
+				                    x:Load="{x:Bind ViewModel.HasMultipleMonitors, Mode=OneTime}"
+				                    IsWrapEnabled="True">
+					<local:SettingsCard.HeaderIcon>
+						<FontIcon Glyph="&#xf5a9;" />
+					</local:SettingsCard.HeaderIcon>
+					<ComboBox DropDownOpened="ComboBox_DropDownOpened"
+					          ItemsSource="{x:Bind ViewModel.MonitorOptions, Mode=OneTime}"
+					          SelectedIndex="{x:Bind ViewModel.MonitorSelection, Mode=TwoWay}" />
+				</local:SettingsCard>
+			</local:SettingsGroup>
+			<local:SettingsGroup x:Uid="Profile_WindowedScaling">
+				<local:SettingsCard x:Uid="Profile_WindowedScaling_InitialScaleFactor"
+				                    IsWrapEnabled="True">
+					<local:SettingsCard.HeaderIcon>
+						<FontIcon Glyph="&#xE740;" />
+					</local:SettingsCard.HeaderIcon>
+					<Grid MinWidth="{StaticResource SettingsCardContentMinWidth}">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="Auto" />
+							<ColumnDefinition Width="Auto" />
+						</Grid.ColumnDefinitions>
+						<ComboBox x:Name="InitialWindowedScaleFactorComboBox"
+						          Grid.Column="0"
+						          HorizontalAlignment="Stretch"
+						          VerticalAlignment="Stretch"
+						          DropDownOpened="ComboBox_DropDownOpened"
+						          SelectedIndex="{x:Bind ViewModel.InitialWindowedScaleFactor, Mode=TwoWay}"
+						          SelectionChanged="InitialWindowedScaleFactorComboBox_SelectionChanged">
+							<ComboBoxItem x:Uid="Profile_WindowedScaling_InitialScaleFactor_Auto" />
+							<x:String>1x</x:String>
+							<x:String>1.25x</x:String>
+							<x:String>1.5x</x:String>
+							<x:String>1.75x</x:String>
+							<x:String>2x</x:String>
+							<x:String>3x</x:String>
+							<ComboBoxItem x:Uid="Profile_WindowedScaling_InitialScaleFactor_Custom" />
+						</ComboBox>
+						<muxc:NumberBox x:Name="CustomInitialWindowedScaleFactorNumberBox"
+						                Grid.Column="1"
+						                Width="70"
+						                MinWidth="70"
+						                Margin="5,0,0,0"
+						                VerticalAlignment="Stretch"
+						                Loaded="NumberBox_Loaded"
+						                Maximum="10"
+						                Minimum="1"
+						                NumberFormatter="{x:Bind local:App.DoubleFormatter, Mode=OneTime}"
+						                SmallChange="0.1"
+						                Value="{x:Bind ViewModel.CustomInitialWindowedScaleFactor, Mode=TwoWay}" />
+						<TextBlock x:Name="CustomInitialWindowedScaleFactorLabel"
+						           Grid.Column="2"
+						           Margin="5,0,0,0"
+						           VerticalAlignment="Bottom"
+						           Text="x" />
+					</Grid>
+				</local:SettingsCard>
+			</local:SettingsGroup>
+			<local:SettingsGroup x:Uid="Profile_Performance">
+				<local:SettingsCard x:Name="GraphicsCardSettingsCard"
+				                    x:Uid="Profile_Performance_GraphicsCard"
+				                    x:Load="{x:Bind ViewModel.IsShowGraphicsCardSettingsCard, Mode=OneWay}"
+				                    IsWrapEnabled="True">
+					<local:SettingsCard.HeaderIcon>
+						<FontIcon Glyph="&#xf211;" />
+					</local:SettingsCard.HeaderIcon>
+					<ComboBox DropDownOpened="ComboBox_DropDownOpened"
+					          ItemsSource="{x:Bind ViewModel.GraphicsCards, Mode=OneWay}"
+					          SelectedIndex="{x:Bind ViewModel.GraphicsCard, Mode=TwoWay}" />
+				</local:SettingsCard>
+				<muxc:InfoBar x:Uid="Profile_Performance_NoGraphicsCard"
+				              IsClosable="False"
+				              IsOpen="{x:Bind ViewModel.IsNoGraphicsCard, Mode=OneWay}"
+				              Severity="Warning" />
+				<local:SettingsExpander x:Uid="Profile_Performance_FrameRateLimiter"
+				                        IsExpanded="{x:Bind ViewModel.IsFrameRateLimiterEnabled, Mode=OneWay}">
+					<local:SettingsExpander.HeaderIcon>
+						<FontIcon Glyph="&#xE72E;" />
+					</local:SettingsExpander.HeaderIcon>
+					<local:SettingsExpander.Content>
+						<ToggleSwitch x:Uid="ToggleSwitch"
+						              IsOn="{x:Bind ViewModel.IsFrameRateLimiterEnabled, Mode=TwoWay}" />
+					</local:SettingsExpander.Content>
+					<local:SettingsExpander.Items>
+						<local:SettingsCard x:Uid="Profile_Performance_FrameRateLimiter_MaxFrameRate"
+						                    IsWrapEnabled="True">
+							<local:SimpleStackPanel Orientation="Horizontal"
+							                        Spacing="8">
+								<muxc:NumberBox VerticalAlignment="Center"
+								                LargeChange="10"
+								                Loaded="NumberBox_Loaded"
+								                Maximum="1000"
+								                Minimum="10"
+								                NumberFormatter="{x:Bind local:App.DoubleFormatter, Mode=OneTime}"
+								                SmallChange="1"
+								                SpinButtonPlacementMode="Inline"
+								                Value="{x:Bind ViewModel.MaxFrameRate, Mode=TwoWay}" />
+								<TextBlock VerticalAlignment="Center"
+								           Text="FPS" />
+							</local:SimpleStackPanel>
+						</local:SettingsCard>
+					</local:SettingsExpander.Items>
+				</local:SettingsExpander>
+			</local:SettingsGroup>
+			<local:SettingsGroup x:Uid="Profile_SourceWindow">
+				<local:SettingsCard x:Uid="Profile_SourceWindow_CaptureTitleBar"
+				                    IsEnabled="{x:Bind ViewModel.CanCaptureTitleBar, Mode=OneWay}">
+					<local:SettingsCard.HeaderIcon>
+						<FontIcon Glyph="&#xE737;" />
+					</local:SettingsCard.HeaderIcon>
+					<ToggleSwitch x:Uid="ToggleSwitch"
+					              IsOn="{x:Bind ViewModel.IsCaptureTitleBar, Mode=TwoWay}" />
+				</local:SettingsCard>
+				<local:SettingsExpander x:Uid="Profile_SourceWindow_CustomCropping"
+				                        IsExpanded="{x:Bind ViewModel.IsCroppingEnabled, Mode=OneWay}">
+					<local:SettingsExpander.HeaderIcon>
+						<FontIcon Glyph="&#xE7A8;" />
+					</local:SettingsExpander.HeaderIcon>
+					<local:SettingsExpander.Content>
+						<ToggleSwitch x:Uid="ToggleSwitch"
+						              IsOn="{x:Bind ViewModel.IsCroppingEnabled, Mode=TwoWay}" />
+					</local:SettingsExpander.Content>
+					<local:SettingsExpander.Items>
+						<local:SettingsCard x:Uid="Profile_SourceWindow_CustomCropping_Left"
+						                    IsWrapEnabled="True">
+							<local:SimpleStackPanel Orientation="Horizontal"
+							                        Spacing="8">
+								<muxc:NumberBox LargeChange="10"
+								                Loaded="NumberBox_Loaded"
+								                Minimum="0"
+								                NumberFormatter="{x:Bind local:App.DoubleFormatter, Mode=OneTime}"
+								                SmallChange="1"
+								                SpinButtonPlacementMode="Inline"
+								                Value="{x:Bind ViewModel.CroppingLeft, Mode=TwoWay}" />
+								<TextBlock x:Uid="Profile_SourceWindow_CustomCropping_Pixels"
+								           VerticalAlignment="Center" />
+							</local:SimpleStackPanel>
+						</local:SettingsCard>
+						<local:SettingsCard x:Uid="Profile_SourceWindow_CustomCropping_Right"
+						                    IsWrapEnabled="True">
+							<local:SimpleStackPanel Orientation="Horizontal"
+							                        Spacing="8">
+								<muxc:NumberBox LargeChange="10"
+								                Loaded="NumberBox_Loaded"
+								                Minimum="0"
+								                NumberFormatter="{x:Bind local:App.DoubleFormatter, Mode=OneTime}"
+								                SmallChange="1"
+								                SpinButtonPlacementMode="Inline"
+								                Value="{x:Bind ViewModel.CroppingRight, Mode=TwoWay}" />
+								<TextBlock x:Uid="Profile_SourceWindow_CustomCropping_Pixels"
+								           VerticalAlignment="Center" />
+							</local:SimpleStackPanel>
+						</local:SettingsCard>
+						<local:SettingsCard x:Uid="Profile_SourceWindow_CustomCropping_Top"
+						                    IsWrapEnabled="True">
+							<local:SimpleStackPanel Orientation="Horizontal"
+							                        Spacing="8">
+								<muxc:NumberBox LargeChange="10"
+								                Loaded="NumberBox_Loaded"
+								                Minimum="0"
+								                NumberFormatter="{x:Bind local:App.DoubleFormatter, Mode=OneTime}"
+								                SmallChange="1"
+								                SpinButtonPlacementMode="Inline"
+								                Value="{x:Bind ViewModel.CroppingTop, Mode=TwoWay}" />
+								<TextBlock x:Uid="Profile_SourceWindow_CustomCropping_Pixels"
+								           VerticalAlignment="Center" />
+							</local:SimpleStackPanel>
+						</local:SettingsCard>
+						<local:SettingsCard x:Uid="Profile_SourceWindow_CustomCropping_Bottom"
+						                    IsWrapEnabled="True">
+							<local:SimpleStackPanel Orientation="Horizontal"
+							                        Spacing="8">
+								<muxc:NumberBox LargeChange="10"
+								                Loaded="NumberBox_Loaded"
+								                Minimum="0"
+								                NumberFormatter="{x:Bind local:App.DoubleFormatter, Mode=OneTime}"
+								                SmallChange="1"
+								                SpinButtonPlacementMode="Inline"
+								                Value="{x:Bind ViewModel.CroppingBottom, Mode=TwoWay}" />
+								<TextBlock x:Uid="Profile_SourceWindow_CustomCropping_Pixels"
+								           VerticalAlignment="Center" />
+							</local:SimpleStackPanel>
+						</local:SettingsCard>
+					</local:SettingsExpander.Items>
+				</local:SettingsExpander>
+			</local:SettingsGroup>
+			<local:SettingsGroup x:Uid="Profile_Cursor">
+				<local:SettingsExpander x:Uid="Profile_Cursor_DrawCursor_ScaleFactor"
+				                        IsWrapEnabled="True">
+					<local:SettingsExpander.HeaderIcon>
+						<FontIcon Glyph="&#xE7C9;" />
+					</local:SettingsExpander.HeaderIcon>
+					<local:SettingsExpander.Content>
+						<Grid MinWidth="{StaticResource SettingsCardContentMinWidth}">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+
+							<ComboBox x:Name="CursorScalingComboBox"
+							          Grid.Column="0"
+							          HorizontalAlignment="Stretch"
+							          VerticalAlignment="Stretch"
+							          DropDownOpened="ComboBox_DropDownOpened"
+							          SelectedIndex="{x:Bind ViewModel.CursorScaling, Mode=TwoWay}"
+							          SelectionChanged="CursorScalingComboBox_SelectionChanged">
+								<x:String>0.5x</x:String>
+								<x:String>0.75x</x:String>
+								<ComboBoxItem x:Uid="Profile_Cursor_DrawCursor_ScaleFactor_NoScaling" />
+								<x:String>1.25x</x:String>
+								<x:String>1.5x</x:String>
+								<x:String>2x</x:String>
+								<ComboBoxItem x:Uid="Profile_Cursor_DrawCursor_ScaleFactor_SameAsSourceWindow" />
+								<ComboBoxItem x:Uid="Profile_Cursor_DrawCursor_ScaleFactor_Custom" />
+							</ComboBox>
+							<muxc:NumberBox x:Name="CustomCursorScalingNumberBox"
+							                Grid.Column="1"
+							                Width="70"
+							                MinWidth="70"
+							                Margin="5,0,0,0"
+							                VerticalAlignment="Stretch"
+							                Loaded="NumberBox_Loaded"
+							                Maximum="10"
+							                Minimum="0.1"
+							                NumberFormatter="{x:Bind local:App.DoubleFormatter, Mode=OneTime}"
+							                SmallChange="0.1"
+							                Value="{x:Bind ViewModel.CustomCursorScaling, Mode=TwoWay}" />
+							<TextBlock x:Name="CustomCursorScalingLabel"
+							           Grid.Column="2"
+							           Margin="5,0,0,0"
+							           VerticalAlignment="Bottom"
+							           Text="x" />
+						</Grid>
+					</local:SettingsExpander.Content>
+					<local:SettingsExpander.Items>
+						<local:SettingsCard x:Uid="Profile_Cursor_DrawCursor_Interpolation"
+						                    IsWrapEnabled="True">
+							<ComboBox DropDownOpened="ComboBox_DropDownOpened"
+							          SelectedIndex="{x:Bind ViewModel.CursorInterpolationMode, Mode=TwoWay}">
+								<ComboBoxItem x:Uid="Profile_Cursor_DrawCursor_Interpolation_NearestNeighbor" />
+								<ComboBoxItem x:Uid="Profile_Cursor_DrawCursor_Interpolation_Bilinear" />
+							</ComboBox>
+						</local:SettingsCard>
+					</local:SettingsExpander.Items>
+				</local:SettingsExpander>
+				<local:SettingsExpander x:Uid="Profile_Cursor_AutoHide"
+				                        IsExpanded="{x:Bind ViewModel.IsAutoHideCursorEnabled, Mode=OneWay}">
+					<local:SettingsExpander.HeaderIcon>
+						<FontIcon Glyph="&#xEC32;" />
+					</local:SettingsExpander.HeaderIcon>
+					<local:SettingsExpander.Content>
+						<ToggleSwitch x:Uid="ToggleSwitch"
+						              IsOn="{x:Bind ViewModel.IsAutoHideCursorEnabled, Mode=TwoWay}" />
+					</local:SettingsExpander.Content>
+					<local:SettingsExpander.Items>
+						<local:SettingsCard x:Uid="Profile_Cursor_AutoHide_Delay"
+						                    IsWrapEnabled="True">
+							<Grid MinWidth="{StaticResource SettingsCardContentMinWidth}">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="*" />
+									<ColumnDefinition Width="Auto" />
+								</Grid.ColumnDefinitions>
+								<Slider Grid.Column="0"
+								        MinWidth="0"
+								        VerticalAlignment="Center"
+								        IsThumbToolTipEnabled="False"
+								        Maximum="5"
+								        Minimum="0.1"
+								        StepFrequency="0.1"
+								        Value="{x:Bind ViewModel.AutoHideCursorDelay, Mode=TwoWay}" />
+								<TextBlock Grid.Column="1"
+								           Width="18"
+								           Margin="8,0,0,0"
+								           VerticalAlignment="Center"
+								           Text="{x:Bind ViewModel.AutoHideCursorDelayText, Mode=OneWay}"
+								           TextAlignment="Center" />
+							</Grid>
+						</local:SettingsCard>
+					</local:SettingsExpander.Items>
+				</local:SettingsExpander>
+				<local:SettingsCard x:Uid="Profile_Cursor_DrawCursor_AdjustCursorSpeed">
+					<local:SettingsCard.HeaderIcon>
+						<PathIcon Data="{StaticResource MoveIconData}" />
+					</local:SettingsCard.HeaderIcon>
+					<ToggleSwitch x:Uid="ToggleSwitch"
+					              IsOn="{x:Bind ViewModel.IsAdjustCursorSpeed, Mode=TwoWay}" />
+				</local:SettingsCard>
+			</local:SettingsGroup>
+			<local:SettingsGroup x:Uid="Profile_Advanced">
+				<local:SettingsCard x:Name="LaunchParametersSettingsCard"
+				                    x:Uid="Profile_Advanced_LaunchParameters"
+				                    x:Load="{x:Bind ViewModel.IsNotDefaultProfile, Mode=OneTime}"
+				                    IsWrapEnabled="True">
+					<local:SettingsCard.HeaderIcon>
+						<FontIcon Glyph="&#xE756;" />
+					</local:SettingsCard.HeaderIcon>
+					<TextBox MaxWidth="400"
+					         KeyDown="LaunchParametersTextBox_KeyDown"
+					         Text="{x:Bind ViewModel.LaunchParameters, Mode=TwoWay}">
+						<TextBox.ContextFlyout>
+							<local:TextMenuFlyout />
+						</TextBox.ContextFlyout>
+					</TextBox>
+				</local:SettingsCard>
+				<local:SettingsCard x:Uid="Profile_Advanced_DestAlignment">
+					<local:SettingsCard.HeaderIcon>
+						<FontIcon Glyph="&#xE799;" />
+					</local:SettingsCard.HeaderIcon>
+					<ComboBox DropDownOpened="ComboBox_DropDownOpened"
+					          SelectedIndex="{x:Bind ViewModel.DestAlignment, Mode=TwoWay}">
+						<ComboBoxItem x:Uid="Profile_Advanced_DestAlignment_TopLeft" />
+						<ComboBoxItem x:Uid="Profile_Advanced_DestAlignment_TopCenter" />
+						<ComboBoxItem x:Uid="Profile_Advanced_DestAlignment_TopRight" />
+						<ComboBoxItem x:Uid="Profile_Advanced_DestAlignment_Left" />
+						<ComboBoxItem x:Uid="Profile_Advanced_DestAlignment_Center" />
+						<ComboBoxItem x:Uid="Profile_Advanced_DestAlignment_Right" />
+						<ComboBoxItem x:Uid="Profile_Advanced_DestAlignment_BottomLeft" />
+						<ComboBoxItem x:Uid="Profile_Advanced_DestAlignment_BottomCenter" />
+						<ComboBoxItem x:Uid="Profile_Advanced_DestAlignment_BottomRight" />
+					</ComboBox>
+				</local:SettingsCard>
+				<local:SettingsCard x:Uid="Profile_Advanced_DisableDirectFlip">
+					<local:SettingsCard.HeaderIcon>
+						<FontIcon Glyph="&#xF259;" />
+					</local:SettingsCard.HeaderIcon>
+					<ToggleSwitch x:Uid="ToggleSwitch"
+					              IsOn="{x:Bind ViewModel.IsDirectFlipDisabled, Mode=TwoWay}" />
+				</local:SettingsCard>
+				<local:SettingsCard x:Uid="Profile_Advanced_ParameterFocusSwitching" IsWrapEnabled="True">
+					<local:SettingsCard.HeaderIcon><FontIcon Glyph="&#xE9E9;" /></local:SettingsCard.HeaderIcon>
+					<ToggleSwitch x:Uid="ToggleSwitch"
+					              IsOn="{x:Bind ViewModel.IsParameterFocusSwitchingEnabled, Mode=TwoWay}" />
+				</local:SettingsCard>
+			</local:SettingsGroup>
+		</local:SimpleStackPanel>
+	</local:PageFrame>
+</Page>

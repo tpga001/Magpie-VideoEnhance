@@ -1,0 +1,31 @@
+namespace Magpie {
+    runtimeclass ScalingModeItem : Windows.UI.Xaml.Data.INotifyPropertyChanged {
+        void RenameFlyout_Opening();
+        void RenameTextBox_KeyDown(Object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs args);
+        void RenameButton_Click();
+
+        Boolean IsInitialExpanded { get; };
+
+        String Name;
+        String Description { get; };
+
+        Boolean HasUnkownEffects { get; };
+        Boolean HasNameConflict { get; };
+        IObservableVector<IInspectable> Effects { get; };
+
+        String RenameText;
+        String RenameProblem { get; };
+        Boolean HasRenameProblem { get; };
+        Int32 RenameTextBoxSelectionStart { get; };
+        Boolean IsRenameButtonEnabled { get; };
+
+        Boolean CanDrag { get; };
+        void Duplicate();
+
+        void Remove();
+        IVector<IInspectable> LinkedProfiles { get; };
+        Boolean IsInUse { get; };
+
+        Boolean CanReorderEffects { get; };
+    }
+}

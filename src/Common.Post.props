@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Microsoft.Cpp.props 之后导入 -->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
+      <PreprocessorDefinitions>_WINDOWS;WIN32_LEAN_AND_MEAN;WINRT_LEAN_AND_MEAN;WINRT_NO_MODULE_LOCK;WIL_SUPPRESS_EXCEPTIONS;WIL_USE_STL=1;NOGDICAPMASKS;NOICONS;NOATOM;NOCLIPBOARD;NODRAWTEXT;NOMEMMGR;NOMETAFILE;NOMINMAX;NOOPENFILE;NOSCROLL;NOSERVICE;NOSOUND;NOTEXTMETRIC;NOCOMM;NOKANJI;NOHELP;NOPROFILER;NOMCX;NO_SHLWAPI_PATH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MP_MAJOR_VERSION=$(MajorVersion);MP_MINOR_VERSION=$(MinorVersion);MP_PATCH_VERSION=$(PatchVersion);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <!-- 避免 phmap 中警告的临时方案，phmap 发布新版本后应删除 -->
+      <PreprocessorDefinitions>_SILENCE_CXX20_IS_ALWAYS_EQUAL_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(VersionString)' != ''">MP_VERSION_STRING=$(VersionString);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(CommitId)' != ''">MP_COMMIT_ID=$(CommitId);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="$(DebugBorder)">MP_DEBUG_BORDER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="$(DebugInfoOnOverlay)">MP_DEBUG_INFO_ON_OVERLAY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="$(UseCompSwapchain)">MP_USE_COMPSWAPCHAIN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="$(EnableDLSSSR) And '$(Platform)' == 'x64'">MP_ENABLE_DLSS_SR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories Condition="$(EnableDLSSSR) And '$(Platform)' == 'x64'">$(DLSSSdkDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="$(EnableDLSSFrameGeneration) And '$(Platform)' == 'x64'">MP_ENABLE_DLSS_FRAME_GENERATION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories Condition="$(EnableDLSSFrameGeneration) And '$(Platform)' == 'x64'">$(DLSSSdkDir)\include;$(NvapiSdkDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="$(EnableDLSSNR) And '$(Platform)' == 'x64'">MP_ENABLE_DLSSNR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories Condition="$(EnableDLSSNR) And '$(Platform)' == 'x64'">$(DLSSSdkDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="$(EnableNvidiaOpticalFlow) And '$(Platform)' == 'x64'">MP_ENABLE_NVIDIA_OPTICAL_FLOW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories Condition="$(EnableNvidiaOpticalFlow) And '$(Platform)' == 'x64'">$(NvidiaOpticalFlowSdkDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="$(EnableFSR2ZeroMV) And '$(Platform)' == 'x64'">MP_ENABLE_FSR2_ZEROMV;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories Condition="$(EnableFSR2ZeroMV) And '$(Platform)' == 'x64'">$(FSR2SdkDir)\src\ffx-fsr2-api;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="$(EnableFSR3ZeroMV) And '$(Platform)' == 'x64'">MP_ENABLE_FSR3_ZEROMV;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories Condition="$(EnableFSR3ZeroMV) And '$(Platform)' == 'x64'">$(FSR3SdkDir)\Kits\FidelityFX\api\include;$(FSR3SdkDir)\Kits\FidelityFX\upscalers\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="$(EnableAmdOpticalFlow) And '$(Platform)' == 'x64'">MP_ENABLE_AMD_OPTICAL_FLOW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories Condition="$(EnableAmdOpticalFlow) And '$(Platform)' == 'x64'">$(FSR3SdkDir)\Kits\FidelityFX\api\include;$(FSR3SdkDir)\Kits\FidelityFX\api\internal;$(FSR3SdkDir)\Kits\FidelityFX\backend\dx12;$(FSR3SdkDir)\Kits\FidelityFX\framegeneration\fsr3\include;$(FSR3SdkDir)\Kits\FidelityFX\framegeneration\fsr3\internal;$(IntDir)FidelityFXOpticalFlow;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="$(EnableXeSSZeroMV) And '$(Platform)' == 'x64'">MP_ENABLE_XESS_ZEROMV;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories Condition="$(EnableXeSSZeroMV) And '$(Platform)' == 'x64'">$(XeSSSdkDir)\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+	  <PreprocessorDefinitions Condition="$(EnableXeSSFrameGeneration) And '$(Platform)' == 'x64'">MP_ENABLE_XESS_FRAME_GENERATION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+	  <AdditionalIncludeDirectories Condition="$(EnableXeSSFrameGeneration) And '$(Platform)' == 'x64'">$(XeSSSdkDir)\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="$(EnableRTXVideoDenoise) And '$(Platform)' == 'x64'">MP_ENABLE_RTX_VIDEO_DENOISE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories Condition="$(EnableRTXVideoDenoise) And '$(Platform)' == 'x64'">$(VFXSdkDir)\nvvfx\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat Condition="'$(DisablePDB)' == 'true'">None</DebugInformationFormat>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(ReproducibleBuild)' == 'true'">/Brepro %(AdditionalOptions)</AdditionalOptions>
+      <!-- -fstrict-vtable-pointers: 缓存虚表指针，这要求不能通过非法手段改变对象的动态类型 -->
+      <!-- -funsafe-math-optimizations: 以降低精度为代价提高浮点运算速度 -->
+      <!-- -fno-math-errno: 浮点操作不设置 errno，这使一些数学函数可以内联 -->
+      <AdditionalOptions Condition="$(UseClangCL)">/clang:-Wno-missing-designated-field-initializers /clang:-Wno-missing-field-initializers /clang:-fstrict-vtable-pointers /clang:-funsafe-math-optimizations /clang:-fno-math-errno %(AdditionalOptions)</AdditionalOptions>
+      <!-- -mcx16: 启用 CX16 指令，Windows 从 8.1 开始要求 CPU 支持它 -->
+      <AdditionalOptions Condition="$(UseClangCL) And '$(Platform)' == 'x64'">/clang:-mcx16 %(AdditionalOptions)</AdditionalOptions>
+      <!-- -march=native: 针对当前硬件生成优化代码 -->
+      <AdditionalOptions Condition="$(UseClangCL) And $(UseNativeMicroArch)">/clang:-march=native %(AdditionalOptions)</AdditionalOptions>
+      <!-- 使用 clang-cl 编译时禁用 cppwinrt 头文件中的编译警告 -->
+      <AdditionalOptions Condition="$(UseClangCL) And '$(GeneratedFilesDir)' != ''">/clang:-isystem /clang:"$(GeneratedFilesDir)\" %(AdditionalOptions)</AdditionalOptions>
+      <!-- 修复编译 Shared 中源文件找不到 pch.h 的问题 -->
+      <AdditionalIncludeDirectories Condition="$(UseClangCL)">.;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>MP_MAJOR_VERSION=$(MajorVersion);MP_MINOR_VERSION=$(MinorVersion);MP_PATCH_VERSION=$(PatchVersion);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(VersionString)' != ''">MP_VERSION_STRING=$(VersionString);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(CommitId)' != ''">MP_COMMIT_ID=$(CommitId);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)\Shared;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Link>
+      <GenerateDebugInformation Condition="'$(DisablePDB)' == 'true'">false</GenerateDebugInformation>
+      <GenerateDebugInformation Condition="'$(GenerateReleaseSymbols)' == 'true'">true</GenerateDebugInformation>
+      <GenerateMapFile Condition="'$(GenerateReleaseSymbols)' == 'true'">true</GenerateMapFile>
+      <MapFileName Condition="'$(GenerateReleaseSymbols)' == 'true'">$(OutDir)$(TargetName).map</MapFileName>
+      <AdditionalOptions Condition="'$(ReproducibleBuild)' == 'true'">/Brepro %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <Lib>
+      <AdditionalOptions Condition="'$(ReproducibleBuild)' == 'true'">/Brepro %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="'$(Configuration)' == 'Debug'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)' == 'Release'">
+    <ClCompile>
+      <!-- Release 下不允许编译警告 -->
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <!-- 存在同名全局属性，但表现很奇怪。首先，在导入 Microsoft.Cpp.Default.props 之前和之后定义 -->
+      <!-- 效果不同，似乎在导入前定义才能起作用；其次，全局 WholeProgramOptimization 属性起作用时由 -->
+      <!-- Microsoft.Cpp.targets 而不是 Microsoft.Cpp.props 更改编译选项，将用户设置覆盖；最后，该 -->
+      <!-- 属性起作用时会将 LinkTimeCodeGeneration 改为 UseFastLinkTimeCodeGeneration，而我们想要 -->
+      <!-- UseLinkTimeCodeGeneration。为了精确控制编译参数，我们不使用全局 -->
+      <!-- WholeProgramOptimization，而是自己定义编译选项。全局 WholeProgramOptimization 影响的属 -->
+      <!-- 性见 $(VCTargetsPath)\Microsoft.Cpp.WholeProgramOptimization.props。 -->
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <!-- /Gw: 链接时删除未使用和重复的数据，可以减小二进制文件体积 -->
+      <!-- /Zc:checkGwOdr: 防止 /Gw 导致某些 ODR 违规被忽略 -->
+      <AdditionalOptions>/Gw %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="!$(UseClangCL)">/Zc:checkGwOdr %(AdditionalOptions)</AdditionalOptions>
+      <!-- clang-cl 不支持 /LTCG，应使用 LTO -->
+      <AdditionalOptions Condition="$(UseClangCL)">/clang:-flto %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <LinkTimeCodeGeneration>true</LinkTimeCodeGeneration>
+    </Lib>
+  </ItemDefinitionGroup>
+
+  <!-- 所有项目共享的头文件 -->
+  <Import Project="$(MSBuildThisFileDirectory)\Shared\Shared.vcxitems" Label="Shared" />
+
+  <!-- Conan 依赖 -->
+  <PropertyGroup>
+    <_MagpieConanRoot>$(SolutionDir)\obj\$(Platform)\$(Configuration)\</_MagpieConanRoot>
+    <_MagpieConanRoot Condition="'$(MagpieIntermediateRoot)' != ''">$(MagpieIntermediateRoot)</_MagpieConanRoot>
+  </PropertyGroup>
+  <Import Project="$(_MagpieConanRoot)_ConanDeps\$(MSBuildProjectName)\conandeps.props" Condition="Exists('$(_MagpieConanRoot)_ConanDeps\$(MSBuildProjectName)\conandeps.props')" />
+
+  <!-- HybridCRT -->
+  <Import Project="$(MSBuildThisFileDirectory)\HybridCRT.props" />
+
+  <!-- _CopyFilesMarkedCopyLocal 有一个 bug：即使没有复制任何文件也会更改 @(FileWrites)，经常导致 -->
+  <!-- up-to-date 检查失败。这个任务用于在 _CopyFilesMarkedCopyLocal 执行后修正 @(FileWrites)。 -->
+  <Target Name="FixUpToDateMarker" AfterTargets="_CopyFilesMarkedCopyLocal">
+    <ItemGroup>
+      <FileWrites Remove="@(CopyUpToDateMarker)" Condition="'@(ReferencesCopiedInThisBuild)' == '' Or '$(WroteAtLeastOneFile)' != 'true'" />
+    </ItemGroup>
+  </Target>
+
+  <!-- _AppendToWriteTlogFile 不会删除原始内容，如果某个中间文件不再生成会导致 up-to-date 检查失败 -->
+  <Target Name="FixWriteLog" BeforeTargets="_AppendToWriteTlogFile">
+    <Delete Files="$(TLogLocation)$(ProjectName).write.1u.tlog" />
+  </Target>
+</Project>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- 不要直接修改这些选项，应通过 BuildOptions.props.user 或命令行参数覆盖 -->
+  <PropertyGroup>
+    <!-- 使用 clang-cl 编译 -->
+    <UseClangCL>false</UseClangCL>
+    <!-- 针对当前硬件生成优化代码，只在使用 clang-cl 编译时有效 -->
+    <UseNativeMicroArch>false</UseNativeMicroArch>
+    <!-- 编译为打包应用 (暂不支持) -->
+    <IsPackaged>false</IsPackaged>
+    <!-- 窗口模式缩放时把用于调整窗口尺寸的辅助窗口标示出来 -->
+    <DebugBorder>false</DebugBorder>
+    <!-- 在性能分析器上显示调试信息 -->
+    <DebugInfoOnOverlay>false</DebugInfoOnOverlay>
+    <!-- Bounded CPU frame tracing for local diagnostic builds; keeps Release optimization. -->
+    <EnableFrameTrace>false</EnableFrameTrace>
+    <!-- Detailed NR/NVOF GPU timing and FG diagnostic summaries; validation only. -->
+    <EnableNativeBackendTiming>false</EnableNativeBackendTiming>
+    <!-- 使用 composition swapchain 呈现 -->
+    <UseCompSwapchain>false</UseCompSwapchain>
+    <!-- Deprecated compatibility input; use EnableDLSSSR in new overrides. -->
+    <EnableDLSSZeroMV>false</EnableDLSSZeroMV>
+    <!-- Experimental NVIDIA DLSS Frame Generation through D3D11/D3D12 sharing. -->
+    <EnableDLSSFrameGeneration>false</EnableDLSSFrameGeneration>
+    <!-- Experimental NVIDIA DLSSNR same-resolution AI filter. -->
+    <EnableDLSSNR>false</EnableDLSSNR>
+    <DLSSSdkDir></DLSSSdkDir>
+    <!-- Official NVAPI headers for native DLSS FG Reflex; no driver DLL is packaged. -->
+    <NvapiSdkDir>$(MSBuildThisFileDirectory)..\..\dependencies\nvapi-sdk</NvapiSdkDir>
+    <DLSSNRRuntimeDir></DLSSNRRuntimeDir>
+    <!-- Renderer-owned NVIDIA Optical Flow frame-guidance provider. -->
+    <EnableNvidiaOpticalFlow>false</EnableNvidiaOpticalFlow>
+    <NvidiaOpticalFlowSdkDir></NvidiaOpticalFlowSdkDir>
+    <EnableFSR2ZeroMV>false</EnableFSR2ZeroMV>
+    <FSR2SdkDir></FSR2SdkDir>
+    <FSR2RuntimeDir></FSR2RuntimeDir>
+    <!-- FSR 3.1 upscaler-only through D3D11/D3D12 shared resources. -->
+    <EnableFSR3ZeroMV>false</EnableFSR3ZeroMV>
+    <FSR3SdkDir></FSR3SdkDir>
+    <!-- Cross-vendor FidelityFX Optical Flow frame-guidance provider. -->
+    <EnableAmdOpticalFlow></EnableAmdOpticalFlow>
+    <!-- Cross-vendor XeSS-SR through D3D11/D3D12 shared resources. -->
+    <EnableXeSSZeroMV>false</EnableXeSSZeroMV>
+	<!-- Cross-vendor XeSS Frame Generation x2 through a D3D12 proxy swap chain. -->
+	<EnableXeSSFrameGeneration>false</EnableXeSSFrameGeneration>
+    <XeSSSdkDir></XeSSSdkDir>
+    <!-- NVIDIA Video Super Resolution same-resolution denoise modes (8-11). -->
+    <EnableRTXVideoDenoise>false</EnableRTXVideoDenoise>
+    <VFXSdkDir></VFXSdkDir>
+    <VFXRuntimeDir></VFXRuntimeDir>
+    <VFXLicenseDir></VFXLicenseDir>
+    <RtxVideoSdkDir>$(MSBuildThisFileDirectory)..\..\dependencies\RTX-Video-SDK-1.1.0</RtxVideoSdkDir>
+    
+    <MajorVersion></MajorVersion>
+    <MinorVersion></MinorVersion>
+    <PatchVersion></PatchVersion>
+    <VersionString></VersionString>
+    <CommitId></CommitId>
+  </PropertyGroup>
+  
+  <!-- 用户自定义编译选项 -->
+  <Import Project="$(MSBuildThisFileDirectory)\BuildOptions.props.user" Condition="Exists('$(MSBuildThisFileDirectory)\BuildOptions.props.user')" />
+  <PropertyGroup>
+    <!-- Preserve existing local/CI overrides while using the accurate name internally. -->
+    <EnableDLSSSR Condition="'$(EnableDLSSSR)' == ''">$(EnableDLSSZeroMV)</EnableDLSSSR>
+    <EnableAmdOpticalFlow Condition="'$(EnableAmdOpticalFlow)' == ''">$(EnableFSR3ZeroMV)</EnableAmdOpticalFlow>
+  </PropertyGroup>
+</Project>

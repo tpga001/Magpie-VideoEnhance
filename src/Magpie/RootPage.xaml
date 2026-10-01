@@ -1,0 +1,350 @@
+<Page x:Class="Magpie.RootPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:Magpie"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      Loaded="RootPage_Loaded"
+      mc:Ignorable="d">
+	<Page.Resources>
+		<DataTemplate x:Key="ProfileNavigationItemContentTemplate"
+		              x:DataType="local:ProfileViewModel">
+			<Grid Height="36"
+			      MinWidth="0"
+			      Margin="0,0,-16,0"
+			      HorizontalAlignment="Stretch"
+			      VerticalAlignment="Center">
+				<Grid.Resources>
+					<ResourceDictionary>
+						<ResourceDictionary.ThemeDictionaries>
+							<ResourceDictionary x:Key="Default">
+								<StaticResource x:Key="ButtonBackground"
+								                ResourceKey="SubtleFillColorTransparentBrush" />
+								<StaticResource x:Key="ButtonBackgroundPointerOver"
+								                ResourceKey="SubtleFillColorSecondaryBrush" />
+								<StaticResource x:Key="ButtonBackgroundPressed"
+								                ResourceKey="SubtleFillColorTertiaryBrush" />
+							</ResourceDictionary>
+							<ResourceDictionary x:Key="Light">
+								<StaticResource x:Key="ButtonBackground"
+								                ResourceKey="SubtleFillColorTransparentBrush" />
+								<StaticResource x:Key="ButtonBackgroundPointerOver"
+								                ResourceKey="SubtleFillColorSecondaryBrush" />
+								<StaticResource x:Key="ButtonBackgroundPressed"
+								                ResourceKey="SubtleFillColorTertiaryBrush" />
+							</ResourceDictionary>
+						</ResourceDictionary.ThemeDictionaries>
+						<Style x:Key="ProfileActionButtonStyle"
+						       BasedOn="{StaticResource DefaultButtonStyle}"
+						       TargetType="Button">
+							<Setter Property="Width" Value="28" />
+							<Setter Property="Height" Value="28" />
+							<Setter Property="MinWidth" Value="28" />
+							<Setter Property="MinHeight" Value="28" />
+							<Setter Property="Padding" Value="4" />
+							<Setter Property="BorderThickness" Value="0" />
+						</Style>
+					</ResourceDictionary>
+				</Grid.Resources>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				<TextBlock Grid.Column="0"
+				           MinWidth="0"
+				           Margin="0,0,2,0"
+				           VerticalAlignment="Center"
+				           local:TextBlockHelper.IsAutoTooltipEnabled="True"
+				           Text="{x:Bind Name, Mode=OneWay}"
+				           TextTrimming="CharacterEllipsis" />
+				<Button x:Uid="Profile_Launch"
+				        Grid.Column="1"
+				        Click="{x:Bind Launch}"
+				        IsEnabled="{x:Bind IsProgramExist, Mode=OneTime}"
+				        Style="{StaticResource ProfileActionButtonStyle}">
+					<Button.Content>
+						<FontIcon FontSize="13" Glyph="&#xE768;" />
+					</Button.Content>
+				</Button>
+				<Button x:Uid="Profile_MoreOptions"
+				        Grid.Column="2"
+				        Margin="4,0,0,0"
+				        Click="ProfileMoreOptionsButton_Click"
+				        Style="{StaticResource ProfileActionButtonStyle}">
+					<Button.Content>
+						<FontIcon FontSize="17" Glyph="&#xE712;" />
+					</Button.Content>
+					<Button.Flyout>
+						<MenuFlyout Placement="Bottom"
+						            ShouldConstrainToRootBounds="False">
+							<MenuFlyoutItem x:Uid="Profile_MoreOptions_OpenProgramLocation"
+							                Click="{x:Bind OpenProgramLocation}"
+							                IsEnabled="{x:Bind IsProgramExist, Mode=OneTime}">
+								<MenuFlyoutItem.Icon>
+									<FontIcon Glyph="&#xE8DA;" />
+								</MenuFlyoutItem.Icon>
+							</MenuFlyoutItem>
+							<MenuFlyoutItem x:Uid="Profile_MoreOptions_ChangeExecutableForLaunching"
+							                Click="{x:Bind ChangeExeForLaunching}"
+							                IsEnabled="{x:Bind IsProgramExist, Mode=OneTime}"
+							                Visibility="{x:Bind IsNotPackaged, Mode=OneTime}">
+								<MenuFlyoutItem.Icon>
+									<FontIcon Glyph="&#xE8E5;" />
+								</MenuFlyoutItem.Icon>
+							</MenuFlyoutItem>
+							<MenuFlyoutSeparator />
+							<MenuFlyoutItem x:Uid="Profile_MoreOptions_Rename"
+							                Click="ProfileRenameMenuItem_Click">
+								<MenuFlyoutItem.Icon>
+									<FontIcon Glyph="&#xE8AC;" />
+								</MenuFlyoutItem.Icon>
+								<FlyoutBase.AttachedFlyout>
+									<Flyout Opening="{x:Bind RenameFlyout_Opening}"
+									        Placement="Bottom">
+										<local:SimpleStackPanel>
+											<TextBlock x:Uid="Profile_MoreOptions_RenameFlyout_Title" />
+											<TextBox Width="280"
+											         Height="32"
+											         Margin="0,8,0,20"
+											         KeyDown="{x:Bind RenameTextBox_KeyDown}"
+											         Loaded="ProfileRenameTextBox_Loaded"
+											         SelectionStart="{x:Bind RenameTextBoxSelectionStart, Mode=OneWay}"
+											         Text="{x:Bind RenameText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+												<TextBox.ContextFlyout>
+													<local:TextMenuFlyout />
+												</TextBox.ContextFlyout>
+											</TextBox>
+											<Button x:Uid="Profile_MoreOptions_RenameFlyout_OK"
+											        MinWidth="80"
+											        HorizontalAlignment="Right"
+											        Click="{x:Bind RenameButton_Click}"
+											        IsEnabled="{x:Bind IsRenameConfirmButtonEnabled, Mode=OneWay}"
+											        Style="{StaticResource AccentButtonStyle}" />
+										</local:SimpleStackPanel>
+									</Flyout>
+								</FlyoutBase.AttachedFlyout>
+							</MenuFlyoutItem>
+							<MenuFlyoutItem x:Uid="Profile_MoreOptions_Delete"
+							                Click="ProfileDeleteMenuItem_Click">
+								<MenuFlyoutItem.Icon>
+									<FontIcon Glyph="&#xE74D;" />
+								</MenuFlyoutItem.Icon>
+								<FlyoutBase.AttachedFlyout>
+									<Flyout Placement="Bottom">
+										<local:SimpleStackPanel Spacing="12">
+											<TextBlock x:Uid="Profile_MoreOptions_DeleteFlyout_Title" />
+											<Button HorizontalAlignment="Right"
+											        Click="{x:Bind Delete}">
+												<Button.Resources>
+													<ResourceDictionary>
+														<StaticResource x:Key="ButtonBackground" ResourceKey="DeleteButtonBackgroundBrush" />
+														<StaticResource x:Key="ButtonBackgroundPointerOver" ResourceKey="DeleteButtonBackgroundPointerOverBrush" />
+														<StaticResource x:Key="ButtonBackgroundPressed" ResourceKey="DeleteButtonBackgroundPressedBrush" />
+														<StaticResource x:Key="ButtonForeground" ResourceKey="DeleteButtonForegroundBrush" />
+														<StaticResource x:Key="ButtonForegroundPointerOver" ResourceKey="DeleteButtonForegroundBrush" />
+														<StaticResource x:Key="ButtonForegroundPressed" ResourceKey="DeleteButtonForegroundPressedBrush" />
+													</ResourceDictionary>
+												</Button.Resources>
+												<Button.Content>
+													<local:SimpleStackPanel Orientation="Horizontal" Spacing="8">
+														<FontIcon VerticalAlignment="Center"
+														          FontSize="{StaticResource StandardIconSize}"
+														          Glyph="&#xE74D;" />
+														<TextBlock x:Uid="Profile_MoreOptions_DeleteFlyout_Delete"
+														           VerticalAlignment="Center" />
+													</local:SimpleStackPanel>
+												</Button.Content>
+											</Button>
+										</local:SimpleStackPanel>
+									</Flyout>
+								</FlyoutBase.AttachedFlyout>
+							</MenuFlyoutItem>
+						</MenuFlyout>
+					</Button.Flyout>
+				</Button>
+				<Grid x:Uid="ScalingModes_DragHandle"
+				      Grid.Column="3"
+				      Width="24"
+				      Height="28"
+				      Margin="4,0,0,0"
+				      Background="Transparent"
+				      PointerCanceled="ProfileReorderHandle_PointerCanceled"
+				      PointerCaptureLost="ProfileReorderHandle_PointerCaptureLost"
+				      PointerMoved="ProfileReorderHandle_PointerMoved"
+				      PointerPressed="ProfileReorderHandle_PointerPressed"
+				      PointerReleased="ProfileReorderHandle_PointerReleased"
+				      Tag="{x:Bind}"
+				      Visibility="{x:Bind CanDrag, Mode=OneWay}">
+					<FontIcon IsHitTestVisible="False"
+					          FontSize="13"
+					          Glyph="&#xE700;" />
+				</Grid>
+			</Grid>
+		</DataTemplate>
+	</Page.Resources>
+	<Grid>
+		<local:TitleBarControl x:Name="TitleBar"
+		                       Canvas.ZIndex="1" />
+
+		<muxc:NavigationView Name="RootNavigationView"
+		                     Canvas.ZIndex="0"
+		                     CompactModeThresholdWidth="0"
+		                     DisplayModeChanged="NavigationView_DisplayModeChanged"
+		                     ExpandedModeThresholdWidth="920"
+		                     IsBackButtonVisible="Collapsed"
+		                     ItemInvoked="NavigationView_ItemInvoked"
+		                     PaneClosing="NavigationView_PaneClosing"
+		                     PaneOpening="NavigationView_PaneOpening"
+		                     SelectionChanged="NavigationView_SelectionChanged">
+			<muxc:NavigationView.Resources>
+				<CornerRadius x:Key="NavigationViewContentGridCornerRadius">0</CornerRadius>
+				<Thickness x:Key="NavigationViewContentGridBorderThickness">1,0,0,0</Thickness>
+			</muxc:NavigationView.Resources>
+
+			<muxc:NavigationView.MenuItems>
+				<muxc:NavigationViewItem x:Uid="Root_Home"
+				                         IsSelected="True"
+				                         Tag="Home">
+					<muxc:NavigationViewItem.Icon>
+						<FontIcon Glyph="&#xE80F;" />
+					</muxc:NavigationViewItem.Icon>
+				</muxc:NavigationViewItem>
+				<muxc:NavigationViewItem x:Uid="Root_ScalingModes"
+				                         Tag="ScalingModes">
+					<muxc:NavigationViewItem.Icon>
+						<PathIcon Data="{StaticResource SpecialEffectSizeIconData}">
+							<!--  导航栏图标尺寸是 19x19  -->
+							<PathIcon.RenderTransform>
+								<ScaleTransform ScaleX="0.95" ScaleY="0.95" />
+							</PathIcon.RenderTransform>
+						</PathIcon>
+					</muxc:NavigationViewItem.Icon>
+				</muxc:NavigationViewItem>
+				<muxc:NavigationViewItemHeader x:Uid="Root_Profiles" />
+				<muxc:NavigationViewItem x:Uid="Root_Defaults">
+					<muxc:NavigationViewItem.Icon>
+						<FontIcon Glyph="&#xE81E;" />
+					</muxc:NavigationViewItem.Icon>
+				</muxc:NavigationViewItem>
+				<muxc:NavigationViewItem x:Name="NewProfileNavigationViewItem"
+				                         x:Uid="Root_NewProfile"
+				                         Icon="Add"
+				                         SelectsOnInvoked="False">
+					<FlyoutBase.AttachedFlyout>
+						<Flyout x:Name="NewProfileFlyout"
+						        Placement="Right">
+							<Grid>
+								<ContentControl Grid.RowSpan="2"
+								                MinWidth="240"
+								                MinHeight="170"
+								                Margin="10"
+								                HorizontalContentAlignment="Center"
+								                VerticalContentAlignment="Center"
+								                Visibility="{x:Bind NewProfileViewModel.IsNoCandidateWindow, Mode=OneWay}">
+									<local:SimpleStackPanel Spacing="20">
+										<FontIcon HorizontalAlignment="Center"
+										          FontSize="40"
+										          Glyph="&#xE8FC;" />
+										<TextBlock x:Uid="Root_NewProfileFlyout_NoCandidateWindow"
+										           HorizontalAlignment="Center" />
+									</local:SimpleStackPanel>
+								</ContentControl>
+
+								<local:SimpleStackPanel Visibility="{x:Bind NewProfileViewModel.IsAnyCandidateWindow, Mode=OneWay}">
+									<TextBlock x:Name="NewProfileTitleTextBlock"
+									           x:Uid="Root_NewProfileFlyout_Title"
+									           Margin="0,5,0,20"
+									           FontSize="18"
+									           FontWeight="SemiBold" />
+									<local:SimpleStackPanel Width="{Binding ActualWidth, ElementName=NewProfileTitleTextBlock}"
+									                        MinWidth="280"
+									                        Spacing="15">
+										<ComboBox x:Name="CandidateWindowsComboBox"
+										          x:Uid="Root_NewProfileFlyout_ComboBox"
+										          Margin="0,0,0,10"
+										          HorizontalAlignment="Stretch"
+										          DropDownOpened="ComboBox_DropDownOpened"
+										          ItemsSource="{x:Bind NewProfileViewModel.CandidateWindows, Mode=OneWay}"
+										          SelectedIndex="{x:Bind NewProfileViewModel.CandidateWindowIndex, Mode=TwoWay}">
+											<ComboBox.ItemTemplate>
+												<DataTemplate x:DataType="local:CandidateWindowItem">
+													<Grid MaxWidth="450"
+													      HorizontalAlignment="Stretch"
+													      ColumnSpacing="15">
+														<Grid.ColumnDefinitions>
+															<ColumnDefinition Width="Auto" />
+															<ColumnDefinition Width="*" />
+														</Grid.ColumnDefinitions>
+														<ContentPresenter Grid.Column="0"
+														                  Content="{x:Bind Icon, Mode=OneWay}" />
+														<TextBlock Grid.Column="1"
+														           VerticalAlignment="Center"
+														           local:TextBlockHelper.IsAutoTooltipEnabled="True"
+														           Text="{x:Bind Title, Mode=OneWay}"
+														           TextTrimming="CharacterEllipsis" />
+													</Grid>
+												</DataTemplate>
+											</ComboBox.ItemTemplate>
+										</ComboBox>
+										<local:SimpleStackPanel Spacing="8">
+											<TextBlock x:Uid="Root_NewProfileFlyout_Name" />
+											<TextBox x:Name="NewProfileNameTextBox"
+											         Height="32"
+											         HorizontalAlignment="Stretch"
+											         KeyDown="NewProfileNameTextBox_KeyDown"
+											         Text="{x:Bind NewProfileViewModel.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+												<TextBox.ContextFlyout>
+													<!--  必须设置 x:Name，否则无法编译  -->
+													<local:TextMenuFlyout x:Name="NewProfileNameContextFlyout"
+													                      Opening="NewProfileNameContextFlyout_Opening" />
+												</TextBox.ContextFlyout>
+											</TextBox>
+										</local:SimpleStackPanel>
+										<local:SimpleStackPanel Spacing="8">
+											<TextBlock x:Uid="Root_NewProfileFlyout_CopyFrom" />
+											<ComboBox x:Name="ProfilesComboBox"
+											          HorizontalAlignment="Stretch"
+											          DropDownOpened="ComboBox_DropDownOpened"
+											          ItemsSource="{x:Bind NewProfileViewModel.Profiles, Mode=OneWay}"
+											          SelectedIndex="{x:Bind NewProfileViewModel.ProfileIndex, Mode=TwoWay}">
+												<ComboBox.ItemTemplate>
+													<DataTemplate>
+														<TextBlock MaxWidth="300"
+														           HorizontalAlignment="Stretch"
+														           local:TextBlockHelper.IsAutoTooltipEnabled="True"
+														           Text="{Binding}"
+														           TextTrimming="CharacterEllipsis" />
+													</DataTemplate>
+												</ComboBox.ItemTemplate>
+											</ComboBox>
+										</local:SimpleStackPanel>
+										<Button x:Uid="Root_NewProfileFlyout_Create"
+										        MinWidth="100"
+										        Margin="0,15,0,0"
+										        HorizontalAlignment="Right"
+										        Click="NewProfileConfirmButton_Click"
+										        IsEnabled="{x:Bind NewProfileViewModel.IsConfirmButtonEnabled, Mode=OneWay}"
+										        Style="{StaticResource AccentButtonStyle}" />
+									</local:SimpleStackPanel>
+								</local:SimpleStackPanel>
+							</Grid>
+						</Flyout>
+					</FlyoutBase.AttachedFlyout>
+				</muxc:NavigationViewItem>
+			</muxc:NavigationView.MenuItems>
+			<muxc:NavigationView.FooterMenuItems>
+				<muxc:NavigationViewItem x:Uid="Root_About"
+				                         Tag="About">
+					<muxc:NavigationViewItem.Icon>
+						<FontIcon Glyph="&#xE946;" />
+					</muxc:NavigationViewItem.Icon>
+				</muxc:NavigationViewItem>
+			</muxc:NavigationView.FooterMenuItems>
+
+			<Frame x:Name="ContentFrame" />
+		</muxc:NavigationView>
+	</Grid>
+</Page>

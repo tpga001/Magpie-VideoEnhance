@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Magpie 视频增强</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main>
+    <div class="heading">
+      <div>
+        <h1>视频增强</h1>
+        <p id="status">读取状态…</p>
+      </div>
+      <label class="switch" aria-label="开启视频增强">
+        <input id="enabled" type="checkbox">
+        <span></span>
+      </label>
+    </div>
+    <p class="hint">自动处理当前窗口里面积最大的主视频。输出分辨率跟随视频所在屏幕。</p>
+    <p id="error" class="error" hidden></p>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>
