@@ -903,7 +903,7 @@ ScalingError ScalingService::_StartScaleImpl(HWND hWnd, const Profile& profile, 
 		options.browserFrameSize = _browserFrameSize;
 		options.browserUiRects = _browserUiRects;
 		for (EffectOption& effect : options.effects) {
-			if (effect.name == "RTXVideo\\RTXVideo_VSR") {
+			if (effect.name == "RTXVideo\\RTXVideo_VSR" || effect.name == "DLSS\\DLSS_SR") {
 				effect.scalingType = ScalingType::Absolute;
 				effect.scale = {
 					static_cast<float>(regionOverlayInternalSize.cx),

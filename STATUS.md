@@ -12,6 +12,8 @@
 
 默认源码构建在 [`src/BuildOptions.props`](src/BuildOptions.props) 中关闭 DLSS FG、DLSS SR、DLSS NR；它们是可选构建功能，所需 SDK 与运行组件不随本仓库提交。开发者可以在本地构建中开启相应选项，但编译成功不等于当前设备能初始化或稳定运行。
 
+DLSS NR 有三个独立状态：`EnableDLSSNR=true` 只表示 NR 代码已编译；`PackageDLSSNRRuntime=true` 才会尝试把由构建者单独取得并核验的 `nvngx_dlssnr.dll` 随包复制，默认关闭，构建脚本只检查文件是否存在；当前 RTX 3080 能否实际处理画面仍要看运行库是否支持该 GPU，以及真实视频链路的初始化和持续输出。缺少运行库时，效果会透传并在“最近一次问题”的详情中说明原因。构建清单分别记录编译开关、随包开关与实际文件是否存在。
+
 - **DLSS SR**：已在隔离候选包中通过初始化和持续处理测试；尚未作为本项目正式发布包验收。见[候选包验证记录](docs/experimental/reviews/20260928-native-super-resolution-runtime-smoke.md)。
 - **DLSS NR**：源码存在可选后端；真实浏览器和本地视频链路仍需单独验证画质、性能及稳定性。
 - **DLSS FG**：源码存在可选后端，但 RTX 3080 不在 [NVIDIA 官方 DLSS Frame Generation 支持范围](https://www.nvidia.com/en-us/geforce/technologies/dlss/)内。实验兼容路径若另行使用，也须逐机验证，不能以构建开关证明可用。

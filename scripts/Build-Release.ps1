@@ -376,7 +376,7 @@ $buildOptionsPath = Join-Path $sourceRoot "src\BuildOptions.props"
 [xml]$buildOptions = Get-Content -LiteralPath $buildOptionsPath
 $supportedFeatureOptions = @{}
 $buildOptions.Project.PropertyGroup.ChildNodes | Where-Object {
-    $_.Name -like "Enable*"
+    $_.Name -like "Enable*" -or $_.Name -eq "PackageDLSSNRRuntime"
 } | ForEach-Object {
     $supportedFeatureOptions[$_.Name] = $true
     if ($_.InnerText -in @("true", "false")) {
@@ -387,7 +387,8 @@ $userOptionsPath = Join-Path $sourceRoot "src\BuildOptions.props.user"
 if (Test-Path -LiteralPath $userOptionsPath) {
     [xml]$userOptions = Get-Content -LiteralPath $userOptionsPath
     $properties = $userOptions.Project.PropertyGroup.ChildNodes | Where-Object {
-        $_.Name -like "Enable*" -and $supportedFeatureOptions.ContainsKey($_.Name)
+        ($_.Name -like "Enable*" -or $_.Name -eq "PackageDLSSNRRuntime") -and
+            $supportedFeatureOptions.ContainsKey($_.Name)
     }
     foreach ($property in $properties) {
         $featureOptions[$property.Name] = [string]$property.InnerText
@@ -438,6 +439,11 @@ $manifest = [ordered]@{
     configuration = $Configuration
     platform = $Platform
     featureOptions = $featureOptions
+    # Presence is recorded separately from compiled feature switches. An NR
+    # build can intentionally ship without the independently sourced runtime.
+    bundledRuntimeFiles = [ordered]@{
+        nvngx_dlssnr = [bool](Test-Path -LiteralPath (Join-Path $stagingDir 'nvngx_dlssnr.dll') -PathType Leaf)
+    }
     files = @($fileRecords)
 }
 $manifest | ConvertTo-Json -Depth 8 | Set-Content `

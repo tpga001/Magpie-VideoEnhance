@@ -1881,9 +1881,24 @@ ID3D11Texture2D* Renderer::_BuildEffects() noexcept {
 					inputDesc.Width, inputDesc.Height, outputDesc.Width, outputDesc.Height));
 			}
 		}
+		bool bypassDlssSr = false;
+		if (effects[i].name == "DLSS\\DLSS_SR") {
+			D3D11_TEXTURE2D_DESC inputDesc{};
+			D3D11_TEXTURE2D_DESC outputDesc{};
+			_effectDrawers[i].GetTexture(0)->GetDesc(&inputDesc);
+			_effectDrawers[i].GetOutputTexture()->GetDesc(&outputDesc);
+			// NGX DLSS SR cannot downscale. Keep the video-region chain running
+			// with the effect's linear adapter when its target is smaller.
+			bypassDlssSr = inputDesc.Width > outputDesc.Width || inputDesc.Height > outputDesc.Height;
+			if (bypassDlssSr) {
+				Logger::Get().Info(fmt::format(
+					"DLSS SR bypassed: target is smaller than input {}x{} -> {}x{}; using linear adapter",
+					inputDesc.Width, inputDesc.Height, outputDesc.Width, outputDesc.Height));
+			}
+		}
 
 		NativeEffectBackendResult nativeBackend{};
-		if (!bypassRtxVideoVsr) {
+		if (!bypassRtxVideoVsr && !bypassDlssSr) {
 			nativeBackend = CreateNativeEffectBackend(
 				effects[i].name,
 				effects[i],

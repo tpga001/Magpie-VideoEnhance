@@ -1383,6 +1383,14 @@ static bool InitializeSignedSnippetSession(
 ) noexcept {
 	const std::filesystem::path dllPath =
 		applicationDirectory / L"nvngx_dlssnr.dll";
+	std::error_code pathError;
+	if (!std::filesystem::is_regular_file(dllPath, pathError)) {
+		Logger::Get().Error(
+			"DLSSNR runtime nvngx_dlssnr.dll is missing beside Magpie.exe; "
+			"the NR code is compiled, but this runtime is not bundled. "
+			"DLSSNR will pass through without processing the image.");
+		return false;
+	}
 	impl.snippetModule = LoadLibraryExW(
 		dllPath.c_str(), nullptr,
 		LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR | LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
