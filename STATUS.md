@@ -19,3 +19,9 @@ DLSS NR 有三个独立状态：`EnableDLSSNR=true` 只表示 NR 代码已编译
 - **DLSS FG**：源码存在可选后端，但 RTX 3080 不在 [NVIDIA 官方 DLSS Frame Generation 支持范围](https://www.nvidia.com/en-us/geforce/technologies/dlss/)内。实验兼容路径若另行使用，也须逐机验证，不能以构建开关证明可用。
 
 XeSS FG 的 3×／4×属于实验兼容模式；SDK 输出帧数不能代替屏幕实际显示帧率。进行性能结论前应记录原始输入、显示帧间隔和卡顿分布。
+
+## 2026-10-01 本机 DLSS 候选
+
+从提交 `556b1a3` 构建的私有候选已安装到测试机，构建清单中的 DLSS SR、FG、NR 均为 `true`，而 `PackageDLSSNRRuntime=false`。SR/FG 运行库与 NVIDIA 官方 SDK 310.9.1 文件哈希相同且签名有效；NR 运行库未随包提供。安装后 205 个清单文件的哈希全部匹配，原用户配置未改变，主窗口可正常唤起。本项目仍未发布公开安装包。
+
+这些结果证明三项代码已编译、可在界面中选择，不代表三项都能在当前 RTX 3080 上处理视频。旧版隔离测试证明过 SR 可在该显卡上工作；本次候选的合成窗口自动缩放测试没有启动，因此尚未完成新的真实视频链路验收。FG 仍受 NVIDIA 的 GPU 支持范围约束；NR 缺少可信运行库，只会记录错误并透传。详见[本次构建与验收记录](docs/experimental/reviews/20261001-dlss-compile-deploy.md)。
