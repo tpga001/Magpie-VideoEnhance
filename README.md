@@ -3,7 +3,7 @@
 
 🌍 **English** | [简体中文](./README_ZH.md)
 
-Magpie Video Enhance is a private development snapshot focused on browser and local video enhancement. It is derived from [SAOG0721/Magpie](https://github.com/SAOG0721/Magpie) and, through that project, [Blinue/Magpie](https://github.com/Blinue/Magpie). It adds video-only capture and alignment to Magpie's window-scaling and effect system while retaining the upstream experimental effects.
+Magpie Video Enhance is a source-only development snapshot focused on browser and local video enhancement. It is derived from [SAOG0721/Magpie](https://github.com/SAOG0721/Magpie) and, through that project, [Blinue/Magpie](https://github.com/Blinue/Magpie). It adds video-only capture and alignment to Magpie's window-scaling and effect system while retaining the upstream experimental effects.
 
 The source tree contains both the original window-processing path and experimental browser/PotPlayer video paths. This repository does not yet publish its own installable release. See [current status](STATUS.md) before building or testing; this is not an official Magpie release.
 

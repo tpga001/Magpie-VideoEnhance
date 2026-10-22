@@ -1,6 +1,6 @@
 # Magpie Video Enhance 当前状态
 
-本仓库是基于 [SAOG0721/Magpie](https://github.com/SAOG0721/Magpie) 与 [Blinue/Magpie](https://github.com/Blinue/Magpie) 的私有开发快照，尚无本项目发布包。源码采用 [GPLv3](LICENSE)；第三方 SDK、模型和运行组件遵循各自许可，见[依赖与再分发说明](docs/THIRD_PARTY_AND_REDISTRIBUTION.md)。
+本仓库是基于 [SAOG0721/Magpie](https://github.com/SAOG0721/Magpie) 与 [Blinue/Magpie](https://github.com/Blinue/Magpie) 的源码开发快照，尚无本项目安装包。源码采用 [GPLv3](LICENSE)；第三方 SDK、模型和运行组件遵循各自许可，见[依赖与再分发说明](docs/THIRD_PARTY_AND_REDISTRIBUTION.md)。
 
 ## 已实现的视频路径
 

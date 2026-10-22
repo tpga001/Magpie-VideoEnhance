@@ -3,7 +3,7 @@
 
 🌍 [English](./README.md) | **简体中文**
 
-Magpie Video Enhance 是以浏览器和本地视频增强为重点的私有开发快照，基于 [SAOG0721/Magpie](https://github.com/SAOG0721/Magpie) 及其上游 [Blinue/Magpie](https://github.com/Blinue/Magpie)。它在 Magpie 的窗口缩放与效果系统基础上，增加只处理视频画面的捕获和对齐路径，并保留原有实验效果。
+Magpie Video Enhance 是以浏览器和本地视频增强为重点的源码开发快照，基于 [SAOG0721/Magpie](https://github.com/SAOG0721/Magpie) 及其上游 [Blinue/Magpie](https://github.com/Blinue/Magpie)。它在 Magpie 的窗口缩放与效果系统基础上，增加只处理视频画面的捕获和对齐路径，并保留原有实验效果。
 
 源码同时包含原有窗口处理路径和实验性的浏览器／PotPlayer 视频路径。本仓库尚未发布自己的可安装版本；构建和测试前请先查看[当前状态](STATUS.md)。本项目不代表 Magpie 官方。
 
